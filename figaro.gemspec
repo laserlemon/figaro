@@ -10,6 +10,8 @@ Gem::Specification.new do |gem|
   gem.summary     = %q{TODO: Write a gem summary}
   gem.homepage    = "https://github.com/laserlemon/figaro"
 
+  gem.add_dependency "rails", "~> 3.0"
+
   gem.add_development_dependency "rake", ">= 0.8.7"
   gem.add_development_dependency "rspec", "~> 2.0"
 
