@@ -6,8 +6,8 @@ Gem::Specification.new do |gem|
 
   gem.authors     = ["Steve Richert"]
   gem.email       = ["steve.richert@gmail.com"]
-  gem.description = %q{TODO: Write a gem description}
-  gem.summary     = %q{TODO: Write a gem summary}
+  gem.summary     = "Simple Rails app configuration"
+  gem.description = "Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file"
   gem.homepage    = "https://github.com/laserlemon/figaro"
 
   gem.add_dependency "rails", "~> 3.0"
