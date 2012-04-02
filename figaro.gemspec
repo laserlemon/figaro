@@ -12,6 +12,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "rails", "~> 3.0"
 
+  gem.add_development_dependency "cucumber", "~> 1.0"
   gem.add_development_dependency "rake", ">= 0.8.7"
   gem.add_development_dependency "rspec", "~> 2.0"
 
