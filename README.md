@@ -62,10 +62,16 @@ heroku config:add STRIPE_PUBLIC_KEY=pk_HHtUKJwlN7USCT6nE5jiXgoduiNl3
 
 ## What if I'm not using Heroku?
 
-No problem. Just add `config/application.yml` on your server for the production app.
+No problem. Just add `config/application.yml` to your production app on the server.
 
 ## This sucks. How can I make it better?
 
 1. Fork it.
 2. Make it better.
 3. Send me a pull request.
+
+## Does Figaro have a mascot?
+
+Yes.
+
+[![Figaro](http://images2.wikia.nocookie.net/__cb20100628192722/disney/images/5/53/Pinocchio-pinocchio-4947890-960-720.jpg "Figaro's mascot: Figaro")](http://en.wikipedia.org/wiki/Figaro_(Disney\))
