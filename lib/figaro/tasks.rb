@@ -23,7 +23,7 @@ namespace :figaro do
         system "heroku config:add #{config_vars.join(" ")}"
       end
 
-      puts "Deployment Complete"
+      puts "Configuration Complete"
     end
   end
 end
