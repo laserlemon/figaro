@@ -18,6 +18,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rake", ">= 0.8.7"
 
   gem.files         = `git ls-files`.split($\)
-  gem.test_files    = gem.files.grep(/^spec\//)
+  gem.test_files    = gem.files.grep(/^features\//)
   gem.require_paths = ["lib"]
 end
