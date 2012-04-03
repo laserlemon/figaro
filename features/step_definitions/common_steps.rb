@@ -9,3 +9,7 @@ end
 Then /^the output should be "([^"]*)"$/ do |output|
   assert_exact_output(output, output_from(@commands.last).strip)
 end
+
+Then /^"([^"]+)" should exist$/ do |path|
+  check_file_presence([path], true)
+end
