@@ -29,3 +29,9 @@ Feature: Rails
       """
     And I run "bundle exec rake hello"
     Then the output should be "Hello, world!"
+
+  @no-clobber
+  Scenario: Generator creates application.yml file
+    When I run "bundle exec rails g figaro:install"
+    Then the "config/application.yml" file should exist
+    
