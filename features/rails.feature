@@ -30,8 +30,15 @@ Feature: Rails
     And I run "bundle exec rake hello"
     Then the output should be "Hello, world!"
 
-  Scenario: Generator creates application.yml file
+  Scenario: Generator creates and ignores application.yml file
     When I run "bundle exec rails generate figaro:install"
     Then "config/application.yml" should exist
+    And ".gitignore" should contain "/config/application.yml"
     When I run "bundle exec rake hello"
     Then the output should be "Hello!"
+
+  Scenario: Generator only creates application.yml if not using Git
+    Given I run "rm .gitignore"
+    When I run "bundle exec rails generate figaro:install"
+    Then "config/application.yml" should exist
+    But ".gitignore" should not exist

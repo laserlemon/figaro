@@ -10,6 +10,10 @@ Then /^the output should be "([^"]*)"$/ do |output|
   assert_exact_output(output, output_from(@commands.last).strip)
 end
 
-Then /^"([^"]+)" should exist$/ do |path|
-  check_file_presence([path], true)
+Then /^"([^"]+)" should ?(not)? exist$/ do |path, negative|
+  check_file_presence([path], !negative)
+end
+
+Then /^"([^"]+)" should contain "([^"]*)"$/ do |path, content|
+  check_file_content(path, content, true)
 end
