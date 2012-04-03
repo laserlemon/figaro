@@ -1,4 +1,5 @@
 Given "a new Rails app" do
-  run_simple("bundle exec rails new example --skip-bundle --skip-git --skip-active-record --skip-sprockets --skip-javascript --skip-test-unit")
+  in_current_dir{ FileUtils.rm_rf("example") }
+  run_simple("bundle exec rails new example --skip-bundle --skip-active-record --skip-sprockets --skip-javascript --skip-test-unit")
   cd("example")
 end
