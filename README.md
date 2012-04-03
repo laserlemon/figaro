@@ -58,6 +58,18 @@ heroku config:add STRIPE_API_KEY=jHXKPPE0dUW84xJNYzn6CdWM2JfrCbPE
 heroku config:add STRIPE_PUBLIC_KEY=pk_HHtUKJwlN7USCT6nE5jiXgoduiNl3
 ```
 
+There's even a helpful rake task, just require 'figaro/tasks' in your Rakefile
+
+```bash
+rake figaro:heroku:config
+```
+
+Optionally, you can pass an app name, which will invoke Heroku's --app flag
+
+```base
+rake figaro:heroku:config[myawesomeapp]
+```
+
 ## What if I'm not using Heroku?
 
 No problem. Just add `config/application.yml` to your production app on the server.
