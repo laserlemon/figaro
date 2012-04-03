@@ -29,6 +29,14 @@ Feature: Rails
     And I run "bundle exec rake hello"
     Then the output should be "Hello!"
 
+  Scenario: Has commented application.yml
+    When I create "config/application.yml" with:
+      """
+      # Comment
+      """
+    And I run "bundle exec rake hello"
+    Then the output should be "Hello!"
+
   Scenario: Has application.yml with requested key
     When I create "config/application.yml" with:
       """
