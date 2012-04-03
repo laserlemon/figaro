@@ -6,3 +6,7 @@ World(Aruba::Api)
 Before do
   @aruba_timeout_seconds = 10
 end
+
+After "~@no-clobber" do
+  FileUtils.rm_rf(current_dir)
+end
