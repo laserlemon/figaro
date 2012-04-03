@@ -48,7 +48,7 @@ Pusher.secret = ENV["PUSHER_SECRET"]
 
 Heroku's beautifully simple application configuration was the [inspiration](http://laserlemon.com/blog/2011/03/08/heroku-friendly-application-configuration/) for Figaro.
 
-To configure your application `ENV` on Heroku, you can do the following from the command line using the `heroku` gem and your production configuration information.
+Typically, to configure your application `ENV` on Heroku, you would do the following from the command line using the `heroku` gem:
 
 ```bash
 heroku config:add PUSHER_APP_ID=8926
@@ -56,6 +56,18 @@ heroku config:add PUSHER_KEY=0463644d89a340ff1132
 heroku config:add PUSHER_SECRET=0eadfd9847769f94367b
 heroku config:add STRIPE_API_KEY=jHXKPPE0dUW84xJNYzn6CdWM2JfrCbPE
 heroku config:add STRIPE_PUBLIC_KEY=pk_HHtUKJwlN7USCT6nE5jiXgoduiNl3
+```
+
+But Figaro provides a rake task to do just that! Just run:
+
+```bash
+rake figaro:heroku
+```
+
+Optionally, you can pass in the name of the Heroku app:
+
+```bash
+rake figaro:heroku[my-awesome-app]
 ```
 
 ## What if I'm not using Heroku?
