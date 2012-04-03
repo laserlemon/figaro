@@ -9,3 +9,7 @@ end
 Then /^the output should be "([^"]*)"$/ do |output|
   assert_exact_output(output, output_from(@commands.last).strip)
 end
+
+Then /^the "([^"]*)" file should exist$/ do |filename|
+  File.should exist(File.join(current_dir, filename))
+end
