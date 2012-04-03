@@ -22,6 +22,13 @@ Feature: Rails
     And I run "bundle exec rake hello"
     Then the output should be "Hello!"
 
+  Scenario: Has blank application.yml
+    When I create "config/application.yml" with:
+      """
+      """
+    And I run "bundle exec rake hello"
+    Then the output should be "Hello!"
+
   Scenario: Has application.yml with requested key
     When I create "config/application.yml" with:
       """
@@ -34,8 +41,6 @@ Feature: Rails
     When I run "bundle exec rails generate figaro:install"
     Then "config/application.yml" should exist
     And ".gitignore" should contain "/config/application.yml"
-    When I run "bundle exec rake hello"
-    Then the output should be "Hello!"
 
   Scenario: Generator only creates application.yml if not using Git
     Given I run "rm .gitignore"
