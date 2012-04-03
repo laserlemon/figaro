@@ -28,17 +28,15 @@ Okay. Add Figaro to your bundle:
 gem "figaro"
 ```
 
-Next up, create your application's configuration file in `config/application.yml`:
+Next up, install Figaro:
 
-```yaml
-PUSHER_APP_ID: "2954"
-PUSHER_KEY: 7381a978f7dd7f9a1117
-PUSHER_SECRET: abdc3b896a0ffb85d373
-STRIPE_API_KEY: EdAvEPVEC3LuaTg5Q3z6WbDVqZlcBQ8Z
-STRIPE_PUBLIC_KEY: pk_BRgD57O8fHja9HxduJUszhef6jCyS
+```bash
+rails generate figaro:install
 ```
 
-Now, just add `config/application.yml` to your `.gitignore` and you're done! Your configuration will be available as key/value pairs in `ENV`. For example, here's `config/initializers/pusher.rb`:
+This generates a commented `config/application.yml` file and ignores it in your `.gitignore`. Add your own configuration to this file and you're done!
+
+Your configuration will be available as key/value pairs in `ENV`. For example, here's `config/initializers/pusher.rb`:
 
 ```ruby
 Pusher.app_id = ENV["PUSHER_APP_ID"]
