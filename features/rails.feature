@@ -33,3 +33,5 @@ Feature: Rails
   Scenario: Generator creates application.yml file
     When I run "bundle exec rails generate figaro:install"
     Then "config/application.yml" should exist
+    When I run "bundle exec rake hello"
+    Then the output should be "Hello!"
