@@ -8,12 +8,14 @@ module Figaro
       end
 
       def ignore_configuration
-        append_to_file ".gitignore" do
-          <<-EOF.strip_heredoc
+        if File.exists?(".gitignore")
+          append_to_file ".gitignore" do
+            <<-EOF.strip_heredoc
 
-          # Ignore application configuration
-          /config/application.yml
-          EOF
+            # Ignore application configuration
+            /config/application.yml
+            EOF
+          end
         end
       end
     end
