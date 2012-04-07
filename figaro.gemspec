@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "aruba", "~> 0.4"
   gem.add_development_dependency "cucumber", "~> 1.0"
   gem.add_development_dependency "rake", ">= 0.8.7"
+  gem.add_development_dependency "heroku"
 
   gem.files         = `git ls-files`.split($\)
   gem.test_files    = gem.files.grep(/^spec\//)
