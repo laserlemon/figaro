@@ -9,3 +9,5 @@ rvm:
   - 1.9.2
   - 1.9.3
   - ruby-head
+env:
+  secure: "SBq3viHypfDJrrU0dRw6U+tNZFVb3NjMHWN1HROgZ+ecF0ycRKDxHZQCHWg2\nV0FwRDb/pd6eZgk12Yxp0PyE2rxtiU/LulQkp0EvpcGXjuQHudWXTZ2c/RiY\n7FVwvy6SYB6D/3pDmVEtTRu/BQjgE9fMlLaaZms64+t5MtRFSCU="
