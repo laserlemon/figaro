@@ -4,30 +4,28 @@ require "yaml"
 module Figaro
   class Railtie < ::Rails::Railtie
     config.before_configuration do
-      path = Rails.root.join("config/application.yml")
-      if File.exist?(path)
-        loader = Loader.new(path)
-        ENV.update(loader.to_hash)
-      end
+      ENV.update(Loader.new.shmush)
     end
   end
 
+
   class Loader
-    def initialize(path)
-      @config = YAML.load(File.read(path)) || {}
+    def initialize
+      @config = Figaro.env
     end
 
-    def to_hash
+    def shmush
       build_hash_from_enviroment
     end
 
+    private
     def enviroment
       ENV['RAILS_ENV'] || ENV['RACK_ENV']
     end
 
     def build_hash_from_enviroment
       @config.keys.each do |key|
-        if @config.fetch(key).respond_to?(:each)
+        if ["Hash", "Array"].include?(@config.fetch(key).class.to_s)
           values = @config.delete(key)
           if key == enviroment
             @config.update(values)
