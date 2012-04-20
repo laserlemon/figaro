@@ -15,58 +15,58 @@ Feature: Rails
     Then the output should be "Hello!"
 
   Scenario: Has application.yml without requested key
-    When I create "config/application.yml" with:
+    Given I create "config/application.yml" with:
       """
       GOODBYE: Ruby Tuesday
       """
-    And I run "rake hello"
+    When I run "rake hello"
     Then the output should be "Hello!"
 
   Scenario: Has blank application.yml
-    When I create "config/application.yml" with:
+    Given I create "config/application.yml" with:
       """
       """
-    And I run "rake hello"
+    When I run "rake hello"
     Then the output should be "Hello!"
 
   Scenario: Has commented application.yml
-    When I create "config/application.yml" with:
+    Given I create "config/application.yml" with:
       """
       # Comment
       """
-    And I run "rake hello"
+    When I run "rake hello"
     Then the output should be "Hello!"
 
   Scenario: Has application.yml with requested key
-    When I create "config/application.yml" with:
+    Given I create "config/application.yml" with:
       """
       HELLO: world
       """
-    And I run "rake hello"
+    When I run "rake hello"
     Then the output should be "Hello, world!"
 
   Scenario: Has application.yml with a RAILS_ENV
-    When I create "config/application.yml" with:
+    Given I create "config/application.yml" with:
       """
       HELLO: world
       development:
         HELLO: developers
       """
-    And I run "rake hello RAILS_ENV=development"
+    When I run "rake hello RAILS_ENV=development"
     Then the output should be "Hello, developers!"
 
   Scenario: Has application.yml without a RAILS_ENV, but has env variables set
-    When I create "config/application.yml" with:
+    Given I create "config/application.yml" with:
       """
       HELLO: world
       development:
         HELLO: developers
       """
-    And I run "rake hello"
+    When I run "rake hello"
     Then the output should be "Hello, world!"
 
   Scenario: Has application.yml with a RAILS_ENV, with multiple envs configured.
-    When I create "config/application.yml" with:
+    Given I create "config/application.yml" with:
       """
       HELLO: world
       development:
@@ -74,7 +74,7 @@ Feature: Rails
       production:
         HELLO: users
       """
-    And I run "rake hello RAILS_ENV=development"
+    When I run "rake hello RAILS_ENV=development"
     Then the output should be "Hello, developers!"
     When I run "rake hello RAILS_ENV=production"
     Then the output should be "Hello, users!"
