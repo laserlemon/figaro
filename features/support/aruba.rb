@@ -7,6 +7,6 @@ Before do
   @aruba_timeout_seconds = 60
 end
 
-After "~@no-clobber" do
+After do
   FileUtils.rm_rf(current_dir)
 end
