@@ -44,7 +44,7 @@ Pusher.key    = ENV["PUSHER_KEY"]
 Pusher.secret = ENV["PUSHER_SECRET"]
 ```
 
-If your app requires Rails-environment-specific configuration, you can also namespace your configuration under a key for `Rails.environment`. For instance:
+If your app requires Rails-environment-specific configuration, you can also namespace your configuration under a key for `Rails.env`.
 
 ```yaml
 HELLO: world
