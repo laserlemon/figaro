@@ -45,6 +45,38 @@ Feature: Rails
     And I run "rake hello"
     Then the output should be "Hello, world!"
 
+  Scenario: Has application.yml with a RAILS_ENV
+    When I create "config/application.yml" with:
+    """
+    HELLO: world
+    development:
+      HELLO: party
+    """
+    And I run "bundle exec rake hello RAILS_ENV=development"
+    Then the output should be "Hello, party!"
+
+  Scenario: Has application.yml without a RAILS_ENV, but has env variables set
+    When I create "config/application.yml" with:
+    """
+    HELLO: world
+    development:
+      HELLO: party
+    """
+    And I run "bundle exec rake hello"
+    Then the output should be "Hello, world!"
+
+  Scenario: Has application.yml with a RAILS_ENV, with multiple envs configured.
+    When I create "config/application.yml" with:
+    """
+    HELLO: world
+    development:
+      HELLO: party
+    production:
+      HELLO: mom
+    """
+    And I run "bundle exec rake hello RAILS_ENV=development"
+    Then the output should be "Hello, party!"
+
   Scenario: Generator creates and ignores application.yml file
     When I run "rails generate figaro:install"
     Then "config/application.yml" should exist
