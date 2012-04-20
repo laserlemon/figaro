@@ -11,7 +11,7 @@ Feature: Rails
       """
 
   Scenario: Has no application.yml
-    When I run "bundle exec rake hello"
+    When I run "rake hello"
     Then the output should be "Hello!"
 
   Scenario: Has application.yml without requested key
@@ -19,14 +19,14 @@ Feature: Rails
       """
       GOODBYE: Ruby Tuesday
       """
-    And I run "bundle exec rake hello"
+    And I run "rake hello"
     Then the output should be "Hello!"
 
   Scenario: Has blank application.yml
     When I create "config/application.yml" with:
       """
       """
-    And I run "bundle exec rake hello"
+    And I run "rake hello"
     Then the output should be "Hello!"
 
   Scenario: Has commented application.yml
@@ -34,7 +34,7 @@ Feature: Rails
       """
       # Comment
       """
-    And I run "bundle exec rake hello"
+    And I run "rake hello"
     Then the output should be "Hello!"
 
   Scenario: Has application.yml with requested key
@@ -42,17 +42,17 @@ Feature: Rails
       """
       HELLO: world
       """
-    And I run "bundle exec rake hello"
+    And I run "rake hello"
     Then the output should be "Hello, world!"
 
   Scenario: Generator creates and ignores application.yml file
-    When I run "bundle exec rails generate figaro:install"
+    When I run "rails generate figaro:install"
     Then "config/application.yml" should exist
     And ".gitignore" should contain "/config/application.yml"
 
   Scenario: Generator only creates application.yml if not using Git
     Given I run "rm .gitignore"
-    When I run "bundle exec rails generate figaro:install"
+    When I run "rails generate figaro:install"
     Then "config/application.yml" should exist
     But ".gitignore" should not exist
 
@@ -66,7 +66,7 @@ Feature: Rails
       """
       FOO: bar
       """
-    When I run "bundle exec rake figaro:heroku"
+    When I run "rake figaro:heroku"
     Then the output should be "Attempted: heroku config:add FOO=bar"
 
   Scenario: Rake task attempts to configure a specific Heroku app
@@ -79,5 +79,5 @@ Feature: Rails
       """
       FOO: bar
       """
-    When I run "bundle exec rake figaro:heroku[my-app]"
+    When I run "rake figaro:heroku[my-app]"
     Then the output should be "Attempted: heroku config:add FOO=bar --app my-app"
