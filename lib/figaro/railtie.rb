@@ -6,5 +6,9 @@ module Figaro
     config.before_configuration do
       ENV.update(Figaro.env)
     end
+
+    rake_tasks do
+      load "figaro/tasks.rb"
+    end
   end
 end
