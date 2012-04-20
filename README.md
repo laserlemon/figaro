@@ -44,6 +44,18 @@ Pusher.key    = ENV["PUSHER_KEY"]
 Pusher.secret = ENV["PUSHER_SECRET"]
 ```
 
+If your app requires Rails-environment-specific configuration, you can also namespace your configuration under a key for `Rails.environment`. For instance:
+
+```yaml
+HELLO: world
+development:
+  HELLO: developers
+production:
+  HELLO: users
+```
+
+In this case, `ENV["HELLO"]` will produce `"developers"` in development, `"users"` in production and `"world"` otherwise.
+
 ## How does it work with Heroku?
 
 Heroku's beautifully simple application configuration was the [inspiration](http://laserlemon.com/blog/2011/03/08/heroku-friendly-application-configuration/) for Figaro.
