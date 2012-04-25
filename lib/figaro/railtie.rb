@@ -8,7 +8,7 @@ module Figaro
     end
 
     rake_tasks do
-      load "figaro/tasks.rb"
+      load "figaro/tasks.rake"
     end
   end
 end
