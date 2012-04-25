@@ -65,7 +65,7 @@ Feature: Rails
     When I run "rake hello"
     Then the output should be "Hello, world!"
 
-  Scenario: Has application.yml with a RAILS_ENV, with multiple envs configured.
+  Scenario: Has application.yml with a RAILS_ENV, with multiple envs configured
     Given I create "config/application.yml" with:
       """
       HELLO: world
