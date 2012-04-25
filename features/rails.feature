@@ -90,28 +90,6 @@ Feature: Rails
     Then "config/application.yml" should exist
     But ".gitignore" should not exist
 
-  Scenario: Rake task attempts to configure Heroku
-    Given the "heroku" command is:
-      """
-      #!/usr/bin/env ruby
-      puts "Attempted: heroku #{ARGV.join(" ")}"
-      """
-    And I create "config/application.yml" with:
-      """
-      FOO: bar
-      """
-    When I run "rake figaro:heroku"
-    Then the output should be "Attempted: heroku config:add FOO=bar"
-
-  Scenario: Rake task attempts to configure a specific Heroku app
-    Given the "heroku" command is:
-      """
-      #!/usr/bin/env ruby
-      puts "Attempted: heroku #{ARGV.join(" ")}"
-      """
-    And I create "config/application.yml" with:
-      """
-      FOO: bar
-      """
-    When I run "rake figaro:heroku[my-app]"
-    Then the output should be "Attempted: heroku config:add FOO=bar --app my-app"
+  Scenario: Includes Heroku Rake task
+    When I run "rake --tasks figaro:heroku"
+    Then the output should be "rake figaro:heroku[app]  # Configure Heroku according to application.yml"

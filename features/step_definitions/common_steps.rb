@@ -1,7 +1,3 @@
-Given /^the "([^"]+)" command is:$/ do |command, content|
-  write_command(command, content)
-end
-
 When /^I create "([^"]+)" with:$/ do |path, content|
   write_file(path, content)
 end
