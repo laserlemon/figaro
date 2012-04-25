@@ -4,6 +4,6 @@ namespace :figaro do
     vars = Figaro.env.map{|k,v| "#{k}=#{v}" }.join(" ")
     command = "heroku config:add #{vars}"
     command << " --app #{args[:app]}" if args[:app]
-    system(command)
+    Kernel.system(command)
   end
 end
