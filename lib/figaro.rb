@@ -20,7 +20,7 @@ module Figaro
   end
 
   def environment
-    ENV["RAILS_ENV"] || ENV["RACK_ENV"]
+    Rails.env
   end
 
   private

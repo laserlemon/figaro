@@ -45,17 +45,7 @@ Feature: Rails
     When I run "rake hello"
     Then the output should be "Hello, world!"
 
-  Scenario: Has application.yml with a RAILS_ENV
-    Given I create "config/application.yml" with:
-      """
-      HELLO: world
-      development:
-        HELLO: developers
-      """
-    When I run "rake hello RAILS_ENV=development"
-    Then the output should be "Hello, developers!"
-
-  Scenario: Has application.yml without a RAILS_ENV, but has env variables set
+  Scenario: Has application.yml with RAILS_ENV defaulting to "development"
     Given I create "config/application.yml" with:
       """
       HELLO: world
@@ -63,9 +53,9 @@ Feature: Rails
         HELLO: developers
       """
     When I run "rake hello"
-    Then the output should be "Hello, world!"
+    Then the output should be "Hello, developers!"
 
-  Scenario: Has application.yml with a RAILS_ENV, with multiple envs configured
+  Scenario: Has application.yml with RAILS_ENV set
     Given I create "config/application.yml" with:
       """
       HELLO: world
@@ -74,6 +64,8 @@ Feature: Rails
       production:
         HELLO: users
       """
+    When I run "rake hello RAILS_ENV=test"
+    Then the output should be "Hello, world!"
     When I run "rake hello RAILS_ENV=development"
     Then the output should be "Hello, developers!"
     When I run "rake hello RAILS_ENV=production"
