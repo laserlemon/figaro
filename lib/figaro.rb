@@ -1,4 +1,5 @@
 require "figaro/railtie"
+require 'figaro/figaro_settings'
 
 module Figaro
   extend self
