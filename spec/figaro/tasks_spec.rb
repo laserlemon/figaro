@@ -14,4 +14,18 @@ describe "Figaro Rake tasks", :rake => true do
       task.invoke("my-app")
     end
   end
+
+  describe "figaro:cloudbees" do
+    it "configures Cloudbees" do
+      Figaro.stub(:env => {"HELLO" => "world", "FOO" => "bar"})
+      Kernel.should_receive(:system).once.with("echo bees config:set FOO=bar HELLO=world")
+      task.invoke
+    end
+
+    it "configures a specific Cloudbees app" do
+      Figaro.stub(:env => {"HELLO" => "world", "FOO" => "bar"})
+      Kernel.should_receive(:system).once.with("bees config:set FOO=bar HELLO=world -a my-app")
+      task.invoke("my-app")
+    end
+  end
 end
