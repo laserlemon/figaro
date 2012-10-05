@@ -1,3 +1,8 @@
+# for travis build issues
+if !Object.const_defined?(:RUBY_ENGINE)
+  RUBY_ENGINE = "ruby"
+end
+
 class FigaroSettings
   class SettingNotFoundError < StandardError; end
 
