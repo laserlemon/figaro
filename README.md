@@ -124,6 +124,11 @@ If you just want to see the commands used you can run `rake figaro:heroku_test`
 
 No problem. Just add `config/application.yml` to your production app on the server.
 
+## What if the key is not there?
+
+If you use ENV then you get back `nil`. `FigaroSettings.some_missing_key` will return nil but `FigaroSettings.some_missing_key!` will throw an exception `FigaroSettings::SettingNotFoundError` 
+
+
 ## This sucks. How can I make it better?
 
 1. Fork it.
