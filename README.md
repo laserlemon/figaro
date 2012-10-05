@@ -92,7 +92,7 @@ Optionally, you can pass in the name of the Heroku app:
 rake figaro:heroku[my-awesome-app]
 ```
 
-## How does it work with Clodbees?
+## How does it work with Cloudbees?
 
 Cloudbees provides application [configuration](http://wiki.cloudbees.com/bin/view/RUN/Configuration+Parameters) in a similar manner.
 
