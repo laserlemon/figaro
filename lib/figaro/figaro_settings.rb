@@ -9,12 +9,11 @@ class FigaroSettings
   class << self
     def method_missing(symbol, *args, &block)
       val = get_val(symbol)
-      unless val.nil?
-        self.class.send(:define_method, symbol) { val }
-        send(symbol)
-      else
+      if val.nil? && has_bang(symbol)
         raise SettingNotFoundError, symbol
       end
+      self.class.send(:define_method, symbol) { val }
+      send(symbol)
     end
 
     def respond_to?(symbol)
@@ -23,7 +22,16 @@ class FigaroSettings
     
     private
     
-    def get_val(symbol)
+    def get_symbol(symbol)
+      symbol.to_s.chomp("!").to_sym
+    end
+    
+    def has_bang(symbol)
+      symbol != get_symbol(symbol)
+    end
+    
+    def get_val(sym)
+      symbol = get_symbol(sym)
       val = nil
       if RUBY_ENGINE == "jruby"
         val = java.lang.System.get_property(symbol.to_s)

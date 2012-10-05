@@ -17,12 +17,16 @@ describe FigaroSettings do
     FigaroSettings.respond_to?(:another_key).should be_true
   end
 
-  it "raises an error if it can't find a key" do
+  it "retrieves nil if it cannot find the key" do
+    FigaroSettings.some_key_not_there.nil?.should be_true
+  end
+
+  it "raises an error if it can't find a key using bang" do
     expect do
-      FigaroSettings.yet_another_key
+      FigaroSettings.yet_another_key!
     end.to raise_error(FigaroSettings::SettingNotFoundError)
   end
-  
+
   it "finds the value from java system property if using jruby" do
     if RUBY_ENGINE == "jruby"
       java.lang.System.set_property 'test_prop', 'test_val'
