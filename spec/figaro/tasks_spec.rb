@@ -30,7 +30,7 @@ describe "Figaro Rake tasks", :rake => true do
     end
   end
   
-  describe "figaro:heroku_test" do
+  describe "figaro:test_heroku" do
     it "echoes commands to configure Heroku" do
       common_test "echo heroku config:add FOO=bar HELLO=world"
       task.invoke
@@ -43,7 +43,7 @@ describe "Figaro Rake tasks", :rake => true do
   end
 
 
-  describe "figaro:cloudbees_test" do
+  describe "figaro:test_cloudbees" do
     it "echoes commands to configure Cloudbees" do
       common_test "echo bees config:set FOO=bar HELLO=world"
       task.invoke
