@@ -92,6 +92,8 @@ Optionally, you can pass in the name of the Heroku app:
 rake figaro:heroku[my-awesome-app]
 ```
 
+If you just want to see the commands used you can run `rake figaro:heroku_test`
+
 ## How does it work with Cloudbees?
 
 Cloudbees provides application [configuration](http://wiki.cloudbees.com/bin/view/RUN/Configuration+Parameters) in a similar manner.
@@ -115,6 +117,9 @@ Optionally, you can pass in the name of the Cloudbees app:
 ```bash
 rake figaro:cloudbees[my-awesome-app]
 ```
+
+If you just want to see the commands used you can run `rake figaro:heroku_test`
+
 ## What if I'm not using Heroku or Cloudbees?
 
 No problem. Just add `config/application.yml` to your production app on the server.
