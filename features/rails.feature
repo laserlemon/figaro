@@ -85,3 +85,15 @@ Feature: Rails
   Scenario: Includes Heroku Rake task
     When I run "rake --tasks figaro:heroku"
     Then the output should be "rake figaro:heroku[app]  # Configure Heroku according to application.yml"
+
+  Scenario: Includes Cloudbees Rake task
+    When I run "rake --tasks figaro:cloudbees"
+    Then the output should be "rake figaro:cloudbees[app]  # Configure Cloudbees according to application.yml"
+
+  Scenario: Includes test cloudbees Rake task
+    When I run "rake --tasks figaro:test_cloudbees"
+    Then the output should be "rake figaro:test_cloudbees[app]  # Echo configuration commands for Cloudbees but dont run them"
+
+  Scenario: Includes test heroku Rake task
+    When I run "rake --tasks figaro:test_heroku"
+    Then the output should be "rake figaro:test_heroku[app]  # Echo configuration commands for heroku but dont run them"
