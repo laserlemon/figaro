@@ -8,9 +8,8 @@ class FigaroSettings
 
   class << self
     def method_missing(symbol, *args, &block)
-      val = get_val(symbol)
-      raise SettingNotFoundError, symbol if val.nil? && has_bang(symbol)
-      self.class.send(:define_method, symbol) { val }
+      raise SettingNotFoundError, symbol if get_val(symbol).nil? && has_bang(symbol)
+      self.class.send(:define_method, symbol) { get_val(symbol) }
       send(symbol)
     end
 

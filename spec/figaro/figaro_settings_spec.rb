@@ -11,6 +11,13 @@ describe FigaroSettings do
     FigaroSettings.some_key.should == 'some value'
   end
 
+  it "should return the new value if environment is changed" do
+    ENV['SOME_KEY'] = 'some value'
+    FigaroSettings.some_key.should == 'some value'
+    ENV['SOME_KEY'] = 'some new value'
+    FigaroSettings.some_key.should == 'some new value'
+  end
+
   it "responds to any method where an environment variable of the same name exists" do
     FigaroSettings.respond_to?(:another_key).should be_false
     ENV['ANOTHER_KEY'] = 'another value'
@@ -31,6 +38,8 @@ describe FigaroSettings do
     if RUBY_ENGINE == "jruby"
       java.lang.System.set_property 'test_prop', 'test_val'
       FigaroSettings.test_prop.should == 'test_val'
+      java.lang.System.set_property 'test_prop', 'test_val2'
+      FigaroSettings.test_prop.should == 'test_val2'
     end
   end
 end
