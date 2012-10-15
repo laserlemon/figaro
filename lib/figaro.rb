@@ -3,8 +3,8 @@ require "figaro/railtie"
 module Figaro
   extend self
 
-  def env
-    flatten(raw).merge(raw.fetch(environment, {}))
+  def env(_environment_ = nil)
+    flatten(raw).merge(raw.fetch(_environment_ || environment, {}))
   end
 
   def raw
