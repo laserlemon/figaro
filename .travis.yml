@@ -1,13 +1,18 @@
+before_script:
+  - unset RAILS_ENV
+  - unset RACK_ENV
 branches: master
 gemfile:
   - gemfiles/rails30.gemfile
   - gemfiles/rails31.gemfile
   - gemfiles/rails32.gemfile
+  - gemfiles/rails4.gemfile
 language: ruby
+matrix:
+  exclude:
+    - rvm: 1.8.7
+    - gemfile: gemfiles/rails4.gemfile
 rvm:
   - 1.8.7
   - 1.9.2
   - 1.9.3
-before_script:
-  - unset RAILS_ENV
-  - unset RACK_ENV
