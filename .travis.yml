@@ -1,6 +1,8 @@
 before_script:
   - unset RAILS_ENV
   - unset RACK_ENV
+  - gem update bundler
+  - gem cleanup bundler
 branches: master
 gemfile:
   - gemfiles/rails30.gemfile
