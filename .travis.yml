@@ -14,7 +14,7 @@ language: ruby
 matrix:
   exclude:
     - rvm: 1.8.7
-    - gemfile: gemfiles/rails4.gemfile
+      gemfile: gemfiles/rails4.gemfile
 rvm:
   - 1.8.7
   - 1.9.2
