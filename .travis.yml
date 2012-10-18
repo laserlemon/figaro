@@ -1,6 +1,5 @@
 before_install:
   - gem update bundler
-  - gem cleanup bundler
 before_script:
   - unset RAILS_ENV
   - unset RACK_ENV
