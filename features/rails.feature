@@ -3,10 +3,14 @@ Feature: Rails
     Given a new Rails app
     And I add figaro as a dependency
     And I bundle
-    And I create "lib/tasks/hello.rake" with:
+    And I create "lib/tasks/defaults.rake" with:
       """
       task :hello => :environment do
         puts ["Hello", ENV["HELLO"]].compact.join(", ") << "!"
+      end
+
+      task :class => :environment do
+        puts ENV["HELLO"].class
       end
       """
 
@@ -44,6 +48,16 @@ Feature: Rails
       """
     When I run "rake hello"
     Then the output should be "Hello, world!"
+
+  Scenario: Has application.yml with integer keys
+    Given I create "config/application.yml" with:
+      """
+      HELLO: 123
+      """
+    When I run "rake class"
+    Then the output should be "String"
+    When I run "rake hello"
+    Then the output should be "Hello, 123!"
 
   Scenario: Has application.yml with RAILS_ENV defaulting to "development"
     Given I create "config/application.yml" with:
