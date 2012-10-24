@@ -1,6 +1,6 @@
 namespace :figaro do
   def run_it(config_cmd, app_option, test, app_name=nil)
-    vars = Figaro.env.map{|k,v| "#{k}=#{v}" }.sort.join(" ")
+    vars = Figaro.env.map { |k,v| "#{k}=#{v[" "] ? '"'+ v +'"' : v}" }.sort.join(" ")
     command = "#{config_cmd} #{vars}"
     command << " #{app_option} #{app_name}" unless app_name.nil?
     command = "echo " + command if test

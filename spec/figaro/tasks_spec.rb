@@ -40,6 +40,12 @@ describe "Figaro Rake tasks", :rake => true do
       common_test "echo heroku config:add FOO=bar HELLO=world --app my-app", "my-app"
       task.invoke("my-app")
     end
+
+    it "echoes commands correctly to configure a specific Heroku app with spaces in value" do
+      Figaro.stub(:env => {"HELLO" => "world", "FOO" => "bar room"})
+      Kernel.should_receive(:system).once.with("echo heroku config:add FOO=\"bar room\" HELLO=world --app my-app")
+      task.invoke("my-app")
+    end
   end
 
 
