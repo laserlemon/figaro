@@ -1,3 +1,4 @@
+require 'figaro/figaro_settings'
 require "figaro/railtie"
 
 module Figaro
