@@ -3,7 +3,7 @@ namespace :figaro do
     vars = Figaro.env.map { |k,v| "#{k}=#{v[" "] ? '"'+ v +'"' : v}" }.sort.join(" ")
     command = "#{config_cmd} #{vars}"
     command << " #{app_option} #{app_name}" unless app_name.nil?
-    command = "echo " + command if test
+    command = "echo " + command.gsub('"','\\"') if test
     Kernel.system(command)
   end
 

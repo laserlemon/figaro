@@ -43,7 +43,7 @@ describe "Figaro Rake tasks", :rake => true do
 
     it "echoes commands correctly to configure a specific Heroku app with spaces in value" do
       Figaro.stub(:env => {"HELLO" => "world", "FOO" => "bar room"})
-      Kernel.should_receive(:system).once.with("echo heroku config:add FOO=\"bar room\" HELLO=world --app my-app")
+      Kernel.should_receive(:system).once.with("echo heroku config:add FOO=\\\"bar room\\\" HELLO=world --app my-app")
       task.invoke("my-app")
     end
   end
@@ -57,6 +57,12 @@ describe "Figaro Rake tasks", :rake => true do
   
     it "echoes commands to configure Cloudbees app" do
       common_test "echo bees config:set FOO=bar HELLO=world -a my-app", "my-app"
+      task.invoke("my-app")
+    end
+
+    it "echoes commands correctly to configure a specific cloudbees app with spaces in value" do
+      Figaro.stub(:env => {"HELLO" => "world", "FOO" => "bar room"})
+      Kernel.should_receive(:system).once.with("echo bees config:set FOO=\\\"bar room\\\" HELLO=world -a my-app")
       task.invoke("my-app")
     end
   end
