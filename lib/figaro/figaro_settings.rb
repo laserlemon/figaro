@@ -30,6 +30,7 @@ class FigaroSettings
     def get_val(sym)
       symbol = get_symbol(sym)
       val = (RUBY_ENGINE == "jruby" && java.lang.System.get_property(symbol.to_s))
+      val ||= (RUBY_ENGINE == "jruby" && java.lang.System.get_property(symbol.to_s.upcase))
       val ||= ENV[symbol.to_s]
       val ||= ENV[symbol.to_s.upcase]
     end
