@@ -4,7 +4,7 @@ module Figaro
   extend self
 
   def env
-    flatten(raw).merge(raw.fetch(environment, {}))
+    stringify(flatten(raw).merge(raw.fetch(environment, {})))
   end
 
   def raw
@@ -27,5 +27,9 @@ module Figaro
 
   def flatten(hash)
     hash.reject{|_,v| Hash === v }
+  end
+
+  def stringify(hash)
+    hash.inject({}){|h,(k,v)| h[k.to_s] = v.to_s; h }
   end
 end

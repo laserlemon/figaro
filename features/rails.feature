@@ -8,6 +8,10 @@ Feature: Rails
       task :hello => :environment do
         puts ["Hello", ENV["HELLO"]].compact.join(", ") << "!"
       end
+
+      task :nena => :environment do
+        puts [ENV["LUFTBALLOONS"], "Luftballoons"].compact.join(" ")
+      end
       """
 
   Scenario: Has no application.yml
@@ -70,6 +74,14 @@ Feature: Rails
     Then the output should be "Hello, developers!"
     When I run "rake hello RAILS_ENV=production"
     Then the output should be "Hello, users!"
+
+  Scenario: Has application.yml with non-string values
+    Given I create "config/application.yml" with:
+      """
+      LUFTBALLOONS: 99
+      """
+    When I run "rake nena"
+    Then the output should be "99 Luftballoons"
 
   Scenario: Generator creates and ignores application.yml file
     When I run "rails generate figaro:install"
