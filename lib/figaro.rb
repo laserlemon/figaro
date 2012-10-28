@@ -20,7 +20,11 @@ module Figaro
   end
 
   def environment
-    Rails.env
+    @environment || Rails.env
+  end
+
+  def environment=(other_env)
+    @environment = other_env
   end
 
   private
