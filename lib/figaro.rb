@@ -14,15 +14,15 @@ module Figaro
   end
 
   def raw
-    yaml && YAML.load(yaml) || {}
+    @raw ||= yaml && YAML.load(yaml) || {}
   end
 
   def yaml
-    File.exist?(path) ? File.read(path) : nil
+    @yaml ||= File.exist?(path) ? File.read(path) : nil
   end
 
   def path
-    Rails.root.join("config/application.yml")
+    @path ||= Rails.root.join("config/application.yml")
   end
 
   def environment
