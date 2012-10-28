@@ -3,6 +3,10 @@ require "figaro/railtie"
 module Figaro
   extend self
 
+  def vars
+    env.map{|k,v| "#{k}=#{v}" }.sort.join(" ")
+  end
+
   def env
     stringify(flatten(raw).merge(raw.fetch(environment, {})))
   end
