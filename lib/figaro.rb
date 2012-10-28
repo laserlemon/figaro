@@ -4,11 +4,12 @@ require "figaro/railtie"
 module Figaro
   extend self
 
-  def vars
-    env.map{|k,v| "#{k}=#{v}" }.sort.join(" ")
+  def vars(custom_environment = nil)
+    env(custom_environment).map{|k,v| "#{k}=#{v}" }.sort.join(" ")
   end
 
-  def env
+  def env(custom_environment = nil)
+    environment = (custom_environment || self.environment).to_s
     Figaro::Env.from(stringify(flatten(raw).merge(raw.fetch(environment, {}))))
   end
 

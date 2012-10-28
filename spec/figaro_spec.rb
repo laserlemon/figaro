@@ -8,5 +8,11 @@ describe Figaro do
       Figaro.env.hello.should == "world"
       ENV.delete("HELLO")
     end
+
+    it "allows access to a particular environment" do
+      Figaro.stub(:raw => {"development" => {"HELLO" => "developers"}, "production" => {"HELLO" => "world"}})
+      Figaro.env(:development).should == {"HELLO" => "developers"}
+      Figaro.env(:production).should == {"HELLO" => "world"}
+    end
   end
 end
