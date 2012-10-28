@@ -12,6 +12,10 @@ Feature: Rails
       task :nena => :environment do
         puts [ENV["LUFTBALLOONS"], "Luftballoons"].compact.join(" ")
       end
+
+      task :greet => :environment do
+        puts ([Figaro.env.greeting] * 3).join(", ") << "!"
+      end
       """
 
   Scenario: Has no application.yml
@@ -97,3 +101,11 @@ Feature: Rails
   Scenario: Includes Heroku Rake task
     When I run "rake --tasks figaro:heroku"
     Then the output should be "rake figaro:heroku[app]  # Configure Heroku according to application.yml"
+
+  Scenario: Accessing values through the Figaro.env proxy
+    Given I create "config/application.yml" with:
+      """
+      GREETING: Figaro
+      """
+    When I run "rake greet"
+    Then the output should be "Figaro, Figaro, Figaro!"

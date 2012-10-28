@@ -1,3 +1,4 @@
+require "figaro/env"
 require "figaro/railtie"
 
 module Figaro
@@ -8,7 +9,7 @@ module Figaro
   end
 
   def env
-    stringify(flatten(raw).merge(raw.fetch(environment, {})))
+    Figaro::Env.from(stringify(flatten(raw).merge(raw.fetch(environment, {}))))
   end
 
   def raw
