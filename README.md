@@ -44,6 +44,16 @@ Pusher.key    = ENV["PUSHER_KEY"]
 Pusher.secret = ENV["PUSHER_SECRET"]
 ```
 
+In addition, you can access these same configuration values through Figaro itself:
+
+```ruby
+Pusher.app_id = Figaro.env.pusher_app_id
+Pusher.key    = Figaro.env.pusher_key
+Pusher.secret = Figaro.env.pusher_secret
+```
+
+But wait… I thought configuration via constant was bad! Well, this is different. Rather than storing a _copy_ of `ENV` internally, `Figaro.env` passes directly through to `ENV`, making it just like using `ENV` itself. So why two approaches? Having your configurations available via method calls makes it easy to stub them out in tests. Either way is fine. The choice is yours!
+
 If your app requires Rails-environment-specific configuration, you can also namespace your configuration under a key for `Rails.env`.
 
 ```yaml
@@ -81,6 +91,8 @@ Optionally, you can pass in the name of the Heroku app:
 ```bash
 rake figaro:heroku[my-awesome-app]
 ```
+
+Additionally, if `RAILS_ENV` is configured on your Heroku server, Figaro will use that environment automatically in determining your proper configuration.
 
 ## What if I'm not using Heroku?
 
