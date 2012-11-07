@@ -45,6 +45,14 @@ Feature: Rails
     When I run "rake hello"
     Then the output should be "Hello!"
 
+  Scenario: Has ERB in application.yml
+    Given I create "config/application.yml" with:
+      """
+      HELLO: <%= 'world' %>
+      """
+    When I run "rake hello"
+    Then the output should be "Hello, world!"
+
   Scenario: Has application.yml with requested key
     Given I create "config/application.yml" with:
       """
