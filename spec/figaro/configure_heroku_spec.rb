@@ -25,7 +25,7 @@ describe Figaro::ConfigureHeroku do
       Figaro.stub(:env => {"HELLO" => "world", "FOO" => "bar"})
       subject.should_receive(:`).with("heroku config:get RAILS_ENV --app my-app").and_return("development")
       subject.should_receive(:`).with("heroku config:add FOO=bar HELLO=world --app my-app")
-      subject.execute(app: "my-app")
+      subject.execute(:app => "my-app")
     end
 
     it "respects the Heroku's remote Rails environment" do
