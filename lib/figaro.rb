@@ -1,5 +1,6 @@
 require "figaro/env"
 require "figaro/railtie"
+require "figaro/configure_heroku"
 
 module Figaro
   extend self
