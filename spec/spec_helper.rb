@@ -1,3 +1,4 @@
+require "rails"
 require "figaro"
 require "pathname"
 

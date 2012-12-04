@@ -1,10 +1,7 @@
-require "rails"
-require "yaml"
-
 module Figaro
   class Railtie < ::Rails::Railtie
     config.before_configuration do
-      ENV.update(Figaro.env)
+      Figaro.configure
     end
 
     rake_tasks do
