@@ -1,8 +1,14 @@
+require "yaml"
 require "figaro/env"
-require "figaro/railtie"
+require "figaro/railtie" if defined?(Rails)
 
 module Figaro
   extend self
+
+  def configure(configuration_file_path = nil)
+    @path = configuration_file_path unless configuration_file_path.nil?
+    ENV.update(Figaro.env)
+  end
 
   def vars(custom_environment = nil)
     env(custom_environment).map{|k,v| "#{k}=#{v}" }.sort.join(" ")
@@ -26,7 +32,7 @@ module Figaro
   end
 
   def environment
-    Rails.env
+    defined?(Rails) ? Rails.env : ENV['RACK_ENV']
   end
 
   private

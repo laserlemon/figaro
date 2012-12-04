@@ -10,7 +10,7 @@ Gem::Specification.new do |gem|
   gem.description = "Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file"
   gem.homepage    = "https://github.com/laserlemon/figaro"
 
-  gem.add_dependency "rails", "~> 3.0"
+  gem.add_development_dependency "rails", "~> 3.0"
 
   gem.add_development_dependency "appraisal", "~> 0.4"
   gem.add_development_dependency "aruba", "~> 0.4"

@@ -98,6 +98,18 @@ Additionally, if `RAILS_ENV` is configured on your Heroku server, Figaro will us
 
 No problem. Just add `config/application.yml` to your production app on the server.
 
+## Use with any rack application
+
+Particularly useful for a rack app that runs alongside a rails application.
+
+```ruby
+require 'figaro'
+
+Figaro.configure 'path/to/application.yml'
+```
+
+Note: Generators or rake tasks will not work without Rails
+
 ## This sucks. How can I make it better?
 
 1. Fork it.
