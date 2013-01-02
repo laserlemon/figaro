@@ -41,5 +41,14 @@ describe Figaro::ConfigureHeroku do
       subject.should_receive(:`).with("heroku config:add HELLO=developers")
       subject.execute
     end
+
+    it "strips the rails_env of any unecessary whitespace characters" do
+      Figaro.stub(:env => {"HELLO" => "world", "FOO" => "bar"})
+      subject.should_receive(:`).with("heroku config:get RAILS_ENV").and_return("some_env\n")
+      subject.should_receive(:`).with("heroku config:add FOO=bar HELLO=world")
+      subject.execute
+      Rails.env.to_s.should == "some_env"
+    end
+
   end
 end
