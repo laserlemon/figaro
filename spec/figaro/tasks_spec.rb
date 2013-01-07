@@ -5,8 +5,8 @@ describe Figaro::Tasks do
     it "configures Heroku" do
       Figaro.stub(:vars => "FOO=bar")
 
-      Open3.should_receive(:capture2).once.with("heroku config:get RAILS_ENV")
-        .and_return("development")
+      Open3.should_receive(:capture2).once.with("heroku config:get RAILS_ENV").
+        and_return("development")
       Open3.should_receive(:capture2).once.with("heroku config:add FOO=bar")
 
       Figaro::Tasks.heroku
@@ -15,18 +15,18 @@ describe Figaro::Tasks do
     it "configures a specific Heroku app" do
       Figaro.stub(:vars => "FOO=bar")
 
-      Open3.should_receive(:capture2).once
-        .with("heroku config:get RAILS_ENV --app my-app")
-        .and_return("development")
-      Open3.should_receive(:capture2).once
-        .with("heroku config:add FOO=bar --app my-app")
+      Open3.should_receive(:capture2).once.
+        with("heroku config:get RAILS_ENV --app my-app").
+        and_return("development")
+      Open3.should_receive(:capture2).once.
+        with("heroku config:add FOO=bar --app my-app")
 
       Figaro::Tasks.heroku("my-app")
     end
 
     it "respects the Heroku's remote Rails environment" do
-      Open3.stub(:capture2).with("heroku config:get RAILS_ENV")
-        .and_return("production")
+      Open3.stub(:capture2).with("heroku config:get RAILS_ENV").
+        and_return("production")
 
       Figaro.should_receive(:vars).once.with("production").and_return("FOO=bar")
       Open3.should_receive(:capture2).once.with("heroku config:add FOO=bar")
@@ -35,8 +35,8 @@ describe Figaro::Tasks do
     end
 
     it "defaults to the local Rails environment if not set remotely" do
-      Open3.stub(:capture2).with("heroku config:get RAILS_ENV")
-        .and_return("\n")
+      Open3.stub(:capture2).with("heroku config:get RAILS_ENV").
+        and_return("\n")
 
       Figaro.should_receive(:vars).once.with(nil).and_return("FOO=bar")
       Open3.should_receive(:capture2).once.with("heroku config:add FOO=bar")

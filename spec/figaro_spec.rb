@@ -9,10 +9,10 @@ describe Figaro do
     end
 
     it "allows access to a particular environment" do
-      Figaro.stub(:env).with("development")
-        .and_return(Figaro::Env.from("HELLO" => "developers"))
-      Figaro.stub(:env).with("production")
-        .and_return(Figaro::Env.from("HELLO" => "world"))
+      Figaro.stub(:env).with("development").
+        and_return(Figaro::Env.from("HELLO" => "developers"))
+      Figaro.stub(:env).with("production").
+        and_return(Figaro::Env.from("HELLO" => "world"))
 
       Figaro.vars("development").should == "HELLO=developers"
       Figaro.vars("production").should == "HELLO=world"
