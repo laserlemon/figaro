@@ -1,3 +1,4 @@
+require "shellwords"
 require "figaro/env"
 require "figaro/railtie"
 require "figaro/tasks"
@@ -6,7 +7,9 @@ module Figaro
   extend self
 
   def vars(custom_environment = nil)
-    env(custom_environment).map{|k,v| "#{k}=#{v}" }.sort.join(" ")
+    env(custom_environment).map { |key, value|
+      "#{key}=#{Shellwords.escape(value)}"
+    }.sort.join(" ")
   end
 
   def env(custom_environment = nil)

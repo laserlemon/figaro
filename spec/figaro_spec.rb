@@ -17,6 +17,12 @@ describe Figaro do
       Figaro.vars("development").should == "HELLO=developers"
       Figaro.vars("production").should == "HELLO=world"
     end
+
+    it "escapes special characters" do
+      Figaro.stub(:env => Figaro::Env.from("FOO" => "bar baz"))
+
+      Figaro.vars.should == 'FOO=bar\ baz'
+    end
   end
 
   describe ".env" do
