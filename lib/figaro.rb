@@ -1,5 +1,6 @@
 require "figaro/env"
 require "figaro/railtie"
+require "figaro/tasks"
 
 module Figaro
   extend self
