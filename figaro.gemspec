@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name    = "figaro"
-  gem.version = "0.5.2"
+  gem.version = "0.5.3"
 
   gem.authors     = ["Steve Richert"]
   gem.email       = ["steve.richert@gmail.com"]
@@ -19,6 +19,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency "rspec", "~> 2.0"
 
   gem.files         = `git ls-files`.split($\)
-  gem.test_files    = gem.files.grep(/^features\//)
+  gem.test_files    = gem.files.grep(/^(features|gemfiles|spec)/)
   gem.require_paths = ["lib"]
 end
