@@ -5,9 +5,9 @@ describe Figaro::Tasks do
     it "configures Heroku" do
       Figaro.stub(:vars => "FOO=bar")
 
-      Open3.should_receive(:capture2).once.with("heroku config:get RAILS_ENV").
-        and_return("development")
-      Open3.should_receive(:capture2).once.with("heroku config:add FOO=bar")
+      Figaro::Tasks.should_receive(:`).once.with("heroku config:get RAILS_ENV").
+        and_return("development\n")
+      Figaro::Tasks.should_receive(:`).once.with("heroku config:add FOO=bar")
 
       Figaro::Tasks.heroku
     end
@@ -15,31 +15,31 @@ describe Figaro::Tasks do
     it "configures a specific Heroku app" do
       Figaro.stub(:vars => "FOO=bar")
 
-      Open3.should_receive(:capture2).once.
+      Figaro::Tasks.should_receive(:`).once.
         with("heroku config:get RAILS_ENV --app my-app").
-        and_return("development")
-      Open3.should_receive(:capture2).once.
+        and_return("development\n")
+      Figaro::Tasks.should_receive(:`).once.
         with("heroku config:add FOO=bar --app my-app")
 
       Figaro::Tasks.heroku("my-app")
     end
 
     it "respects the Heroku's remote Rails environment" do
-      Open3.stub(:capture2).with("heroku config:get RAILS_ENV").
-        and_return("production")
+      Figaro::Tasks.stub(:`).with("heroku config:get RAILS_ENV").
+        and_return("production\n")
 
       Figaro.should_receive(:vars).once.with("production").and_return("FOO=bar")
-      Open3.should_receive(:capture2).once.with("heroku config:add FOO=bar")
+      Figaro::Tasks.should_receive(:`).once.with("heroku config:add FOO=bar")
 
       Figaro::Tasks.heroku
     end
 
     it "defaults to the local Rails environment if not set remotely" do
-      Open3.stub(:capture2).with("heroku config:get RAILS_ENV").
+      Figaro::Tasks.stub(:`).with("heroku config:get RAILS_ENV").
         and_return("\n")
 
       Figaro.should_receive(:vars).once.with(nil).and_return("FOO=bar")
-      Open3.should_receive(:capture2).once.with("heroku config:add FOO=bar")
+      Figaro::Tasks.should_receive(:`).once.with("heroku config:add FOO=bar")
 
       Figaro::Tasks.heroku
     end
