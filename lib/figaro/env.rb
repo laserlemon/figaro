@@ -5,7 +5,7 @@ module Figaro
     end
 
     def method_missing(method, *)
-      ENV.fetch(method.to_s.upcase){ super }
+      ENV.fetch(method.to_s.upcase) { super }
     end
 
     def respond_to?(method)

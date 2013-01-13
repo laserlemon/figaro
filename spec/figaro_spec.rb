@@ -27,25 +27,25 @@ describe Figaro do
 
   describe ".env" do
     it "is a Figaro env instance" do
-      Figaro.stub(:raw => {"FOO" => "bar"})
+      Figaro.stub(:raw => { "FOO" => "bar" })
 
       Figaro.env.should be_a(Figaro::Env)
     end
 
     it "allows access to a particular environment" do
       Figaro.stub(:raw).and_return(
-        "development" => {"HELLO" => "developers"},
-        "production" => {"HELLO" => "world"}
+        "development" => { "HELLO" => "developers" },
+        "production" => { "HELLO" => "world" }
       )
 
-      Figaro.env(:development).should == {"HELLO" => "developers"}
-      Figaro.env(:production).should == {"HELLO" => "world"}
+      Figaro.env(:development).should == { "HELLO" => "developers" }
+      Figaro.env(:production).should == { "HELLO" => "world" }
     end
 
     it "stringifies keys and values" do
       Figaro.stub(:raw).and_return(:LUFTBALLOONS => 99)
 
-      Figaro.env.should == {"LUFTBALLOONS" => "99"}
+      Figaro.env.should == { "LUFTBALLOONS" => "99" }
     end
   end
 end

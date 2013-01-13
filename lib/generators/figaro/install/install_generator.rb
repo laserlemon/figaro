@@ -4,12 +4,12 @@ module Figaro
       source_root File.expand_path("../templates", __FILE__)
 
       def create_configuration
-        copy_file "application.yml", "config/application.yml"
+        copy_file("application.yml", "config/application.yml")
       end
 
       def ignore_configuration
         if File.exists?(".gitignore")
-          append_to_file ".gitignore" do
+          append_to_file(".gitignore") do
             <<-EOF.strip_heredoc
 
             # Ignore application configuration
