@@ -1,5 +1,3 @@
-require "open3"
-
 module Figaro
   module Tasks
     def self.heroku(app = nil)
