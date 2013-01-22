@@ -18,7 +18,7 @@ module Figaro
   end
 
   def raw
-    @raw ||= yaml && YAML.load(yaml) || {}
+    @raw ||= yaml && YAML.load( ERB.new(yaml).result ) || {}
   end
 
   def yaml
