@@ -40,6 +40,6 @@ module Figaro
   end
 
   def stringify(hash)
-    hash.inject({}) { |h, (k, v)| h[k.to_s] = v.to_s; h }
+    hash.inject({}) { |h, (k, v)| h[k.to_s] = v.to_s if v ; h }
   end
 end

@@ -10,7 +10,11 @@ Feature: Rails
       end
 
       task :nena => :environment do
-        puts [ENV["LUFTBALLOONS"], "Luftballoons"].compact.join(" ")
+        if ENV["LUFTBALLOONS"]
+          puts [ENV["LUFTBALLOONS"], "Luftballoons"].compact.join(" ")
+        else
+          puts "There aren't any ballons today."
+        end
       end
 
       task :greet => :environment do
@@ -86,6 +90,14 @@ Feature: Rails
       """
     When I run "rake nena"
     Then the output should be "99 Luftballoons"
+
+  Scenario: Has application.yml with nil values
+    Given I create "config/application.yml" with:
+      """
+      LUFTBALLOONS: ~
+      """
+    When I run "rake nena"
+    Then the output should be "There aren't any ballons today."
 
   Scenario: Generator creates and ignores application.yml file
     When I run "rails generate figaro:install"
