@@ -47,5 +47,12 @@ describe Figaro do
 
       Figaro.env.should == { "LUFTBALLOONS" => "99" }
     end
+
+    it "leaves nil values undefined" do
+      Figaro.stub(:raw).and_return(:LUFTBALLOONS => "ballons", :NIL_VALUE => nil)
+
+      Figaro.env.should == { "LUFTBALLOONS" => "ballons" }
+    end
+
   end
 end
