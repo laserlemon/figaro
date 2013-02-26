@@ -4,7 +4,7 @@ Simple Rails app configuration
 
 ## What is this for?
 
-Figaro is for configuring Rails 3 apps, especially open source Rails apps.
+Figaro is for configuring Rails (3 and 4) apps, especially open source Rails apps.
 
 Open sourcing a Rails app can be a little tricky when it comes to sensitive configuration information like [Pusher](http://pusher.com/) or [Stripe](https://stripe.com/) credentials. You don't want to check private credentials into the repo but what other choice is there?
 
