@@ -8,6 +8,7 @@ rvm:
   - 1.8.7
   - 1.9.2
   - 1.9.3
+  - 2.0.0
 before_script:
   - unset RAILS_ENV
   - unset RACK_ENV
