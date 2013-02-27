@@ -12,12 +12,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "rails", ">= 3", "< 5"
 
-  gem.add_development_dependency "aruba", "~> 0.5.1"
-  gem.add_development_dependency "cucumber", "~> 1.2.1"
-  gem.add_development_dependency "rake", ">= 0.8.7"
-  gem.add_development_dependency "rspec", "~> 2.12.0"
-
   gem.files         = `git ls-files`.split($\)
-  gem.test_files    = gem.files.grep(/^(features|gemfiles|spec)/)
+  gem.test_files    = gem.files.grep(/^(features|spec)/)
   gem.require_paths = ["lib"]
 end
