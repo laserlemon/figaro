@@ -9,10 +9,6 @@ Feature: Rails
         puts ["Hello", ENV["HELLO"]].compact.join(", ") << "!"
       end
 
-      task :nena => :environment do
-        puts [ENV["LUFTBALLOONS"], "Luftballoons"].compact.join(" ")
-      end
-
       task :greet => :environment do
         puts ([Figaro.env.greeting] * 3).join(", ") << "!"
       end
@@ -22,15 +18,7 @@ Feature: Rails
     When I run "rake hello"
     Then the output should be "Hello!"
 
-  Scenario: Has application.yml without requested key
-    Given I create "config/application.yml" with:
-      """
-      GOODBYE: Ruby Tuesday
-      """
-    When I run "rake hello"
-    Then the output should be "Hello!"
-
-  Scenario: Has blank application.yml
+ Scenario: Has blank application.yml
     Given I create "config/application.yml" with:
       """
       """
@@ -44,24 +32,6 @@ Feature: Rails
       """
     When I run "rake hello"
     Then the output should be "Hello!"
-
-  Scenario: Has application.yml with requested key
-    Given I create "config/application.yml" with:
-      """
-      HELLO: world
-      """
-    When I run "rake hello"
-    Then the output should be "Hello, world!"
-
-  Scenario: Has application.yml with RAILS_ENV defaulting to "development"
-    Given I create "config/application.yml" with:
-      """
-      HELLO: world
-      development:
-        HELLO: developers
-      """
-    When I run "rake hello"
-    Then the output should be "Hello, developers!"
 
   Scenario: Has application.yml with RAILS_ENV set
     Given I create "config/application.yml" with:
@@ -78,14 +48,6 @@ Feature: Rails
     Then the output should be "Hello, developers!"
     When I run "rake hello RAILS_ENV=production"
     Then the output should be "Hello, users!"
-
-  Scenario: Has application.yml with non-string values
-    Given I create "config/application.yml" with:
-      """
-      LUFTBALLOONS: 99
-      """
-    When I run "rake nena"
-    Then the output should be "99 Luftballoons"
 
   Scenario: Generator creates and ignores application.yml file
     When I run "rails generate figaro:install"
