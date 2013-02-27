@@ -83,16 +83,18 @@ heroku config:add STRIPE_PUBLIC_KEY=pk_HHtUKJwlN7USCT6nE5jiXgoduiNl3
 But Figaro provides a rake task to do just that! Just run:
 
 ```bash
-rake figaro:heroku
+rake figaro:heroku RAILS_ENV=production
 ```
 
 Optionally, you can pass in the name of the Heroku app:
 
 ```bash
-rake figaro:heroku[my-awesome-app]
+rake figaro:heroku [my-awesome-app] RAILS_ENV=production
 ```
 
 Additionally, if `RAILS_ENV` is configured on your Heroku server, Figaro will use that environment automatically in determining your proper configuration.
+
+This must be done, e.g., by `heroku config:set RAILS_ENV=production`.
 
 ## What if I'm not using Heroku?
 
