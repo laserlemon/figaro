@@ -94,6 +94,8 @@ rake figaro:heroku [my-awesome-app] RAILS_ENV=production
 
 Additionally, if `RAILS_ENV` is configured on your Heroku server, Figaro will use that environment automatically in determining your proper configuration.
 
+This must be done, e.g., by `heroku config:set RAILS_ENV=production`.
+
 ## What if I'm not using Heroku?
 
 No problem. Just add `config/application.yml` to your production app on the server.
