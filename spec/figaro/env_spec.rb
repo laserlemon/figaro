@@ -10,11 +10,11 @@ describe Figaro::Env do
   end
 
   it "makes ENV values accessible as methods" do
-    subject.HELLO.should == "world"
+    expect(subject.HELLO).to eq("world")
   end
 
   it "makes lowercase ENV values accessible as methods" do
-    subject.hello.should == "world"
+    expect(subject.hello).to eq("world")
   end
 
   it "raises an error if no ENV key matches" do
