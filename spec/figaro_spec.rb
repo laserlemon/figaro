@@ -53,5 +53,11 @@ describe Figaro do
 
       Figaro.env.should == { "FOO" => nil }
     end
+
+    it "casts booleans to strings" do
+      Figaro.stub(:raw).and_return("FOO" => true, "BAR" => false)
+
+      Figaro.env.should == { "FOO" => "true", "BAR" => "false" }
+    end
   end
 end
