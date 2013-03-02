@@ -1,5 +1,6 @@
 require "figaro"
 require "pathname"
+require "bundler"
 
 ROOT = Pathname.new(File.expand_path("../..", __FILE__))
 
