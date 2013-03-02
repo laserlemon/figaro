@@ -5,8 +5,8 @@ describe Figaro::Tasks do
     it "configures Heroku" do
       Figaro.stub(:vars => "FOO=bar")
 
-      Figaro::Tasks.should_receive(:`).once.with("heroku config:get RAILS_ENV").
-        and_return("development\n")
+      Figaro::Tasks.should_receive(:`).once.with('heroku run "echo \$RAILS_ENV"').
+        and_return("\ndevelopment\n")
       Figaro::Tasks.should_receive(:`).once.with("heroku config:add FOO=bar")
 
       Figaro::Tasks.heroku
@@ -16,8 +16,8 @@ describe Figaro::Tasks do
       Figaro.stub(:vars => "FOO=bar")
 
       Figaro::Tasks.should_receive(:`).once.
-        with("heroku config:get RAILS_ENV --app my-app").
-        and_return("development\n")
+        with('heroku run "echo \$RAILS_ENV"').
+        and_return("\ndevelopment\n")
       Figaro::Tasks.should_receive(:`).once.
         with("heroku config:add FOO=bar --app my-app")
 
@@ -25,8 +25,8 @@ describe Figaro::Tasks do
     end
 
     it "respects the Heroku's remote Rails environment" do
-      Figaro::Tasks.stub(:`).with("heroku config:get RAILS_ENV").
-        and_return("production\n")
+      Figaro::Tasks.stub(:`).with('heroku run "echo \$RAILS_ENV"').
+        and_return("\nproduction\n")
 
       Figaro.should_receive(:vars).once.with("production").and_return("FOO=bar")
       Figaro::Tasks.should_receive(:`).once.with("heroku config:add FOO=bar")
@@ -35,8 +35,8 @@ describe Figaro::Tasks do
     end
 
     it "defaults to the local Rails environment if not set remotely" do
-      Figaro::Tasks.stub(:`).with("heroku config:get RAILS_ENV").
-        and_return("\n")
+      Figaro::Tasks.stub(:`).with('heroku run "echo \$RAILS_ENV"').
+        and_return("\n\n")
 
       Figaro.should_receive(:vars).once.with(nil).and_return("FOO=bar")
       Figaro::Tasks.should_receive(:`).once.with("heroku config:add FOO=bar")
