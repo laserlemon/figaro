@@ -1,12 +1,22 @@
 module Figaro
   module Tasks
-    def self.heroku(app = nil)
-      with_app = app ? " --app #{app}" : ""
+    class Heroku < Struct.new(:app)
+      def invoke
+        heroku("config:set #{vars}")
+      end
 
-      rails_env = `heroku config:get RAILS_ENV#{with_app}`.chomp
-      vars = Figaro.vars(rails_env.presence)
+      def vars
+        Figaro.vars(environment)
+      end
 
-      `heroku config:add #{vars}#{with_app}`
+      def environment
+        heroku("run 'echo $RAILS_ENV'").chomp[/(\w+)\z/]
+      end
+
+      def heroku(command)
+        with_app = app ? " --app #{app}" : ""
+        `heroku #{command}#{with_app}`
+      end
     end
   end
 end
