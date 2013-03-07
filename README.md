@@ -1,4 +1,9 @@
-# Figaro [![Build](https://travis-ci.org/laserlemon/figaro.png?branch=master)](https://travis-ci.org/laserlemon/figaro) [![Code Climate](https://codeclimate.com/github/laserlemon/figaro.png)](https://codeclimate.com/github/laserlemon/figaro)
+# Figaro
+[![Gem Version](https://badge.fury.io/rb/figaro.png)](http://badge.fury.io/rb/figaro)
+[![Build Status](https://travis-ci.org/laserlemon/figaro.png?branch=master)](https://travis-ci.org/laserlemon/figaro)
+[![Code Climate](https://codeclimate.com/github/laserlemon/figaro.png)](https://codeclimate.com/github/laserlemon/figaro)
+[![Coverage Status](https://coveralls.io/repos/laserlemon/figaro/badge.png?branch=master)](https://coveralls.io/r/laserlemon/figaro)
+[![Dependency Status](https://gemnasium.com/laserlemon/figaro.png)](https://gemnasium.com/laserlemon/figaro)
 
 Simple Rails app configuration
 
