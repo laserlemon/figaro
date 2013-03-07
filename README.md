@@ -17,8 +17,6 @@ Figaro provides a clean and simple way to configure your app and keep the privat
 
 ## How does it work?
 
-It works really well.
-
 There are a few similar solutions out there, and a lot of homegrown attempts. Most namespace your configuration under a `Config` (or similar) namespace. That's fine, but there's already a place to describe the application environment… `ENV`!
 
 `ENV` is a collection of simple string key/value pairs and it works just great for application configuration.
