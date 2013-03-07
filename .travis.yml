@@ -21,3 +21,7 @@ matrix:
       rvm: 1.8.7
     - gemfile: gemfiles/rails40.gemfile
       rvm: 1.9.2
+  include:
+    - gemfile: Gemfile
+      rvm: 1.9.3
+      env: COVERAGE=true
