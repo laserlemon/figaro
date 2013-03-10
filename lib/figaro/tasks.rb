@@ -1,3 +1,5 @@
+require "bundler"
+
 module Figaro
   module Tasks
     class Heroku < Struct.new(:app)
@@ -16,6 +18,10 @@ module Figaro
       def heroku(command)
         with_app = app ? " --app #{app}" : ""
         `heroku #{command}#{with_app}`
+      end
+
+      def `(command)
+        Bundler.with_clean_env { super }
       end
     end
   end

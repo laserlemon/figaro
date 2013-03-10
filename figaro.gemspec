@@ -11,6 +11,7 @@ Gem::Specification.new do |gem|
   gem.homepage    = "https://github.com/laserlemon/figaro"
   gem.license     = "MIT"
 
+  gem.add_dependency "bundler", "~> 1.0"
   gem.add_dependency "rails", ">= 3", "< 5"
 
   gem.files         = `git ls-files`.split($\)
