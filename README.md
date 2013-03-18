@@ -25,19 +25,19 @@ As an added bonus, this is exactly how apps on [Heroku](http://www.heroku.com/) 
 
 ## Give me an example.
 
-Okay. Add Figaro to your bundle:
+Okay. Add Figaro to your Gemfile and run the `bundle` command to install it:
 
 ```ruby
 gem "figaro"
 ```
 
-Next up, install Figaro:
+Next up, use the generator provided by Figaro:
 
 ```bash
 rails generate figaro:install
 ```
 
-This generates a commented `config/application.yml` file and ignores it in your `.gitignore`. Add your own configuration to this file and you're done!
+This creates a commented `config/application.yml` file and ignores it in your `.gitignore`. Add your own configuration to this file and you're done!
 
 Your configuration will be available as key/value pairs in `ENV`. For example, here's `config/initializers/pusher.rb`:
 
