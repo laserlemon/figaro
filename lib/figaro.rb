@@ -26,11 +26,27 @@ module Figaro
   end
 
   def path
-    @path ||= Rails.root.join("config", "application.yml")
+    @path ||= root.join("config", "application.yml")
   end
 
   def environment
-    Rails.env
+    if defined?(Rails)
+      Rails.env
+    else
+      ENV["RAILS_ENV"] || ENV["RACK_ENV"]
+    end
+  end
+  
+  def root
+    if defined?(Rails)
+      Rails.root
+    else
+      Dir.pwd
+    end
+  end
+
+  def load!
+     ENV.update(env)     
   end
 
   private
