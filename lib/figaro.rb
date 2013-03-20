@@ -2,7 +2,6 @@ require "shellwords"
 require "figaro/env"
 require "figaro/railtie"
 require "figaro/tasks"
-
 module Figaro
   extend self
 
@@ -30,23 +29,15 @@ module Figaro
   end
 
   def environment
-    if defined?(Rails)
-      Rails.env
-    else
-      ENV["RAILS_ENV"] || ENV["RACK_ENV"]
-    end
+     ENV["RAILS_ENV"] || ENV["RACK_ENV"]
   end
-  
+
   def root
-    if defined?(Rails)
-      Rails.root
-    else
-      Dir.pwd
-    end
+    Dir.pwd
   end
 
   def load!
-     ENV.update(env)     
+     ENV.update(env)
   end
 
   private
