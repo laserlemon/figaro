@@ -1,8 +1,8 @@
 # encoding: utf-8
 
 Gem::Specification.new do |gem|
-  gem.name    = "figaro"
-  gem.version = "0.6.3"
+  gem.name    = "figaro-oma"
+  gem.version = "0.6.4"
 
   gem.authors     = ["Steve Richert"]
   gem.email       = ["steve.richert@gmail.com"]
@@ -12,8 +12,6 @@ Gem::Specification.new do |gem|
   gem.license     = "MIT"
 
   gem.add_dependency "bundler", "~> 1.0"
-  gem.add_dependency "rails", ">= 3", "< 5"
-
   gem.files         = `git ls-files`.split($\)
   gem.test_files    = gem.files.grep(/^(features|spec)/)
   gem.require_paths = ["lib"]
