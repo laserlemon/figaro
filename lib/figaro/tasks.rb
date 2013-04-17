@@ -7,6 +7,10 @@ module Figaro
         heroku("config:set #{vars}")
       end
 
+      def pull
+        heroku("config", :pull)
+      end
+
       def vars
         Figaro.vars(environment)
       end
@@ -15,9 +19,25 @@ module Figaro
         heroku("run 'echo $RAILS_ENV'").chomp[/(\w+)\z/]
       end
 
-      def heroku(command)
+      def redirect(arg)
+        arg.eql?(:pull) ? append : ""
+      end
+
+      def append
+        "| #{pattern} >> #{file}"
+      end
+
+      def pattern
+        "grep -v -E 'Config Vars|postgres://'"
+      end
+
+      def file
+        Rails.root.join("config", "application.yml")
+      end
+
+      def heroku(command, option=nil)
         with_app = app ? " --app #{app}" : ""
-        `heroku #{command}#{with_app}`
+        `heroku #{command}#{with_app}#{redirect(option)}`
       end
 
       def `(command)
