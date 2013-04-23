@@ -14,19 +14,25 @@ module Figaro
 
   def env(custom_environment = nil)
     environment = (custom_environment || self.environment).to_s
-    Figaro::Env.from(stringify(flatten(raw).merge(raw.fetch(environment, {}))))
+    hash = flatten(raw).merge(raw.fetch(environment, {}))
+    hash_local = flatten(raw(true)).merge(raw(true).fetch(environment, {}))
+    Figaro::Env.from(stringify(hash.merge(hash_local)))
   end
 
-  def raw
-    @raw ||= yaml && YAML.load(yaml) || {}
+  def raw(local = false)
+    @raw ||= {}
+    @raw[local] ||= yaml(local) && YAML.load(yaml(local)) || {}
   end
 
-  def yaml
-    @yaml ||= File.exist?(path) ? File.read(path) : nil
+  def yaml(local = false)
+    @yaml ||= {}
+    @yaml[local] ||= File.exist?(path(local)) ? File.read(path(local)) : nil
   end
 
-  def path
-    @path ||= Rails.root.join("config", "application.yml")
+  def path(local = false)
+    @path ||= {}
+    file_name = local ? "application.local.yml" : "application.yml"
+    @path[local] ||= Rails.root.join("config", file_name)
   end
 
   def environment
