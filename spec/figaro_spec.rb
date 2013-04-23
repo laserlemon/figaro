@@ -59,5 +59,12 @@ describe Figaro do
 
       expect(Figaro.env).to eq("FOO" => "true", "BAR" => "false")
     end
+
+    it "merged" do
+      Figaro.stub(:raw).with().and_return({ "FOO" => true, "BAR" => false })
+      Figaro.stub(:raw).with(true).and_return({ "BAR" => true})
+
+      expect(Figaro.env).to eq("FOO" => "true", "BAR" => "true")
+    end
   end
 end
