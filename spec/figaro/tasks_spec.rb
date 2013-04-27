@@ -4,9 +4,8 @@ module Figaro::Tasks
   describe Heroku do
     subject(:heroku) { Heroku.new }
 
-    let(:append_output) {
-      "| grep -v -E 'Config Vars|postgres://' >> /home/app/config/application.yml"
-    }
+    let(:file) { "../../LICENSE" }
+    let(:stringio) { StringIO.new("line of text") }
 
     describe "#invoke" do
       it "configures Heroku" do
@@ -55,53 +54,79 @@ OUT
     end
 
     describe "#pull" do
-      it "retrieves vars from Heroku" do
-        heroku.should_receive(:heroku).once.with("config", :pull)
+      before { heroku.stub(:config => file) }
+      it "writes Heroku's output to a file" do
+        heroku.should_receive(:pulled_vars).once
+
+        heroku.pull
+      end
+
+      it "opens a file" do
+        heroku.should_receive(:config).once
 
         heroku.pull
       end
     end
 
-    describe "#append" do
-      it "adds Heroku's vars to application.yml" do
-        heroku.stub(:file => '/home/app/config/application.yml')
+    describe "#pulled_vars" do
+      before { heroku.stub(:heroku => "key: value") }
+      it "stores Heroku's output in a StringIO object" do
+        heroku.should_receive(:heroku).once.with("config")
 
-        expect(heroku.append).to eq append_output
+        heroku.pulled_vars
+      end
+
+      it "parses Heroku's output" do
+        heroku.should_receive(:parse).with(kind_of(StringIO))
+
+        heroku.pulled_vars
       end
     end
 
-    describe "#file" do
-      it "returns path of application.yml" do
+    describe "#parse" do
+      it "analyzes each line of Heroku's output" do
+        heroku.should_receive(:filter).with("line of text", '')
+
+        heroku.parse(stringio)
+      end
+
+      it "returns a string" do
+        expect(heroku.parse(stringio)).to be_a String
+      end
+    end
+
+    describe "#filter" do
+      let(:str) { "" }
+      context "given lines containing a database URL" do
+        it "does not collect it" do
+          heroku.filter("postgres://etcetc", str)
+
+          str.should eq ''
+        end
+      end
+
+      context "given lines containing Heroku's heading" do
+        it "does not collect it" do
+          heroku.filter("tranquil-ridge-8875 Config Vars", str)
+
+          str.should eq ''
+        end
+      end
+
+      context "given lines containing key/value pairs" do
+        it "does collect it" do
+          heroku.filter("API_KEY: abc457na3g9", str)
+
+          str.should eq "API_KEY: abc457na3g9"
+        end
+      end
+    end
+
+    describe "#config" do
+      it "returns path to a Rails project's application.yml" do
         Rails.stub(:root => Pathname.new("/home/app"))
 
-        expect(
-          heroku.file.to_s
-        ).to eq "/home/app/config/application.yml"
-      end
-    end
-
-    describe "#redirect" do
-        
-      context "given :pull as an argument" do
-        it "returns command for redirecting output" do
-          heroku.stub(:append => append_output)
-
-          expect( heroku.redirect(:pull)).to eq append_output
-        end
-      end
-
-      context "given a nil argument" do
-        it "returns an empty string" do
-          expect(heroku.redirect(nil)).to eq ""
-        end
-      end
-    end
-
-    describe "#pattern" do
-      it "greps Heroku's output" do
-        expect(
-          heroku.pattern
-        ).to eq "grep -v -E 'Config Vars|postgres://'"
+        expect(heroku.config.to_s).to eq '/home/app/config/application.yml'
       end
     end
   end
