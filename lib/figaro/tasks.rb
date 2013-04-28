@@ -9,7 +9,7 @@ module Figaro
       end
 
       def pull
-        open(config, "a") { |f| f.puts pulled_vars }
+        File.open(config, "a") { |f| f.puts pulled_vars }
       end
 
       def pulled_vars

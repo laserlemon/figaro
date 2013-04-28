@@ -54,7 +54,11 @@ OUT
     end
 
     describe "#pull" do
-      before { heroku.stub(:config => file) }
+      before {
+        heroku.stub(:config => file)
+        heroku.stub(:heroku => "key: value")
+      }
+
       it "writes Heroku's output to a file" do
         heroku.should_receive(:pulled_vars).once
 
@@ -62,7 +66,7 @@ OUT
       end
 
       it "opens a file" do
-        heroku.should_receive(:config).once
+        File.should_receive(:open).once.with(file, "a")
 
         heroku.pull
       end
