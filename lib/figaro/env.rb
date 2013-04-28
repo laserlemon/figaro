@@ -8,8 +8,8 @@ module Figaro
       ENV.fetch(method.to_s.upcase) { super }
     end
 
-    def respond_to?(method)
-      ENV.key?(method.to_s.upcase)
+    def respond_to_missing?(*args)
+      ENV.key?(args.first.to_s.upcase)
     end
   end
 end
