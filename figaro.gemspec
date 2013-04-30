@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name    = "figaro-oma"
-  gem.version = "0.6.6"
+  gem.version = "0.6.7777777"
 
   gem.authors     = ["Steve Richert"]
   gem.email       = ["steve.richert@gmail.com"]
@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
 
-  gem.add_dependency("bundler")
+  gem.add_dependency("bundler","~> 1.3.0")
 
   gem.add_development_dependency("rspec")
 
