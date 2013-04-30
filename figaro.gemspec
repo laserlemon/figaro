@@ -11,8 +11,13 @@ Gem::Specification.new do |gem|
   gem.homepage    = "https://github.com/laserlemon/figaro"
   gem.license     = "MIT"
 
-  gem.add_dependency "bundler", "~> 1.0"
   gem.files         = `git ls-files`.split($\)
   gem.test_files    = gem.files.grep(/^(features|spec)/)
   gem.require_paths = ["lib"]
+
+
+  gem.add_dependency("bundler")
+
+  gem.add_development_dependency("rspec")
+
 end
