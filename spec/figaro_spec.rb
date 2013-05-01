@@ -59,5 +59,11 @@ describe Figaro do
 
       expect(Figaro.env).to eq("FOO" => "true", "BAR" => "false")
     end
+
+    it "it transforms lower case keys to upper case" do
+      Figaro.stub(:raw => { "foo" => "bar" })
+      expect(Figaro.env).to eq("FOO" => "bar")
+    end
+
   end
 end

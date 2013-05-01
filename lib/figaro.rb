@@ -14,7 +14,7 @@ module Figaro
 
   def env(custom_environment = nil)
     environment = (custom_environment || self.environment).to_s
-    Figaro::Env.from(stringify(flatten(raw).merge(raw.fetch(environment, {}))))
+    Figaro::Env.from(upcase(stringify(flatten(raw).merge(raw.fetch(environment, {})))))
   end
 
   def raw
@@ -42,4 +42,9 @@ module Figaro
   def stringify(hash)
     hash.inject({}) { |h, (k, v)| h[k.to_s] = v.nil? ? nil : v.to_s; h }
   end
+
+  def upcase(hash)
+    hash.inject({}) { |h, (k, v)| h[k.upcase] = v; h }
+  end
+
 end
