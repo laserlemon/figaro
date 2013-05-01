@@ -5,11 +5,12 @@ module Figaro
     end
 
     def method_missing(method, *)
-      ENV.fetch(method.to_s.upcase) { super }
+      pair = ENV.detect { |k, _| k.upcase == method.to_s.upcase }
+      pair ? pair[1] : super
     end
 
-    def respond_to?(method)
-      ENV.key?(method.to_s.upcase)
+    def respond_to?(method, *)
+      ENV.keys.any? { |k| k.upcase == method.to_s.upcase } || super
     end
   end
 end
