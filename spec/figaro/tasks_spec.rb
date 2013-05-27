@@ -1,10 +1,11 @@
 require "spec_helper"
+require "fileutils"
 
 module Figaro::Tasks
   describe Heroku do
     subject(:heroku) { Heroku.new }
 
-    let(:file) { "../../LICENSE" }
+    let(:file) { "./test" }
     let(:stringio) { StringIO.new("line of text") }
 
     describe "#invoke" do
@@ -58,6 +59,10 @@ OUT
         heroku.stub(:config => file)
         heroku.stub(:heroku => "key: value")
       }
+
+      after :all do
+        FileUtils.rm file
+      end
 
       it "writes Heroku's output to a file" do
         heroku.should_receive(:pulled_vars).once
