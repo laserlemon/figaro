@@ -79,3 +79,11 @@ Feature: Rails
       """
     When I run "rake greet GREETING=Ho"
     Then the output should be "Ho, Ho, Ho!"
+
+  Scenario: Overriding values in application.yml with an empty string
+    Given I create "config/application.yml" with:
+      """
+      GREETING: Figaro
+      """
+    When I run "rake greet GREETING="
+    Then the output should be ", , !"
