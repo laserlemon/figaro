@@ -6,7 +6,7 @@ Feature: Rails
     And I create "lib/tasks/hello.rake" with:
       """
       task :hello => :environment do
-        puts ["Hello", ENV["HELLO"]].compact.join(", ") << "!"
+        puts ["Hello", ENV["HELLO"]].reject(&:blank?).join(", ") << "!"
       end
 
       task :greet => :environment do
@@ -79,6 +79,14 @@ Feature: Rails
       """
     When I run "rake greet GREETING=Ho"
     Then the output should be "Ho, Ho, Ho!"
+
+  Scenario: Nullifying values in application.yml
+    Given I create "config/application.yml" with:
+      """
+      HELLO: world
+      """
+    When I run "rake hello HELLO="
+    Then the output should be "Hello!"
 
   Scenario: Using ERB in application.yml
     Given I create "config/application.yml" with:
