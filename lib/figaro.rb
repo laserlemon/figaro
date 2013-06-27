@@ -22,7 +22,7 @@ module Figaro
   end
 
   def yaml
-    @yaml ||= File.exist?(path) ? File.read(path) : nil
+    @yaml ||= File.exist?(path) ? ERB.new(File.read(path)).result : nil
   end
 
   def path

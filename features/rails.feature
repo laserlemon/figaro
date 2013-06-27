@@ -79,3 +79,11 @@ Feature: Rails
       """
     When I run "rake greet GREETING=Ho"
     Then the output should be "Ho, Ho, Ho!"
+
+  Scenario: Using ERB in application.yml
+    Given I create "config/application.yml" with:
+      """
+      GREETING: <%= "Yo" %>
+      """
+    When I run "rake greet"
+    Then the output should be "Yo, Yo, Yo!"
