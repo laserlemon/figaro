@@ -4,7 +4,9 @@ require "yaml"
 module Figaro
   class Railtie < ::Rails::Railtie
     config.before_configuration do
-      ENV.update(Figaro.env)
+      Figaro.env.each do |key, value|
+        ENV[key] = value unless ENV.key?(key)
+      end
     end
 
     rake_tasks do
