@@ -112,3 +112,23 @@ No problem. Just add `config/application.yml` to your production app on the serv
 Yes.
 
 [![Figaro](http://images2.wikia.nocookie.net/__cb20100628192722/disney/images/5/53/Pinocchio-pinocchio-4947890-960-720.jpg "Figaro's mascot: Figaro")](http://en.wikipedia.org/wiki/Figaro_(Disney\))
+
+## Thank you!
+
+Figaro is made possible by the continued contributions and insights from kind-hearted developers everywhere. Just to name a few:
+
+* [@ersatzryan](https://github.com/ersatzryan)
+* [@robertjwhitney](https://github.com/robertjwhitney)
+* [@maxwell](https://github.com/maxwell)
+* [@GuilhermeSimoes](https://github.com/GuilhermeSimoes)
+* [@mikeycgto](https://github.com/mikeycgto)
+* [@subosito](https://github.com/subosito)
+* [@srushti](https://github.com/srushti)
+* [@ptyagi16](https://github.com/ptyagi16)
+* [@jspradlin](https://github.com/jspradlin)
+* [@hadifarnoud](https://github.com/hadifarnoud)
+* [@eloyesp](https://github.com/eloyesp)
+* [@etuya-ix](https://github.com/etuya-ix)
+* [@MarkDBlackwell](https://github.com/MarkDBlackwell)
+* [@HALapeno](https://github.com/HALapeno)
+* [@sethvargo](https://github.com/sethvargo)
