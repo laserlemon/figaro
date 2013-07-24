@@ -131,4 +131,5 @@ Figaro is made possible by the continued contributions and insights from kind-he
 * [@etuya-ix](https://github.com/etuya-ix)
 * [@MarkDBlackwell](https://github.com/MarkDBlackwell)
 * [@HALapeno](https://github.com/HALapeno)
+* [@severin](https://github.com/severin)
 * [@sethvargo](https://github.com/sethvargo)
