@@ -54,11 +54,11 @@ describe Figaro::Env do
 
     context "when ENV doesn't have the key" do
       it "is true if Hash responds to the method" do
-        expect(env.respond_to?(:baz)).to be_false
+        expect(env.respond_to?(:[])).to be_true
       end
 
       it "is false if Hash doesn't respond to the method" do
-        expect(env.respond_to?(:[])).to be_true
+        expect(env.respond_to?(:baz)).to be_false
       end
     end
   end
