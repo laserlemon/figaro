@@ -17,9 +17,23 @@ module Figaro::Tasks
     describe "#vars" do
       it "returns Figaro's vars for Heroku's environment" do
         heroku.stub(:environment => "staging")
-        Figaro.stub(:vars).with("staging").and_return("FOO=bar")
+        Figaro.stub(:env).with("staging").and_return({"FOO" => "bar"})
 
         expect(heroku.vars).to eq("FOO=bar")
+      end
+            
+      it "escapes Figaro's vars containing spaces with single quotes for Heroku's environment" do
+        heroku.stub(:environment => "staging")
+        Figaro.stub(:env).with("staging").and_return({"FOO" => "bar bar"})
+
+        expect(heroku.vars).to eq("FOO='bar bar'")
+      end
+            
+      it "escapes Figaro's vars containing arrays with single quotes for Heroku's environment" do
+        heroku.stub(:environment => "staging")
+        Figaro.stub(:env).with("staging").and_return({"FOO" => "[\"x\", \"y\", \"z\"]"})
+
+        expect(heroku.vars).to eq("FOO='[x, y, z]'")
       end
     end
 
