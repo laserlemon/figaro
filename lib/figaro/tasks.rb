@@ -8,7 +8,14 @@ module Figaro
       end
 
       def vars
-        Figaro.vars(environment)
+        Figaro.env(environment).map { |key, value|
+          if value.start_with? '['   
+            value = "'#{value.gsub('"', '')}'"
+          elsif value.include? ' ' 
+            value = "'#{value}'" 
+          end
+          "#{key}=#{value}"
+        }.sort.join(" ")
       end
 
       def environment
