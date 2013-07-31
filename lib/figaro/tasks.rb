@@ -1,5 +1,4 @@
 require "bundler"
-require "shellwords"
 
 module Figaro
   module Tasks
