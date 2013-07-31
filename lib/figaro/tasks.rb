@@ -10,9 +10,9 @@ module Figaro
 
       def vars
         Figaro.env(environment).map { |key, value|
-          if value.start_with? "["   
+          if value.start_with? '['   
             value = "'#{value.gsub('"', '')}'"
-          elsif value.include? " " 
+          elsif value.include? ' ' 
             value = "'#{value}'" 
           end
           "#{key}=#{value}"

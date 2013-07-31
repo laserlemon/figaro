@@ -31,9 +31,9 @@ module Figaro::Tasks
             
       it "escapes Figaro's vars containing arrays with single quotes for Heroku's environment" do
         heroku.stub(:environment => "staging")
-        Figaro.stub(:env).with("staging").and_return({"FOO" => "[\"x\", \"y\", \"z\"]"})
+        Figaro.stub(:env).with("staging").and_return({"FOO" => "[\"x\", \"y\"]"})
 
-        expect(heroku.vars).to eq("FOO='[x, y, z]'")
+        expect(heroku.vars).to eq("FOO='[x, y]'")
       end
     end
 
