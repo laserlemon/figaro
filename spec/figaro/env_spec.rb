@@ -14,51 +14,155 @@ describe Figaro::Env do
   end
 
   describe "#method_missing" do
-    it "makes ENV values accessible as lowercase methods" do
-      expect(env.hello).to eq("world")
-      expect(env.foo).to eq("bar")
+    context "plain method" do
+      it "makes ENV values accessible as lowercase methods" do
+        expect(env.hello).to eq("world")
+        expect(env.foo).to eq("bar")
+      end
+
+      it "makes ENV values accessible as uppercase methods" do
+        expect(env.HELLO).to eq("world")
+        expect(env.FOO).to eq("bar")
+      end
+
+      it "makes ENV values accessible as mixed-case methods" do
+        expect(env.Hello).to eq("world")
+        expect(env.fOO).to eq("bar")
+      end
+
+      it "returns nil if no ENV key matches" do
+        expect(env.goodbye).to eq(nil)
+      end
     end
 
-    it "makes ENV values accessible as uppercase methods" do
-      expect(env.HELLO).to eq("world")
-      expect(env.FOO).to eq("bar")
+    context "bang method" do
+      it "makes ENV values accessible as lowercase methods" do
+        expect(env.hello!).to eq("world")
+        expect(env.foo!).to eq("bar")
+      end
+
+      it "makes ENV values accessible as uppercase methods" do
+        expect(env.HELLO!).to eq("world")
+        expect(env.FOO!).to eq("bar")
+      end
+
+      it "makes ENV values accessible as mixed-case methods" do
+        expect(env.Hello!).to eq("world")
+        expect(env.fOO!).to eq("bar")
+      end
+
+      it "raises an error if no ENV key matches" do
+        expect { env.goodbye! }.to raise_error(NoMethodError)
+      end
     end
 
-    it "makes ENV values accessible as mixed-case methods" do
-      expect(env.Hello).to eq("world")
-      expect(env.fOO).to eq("bar")
-    end
+    context "boolean method" do
+      it "returns true for accessible, lowercase methods" do
+        expect(env.hello?).to eq(true)
+        expect(env.foo?).to eq(true)
+      end
 
-    it "raises an error if no ENV key matches" do
-      expect { env.goodbye }.to raise_error(NoMethodError)
+      it "returns true for accessible, uppercase methods" do
+        expect(env.HELLO?).to eq(true)
+        expect(env.FOO?).to eq(true)
+      end
+
+      it "returns true for accessible, mixed-case methods" do
+        expect(env.Hello?).to eq(true)
+        expect(env.fOO?).to eq(true)
+      end
+
+      it "returns false if no ENV key matches" do
+        expect(env.goodbye?).to eq(false)
+      end
     end
   end
 
   describe "#respond_to?" do
-    context "when ENV has the key" do
-      it "is true for a lowercase method" do
-        expect(env.respond_to?(:hello)).to be_true
-        expect(env.respond_to?(:foo)).to be_true
+    context "plain method" do
+      context "when ENV has the key" do
+        it "is true for a lowercase method" do
+          expect(env.respond_to?(:hello)).to eq(true)
+          expect(env.respond_to?(:foo)).to eq(true)
+        end
+
+        it "is true for a uppercase method" do
+          expect(env.respond_to?(:HELLO)).to eq(true)
+          expect(env.respond_to?(:FOO)).to eq(true)
+        end
+
+        it "is true for a mixed-case key" do
+          expect(env.respond_to?(:Hello)).to eq(true)
+          expect(env.respond_to?(:fOO)).to eq(true)
+        end
       end
 
-      it "is true for a uppercase method" do
-        expect(env.respond_to?(:HELLO)).to be_true
-        expect(env.respond_to?(:FOO)).to be_true
-      end
+      context "when ENV doesn't have the key" do
+        it "is true if Hash responds to the method" do
+          expect(env.respond_to?(:[])).to eq(true)
+        end
 
-      it "is true for a mixed-case key" do
-        expect(env.respond_to?(:Hello)).to be_true
-        expect(env.respond_to?(:fOO)).to be_true
+        it "is false if Hash doesn't respond to the method" do
+          expect(env.respond_to?(:baz)).to eq(false)
+        end
       end
     end
 
-    context "when ENV doesn't have the key" do
-      it "is true if Hash responds to the method" do
-        expect(env.respond_to?(:[])).to be_true
+    context "bang method" do
+      context "when ENV has the key" do
+        it "is true for a lowercase method" do
+          expect(env.respond_to?(:hello!)).to eq(true)
+          expect(env.respond_to?(:foo!)).to eq(true)
+        end
+
+        it "is true for a uppercase method" do
+          expect(env.respond_to?(:HELLO!)).to eq(true)
+          expect(env.respond_to?(:FOO!)).to eq(true)
+        end
+
+        it "is true for a mixed-case key" do
+          expect(env.respond_to?(:Hello!)).to eq(true)
+          expect(env.respond_to?(:fOO!)).to eq(true)
+        end
       end
 
-      it "is false if Hash doesn't respond to the method" do
-        expect(env.respond_to?(:baz)).to be_false
+      context "when ENV doesn't have the key" do
+        it "is true if Hash responds to the method" do
+          expect(env.respond_to?(:merge!)).to eq(true)
+        end
+
+        it "is false if Hash doesn't respond to the method" do
+          expect(env.respond_to?(:baz!)).to eq(false)
+        end
+      end
+    end
+
+    context "boolean method" do
+      context "when ENV has the key" do
+        it "is true for a lowercase method" do
+          expect(env.respond_to?(:hello?)).to eq(true)
+          expect(env.respond_to?(:foo?)).to eq(true)
+        end
+
+        it "is true for a uppercase method" do
+          expect(env.respond_to?(:HELLO?)).to eq(true)
+          expect(env.respond_to?(:FOO?)).to eq(true)
+        end
+
+        it "is true for a mixed-case key" do
+          expect(env.respond_to?(:Hello?)).to eq(true)
+          expect(env.respond_to?(:fOO?)).to eq(true)
+        end
+      end
+
+      context "when ENV doesn't have the key" do
+        it "is true if Hash responds to the method" do
+          expect(env.respond_to?(:empty?)).to eq(true)
+        end
+
+        it "is false if Hash doesn't respond to the method" do
+          expect(env.respond_to?(:baz?)).to eq(false)
+        end
       end
     end
   end
