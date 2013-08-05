@@ -59,5 +59,11 @@ describe Figaro do
 
       expect(Figaro.env).to eq("FOO" => "true", "BAR" => "false")
     end
+
+    it "throws an exception for invalid syntax" do
+      Figaro.stub(:raw => "Foo: true\n Bar: false\n")
+
+      expect { flatten(raw) }.to raise_error
+    end
   end
 end
