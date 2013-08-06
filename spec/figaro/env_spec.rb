@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe Figaro::Env do
-  subject(:env) { Figaro::Env.new }
+describe Figaro::ENV do
+  subject(:env) { Figaro::ENV }
 
   before do
     ENV["HELLO"] = "world"
