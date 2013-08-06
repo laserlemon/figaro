@@ -11,19 +11,25 @@ module Figaro
       case punctuation
       when "!" then value || super
       when "?" then !!value
-      else value
+      when nil then value
+      else super
       end
     end
 
     def respond_to?(method, *)
-      key, _ = extract_key_from_method(method)
-      ENV.keys.any? { |k| k.upcase == key } || super
+      key, punctuation = extract_key_from_method(method)
+
+      case punctuation
+      when "!" then ENV.keys.any? { |k| k.upcase == key } || super
+      when "?", nil then true
+      else super
+      end
     end
 
     private
 
     def extract_key_from_method(method)
-      method.to_s.upcase.match(/^(.+?)([\!\?]?)$/).captures
+      method.to_s.upcase.match(/^(.+?)([!?=])?$/).captures
     end
   end
 end

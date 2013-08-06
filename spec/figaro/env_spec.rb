@@ -14,7 +14,7 @@ describe Figaro::Env do
   end
 
   describe "#method_missing" do
-    context "plain method" do
+    context "plain methods" do
       it "makes ENV values accessible as lowercase methods" do
         expect(env.hello).to eq("world")
         expect(env.foo).to eq("bar")
@@ -35,7 +35,7 @@ describe Figaro::Env do
       end
     end
 
-    context "bang method" do
+    context "bang methods" do
       it "makes ENV values accessible as lowercase methods" do
         expect(env.hello!).to eq("world")
         expect(env.foo!).to eq("bar")
@@ -56,7 +56,7 @@ describe Figaro::Env do
       end
     end
 
-    context "boolean method" do
+    context "boolean methods" do
       it "returns true for accessible, lowercase methods" do
         expect(env.hello?).to eq(true)
         expect(env.foo?).to eq(true)
@@ -76,10 +76,16 @@ describe Figaro::Env do
         expect(env.goodbye?).to eq(false)
       end
     end
+
+    context "setter methods" do
+      it "raises an error" do
+        expect { env.foo = "bar" }.to raise_error(NoMethodError)
+      end
+    end
   end
 
   describe "#respond_to?" do
-    context "plain method" do
+    context "plain methods" do
       context "when ENV has the key" do
         it "is true for a lowercase method" do
           expect(env.respond_to?(:hello)).to eq(true)
@@ -98,17 +104,13 @@ describe Figaro::Env do
       end
 
       context "when ENV doesn't have the key" do
-        it "is true if Hash responds to the method" do
-          expect(env.respond_to?(:[])).to eq(true)
-        end
-
-        it "is false if Hash doesn't respond to the method" do
-          expect(env.respond_to?(:baz)).to eq(false)
+        it "is true" do
+          expect(env.respond_to?(:baz)).to eq(true)
         end
       end
     end
 
-    context "bang method" do
+    context "bang methods" do
       context "when ENV has the key" do
         it "is true for a lowercase method" do
           expect(env.respond_to?(:hello!)).to eq(true)
@@ -127,17 +129,13 @@ describe Figaro::Env do
       end
 
       context "when ENV doesn't have the key" do
-        it "is true if Hash responds to the method" do
-          expect(env.respond_to?(:merge!)).to eq(true)
-        end
-
-        it "is false if Hash doesn't respond to the method" do
+        it "is false" do
           expect(env.respond_to?(:baz!)).to eq(false)
         end
       end
     end
 
-    context "boolean method" do
+    context "boolean methods" do
       context "when ENV has the key" do
         it "is true for a lowercase method" do
           expect(env.respond_to?(:hello?)).to eq(true)
@@ -156,12 +154,22 @@ describe Figaro::Env do
       end
 
       context "when ENV doesn't have the key" do
-        it "is true if Hash responds to the method" do
-          expect(env.respond_to?(:empty?)).to eq(true)
+        it "is true" do
+          expect(env.respond_to?(:baz?)).to eq(true)
         end
+      end
+    end
 
-        it "is false if Hash doesn't respond to the method" do
-          expect(env.respond_to?(:baz?)).to eq(false)
+    context "setter methods" do
+      context "when ENV has the key" do
+        it "is false" do
+          expect(env.respond_to?(:foo=)).to eq(false)
+        end
+      end
+
+      context "when ENV doesn't have the key" do
+        it "is false" do
+          expect(env.respond_to?(:baz=)).to eq(false)
         end
       end
     end
