@@ -67,7 +67,11 @@ production:
   HELLO: users
 ```
 
+
 In this case, `ENV["HELLO"]` will produce `"developers"` in development, `"users"` in production and `"world"` otherwise.
+
+**NOTE:** Figaro uses Rails' standard hooks to initialize. Unfortunately, this hook apparently occurs after `database.yml` is read. Because of this issue, environment variables created in `application.yml` doesn't work inside `datatabase.yml`. 
+
 
 ## How does it work with Heroku?
 
