@@ -6,6 +6,9 @@ require "figaro/tasks"
 module Figaro
   extend self
 
+  class YAMLParseError < StandardError
+  end
+
   def vars(custom_environment = nil)
     env(custom_environment).map { |key, value|
       "#{key}=#{Shellwords.escape(value)}"
@@ -36,7 +39,11 @@ module Figaro
   private
 
   def flatten(hash)
-    hash.reject { |_, v| Hash === v }
+    if hash.is_a?(Hash)
+      hash.reject { |_, v| Hash === v }
+    else
+      raise YAMLParseError, "Please check the syntax of config/application.yml"
+    end
   end
 
   def stringify(hash)
