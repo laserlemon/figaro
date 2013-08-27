@@ -3,7 +3,7 @@ require "yaml"
 
 module Figaro
   class Railtie < ::Rails::Railtie
-    config.before_configuration do
+    initializer "figaro.initializer", :before => :load_environment_hook do
       Figaro.env.each do |key, value|
         ENV[key] = value unless ENV.key?(key)
       end
