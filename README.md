@@ -99,6 +99,12 @@ Optionally, you can pass in the name of the Heroku app:
 rake figaro:heroku[my-awesome-app]
 ```
 
+You can also pull configuration variables from Heroku into application.yml:
+
+```bash
+rake figaro:pull[my-awesome-app]
+```
+
 Additionally, if `RAILS_ENV` is configured on your Heroku server, Figaro will use that environment automatically in determining your proper configuration.
 
 ## What if I'm not using Heroku?
