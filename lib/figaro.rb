@@ -38,7 +38,8 @@ module Figaro
     Dir.pwd
   end
 
-  def load!
+  def load!(file = nil)
+     @path = file if (not file.nil?) and file.is_a?(File)
      ENV.update(env)
   end
 
