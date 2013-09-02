@@ -39,7 +39,7 @@ module Figaro
   end
 
   def load!(file = nil)
-     @path = file if (not file.nil?) and file.is_a?(File)
+     @path = file if not file.nil?
      ENV.update(env)
   end
 
