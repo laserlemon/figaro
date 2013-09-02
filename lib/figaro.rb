@@ -1,6 +1,8 @@
 require "shellwords"
 require "figaro/env"
+if defined?(RAILS)
 require "figaro/railtie"
+end
 require "figaro/tasks"
 module Figaro
   extend self
