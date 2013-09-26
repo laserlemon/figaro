@@ -52,7 +52,7 @@ OUT
   end
 
   describe "figaro:heroku", :rake => true do
-    subject(:heroku) { mock(:heroku) }
+    subject(:heroku) { double(:heroku) }
 
     it "configures Heroku" do
       Figaro::Tasks::Heroku.stub(:new).with(nil).and_return(heroku)
