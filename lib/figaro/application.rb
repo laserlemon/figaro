@@ -5,16 +5,19 @@ require "figaro/error"
 
 module Figaro
   class Application
+    attr_writer :path, :environment
+
     def initialize(options = {})
-      @options = options
+      @path = options[:path]
+      @environment = options[:environment]
     end
 
     def path
-      @options.fetch(:path) { default_path }.to_s
+      (@path || default_path).to_s
     end
 
     def environment
-      @options.fetch(:environment) { default_environment }.to_s
+      (@environment || default_environment).to_s
     end
 
     def configuration

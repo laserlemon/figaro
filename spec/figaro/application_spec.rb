@@ -15,8 +15,15 @@ module Figaro
         expect(application.path).to eq("/path/to/app/config/application.yml")
       end
 
-      it "is configurable" do
+      it "is configurable via initialization" do
         application = Application.new(path: "/app/env.yml")
+
+        expect(application.path).to eq("/app/env.yml")
+      end
+
+      it "is configurable via setter" do
+        application = Application.new
+        application.path = "/app/env.yml"
 
         expect(application.path).to eq("/app/env.yml")
       end
@@ -50,8 +57,15 @@ module Figaro
         expect(application.environment).to eq("development")
       end
 
-      it "is configurable" do
+      it "is configurable via initialization" do
         application = Application.new(environment: "test")
+
+        expect(application.environment).to eq("test")
+      end
+
+      it "is configurable via setter" do
+        application = Application.new
+        application.environment = "test"
 
         expect(application.environment).to eq("test")
       end
