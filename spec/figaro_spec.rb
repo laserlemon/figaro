@@ -6,4 +6,39 @@ describe Figaro do
       expect(Figaro.env).to eq(Figaro::ENV)
     end
   end
+
+  describe ".application" do
+    let(:application) { double(:application) }
+    let(:custom_application) { double(:custom_application) }
+
+    before do
+      Figaro::Application.stub(:new).with(no_args) { application }
+    end
+
+    it "defaults to a new Figaro application" do
+      expect(Figaro.application).to eq(application)
+    end
+
+    it "is configurable" do
+      expect {
+        Figaro.application = custom_application
+      }.to change {
+        Figaro.application
+      }.from(application).to(custom_application)
+    end
+  end
+
+  describe ".load" do
+    let(:application) { double(:application) }
+
+    before do
+      Figaro.stub(:application) { application }
+    end
+
+    it "loads the application configuration" do
+      expect(application).to receive(:load).once.with(no_args)
+
+      Figaro.load
+    end
+  end
 end

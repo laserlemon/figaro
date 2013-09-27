@@ -1,12 +1,9 @@
 require "rails"
-require "yaml"
 
 module Figaro
   class Railtie < ::Rails::Railtie
     config.before_configuration do
-      Figaro.env.each do |key, value|
-        ENV[key] = value unless ENV.key?(key)
-      end
+      Figaro.load
     end
 
     rake_tasks do
