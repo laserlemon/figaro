@@ -33,13 +33,13 @@ module Figaro
     private
 
     def default_path
-      rails_not_initialized! unless Rails.root
+      rails_not_initialized! unless ::Rails.root
 
-      Rails.root.join("config", "application.yml")
+      ::Rails.root.join("config", "application.yml")
     end
 
     def default_environment
-      Rails.env
+      ::Rails.env
     end
 
     def raw_configuration

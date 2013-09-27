@@ -1,6 +1,6 @@
 require "figaro/application"
 require "figaro/env"
-require "figaro/railtie"
+require "figaro/rails"
 require "figaro/tasks"
 
 module Figaro
