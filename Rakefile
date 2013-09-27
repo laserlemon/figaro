@@ -5,7 +5,7 @@ require "cucumber/rake/task"
 RSpec::Core::RakeTask.new(:spec)
 Cucumber::Rake::Task.new(:cucumber)
 
-task :default => [:spec, :cucumber]
+task default: [:spec, :cucumber]
 
 if ENV["COVERAGE"]
   Rake::Task[:default].enhance do

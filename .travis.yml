@@ -16,6 +16,6 @@ matrix:
     - gemfile: gemfiles/rails40.gemfile
       rvm: 2.0.0
   include:
-    - gemfile: gemfiles/rails40.gemfile
+    - gemfile: Gemfile
       rvm: 2.0.0
       env: COVERAGE=1

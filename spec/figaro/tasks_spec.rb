@@ -6,7 +6,7 @@ module Figaro::Tasks
 
     describe "#invoke" do
       it "configures Heroku" do
-        heroku.stub(:vars => "FOO=bar")
+        heroku.stub(vars: "FOO=bar")
 
         heroku.should_receive(:heroku).once.with("config:set FOO=bar")
 
@@ -16,7 +16,7 @@ module Figaro::Tasks
 
     describe "#vars" do
       it "returns Figaro's vars for Heroku's environment" do
-        heroku.stub(:environment => "staging")
+        heroku.stub(environment: "staging")
         Figaro.stub(:vars).with("staging").and_return("FOO=bar")
 
         expect(heroku.vars).to eq("FOO=bar")
@@ -51,7 +51,7 @@ OUT
     end
   end
 
-  describe "figaro:heroku", :rake => true do
+  describe "figaro:heroku", rake: true do
     subject(:heroku) { double(:heroku) }
 
     it "configures Heroku" do

@@ -5,11 +5,11 @@ Feature: Rails
     And I bundle
     And I create "lib/tasks/hello.rake" with:
       """
-      task :hello => :environment do
+      task hello: :environment do
         puts ["Hello", ENV["HELLO"]].reject(&:blank?).join(", ") << "!"
       end
 
-      task :greet => :environment do
+      task greet: :environment do
         puts ([Figaro.env.greeting] * 3).join(", ") << "!"
       end
       """
