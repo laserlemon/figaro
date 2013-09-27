@@ -6,14 +6,18 @@ require "figaro/tasks"
 module Figaro
   extend self
 
-  attr_writer :application
+  attr_writer :backend, :application
 
   def env
     Figaro::ENV
   end
 
+  def backend
+    @backend ||= Figaro::Rails::Application
+  end
+
   def application
-    @application ||= Figaro::Rails::Application.new
+    @application ||= backend.new
   end
 
   def load
