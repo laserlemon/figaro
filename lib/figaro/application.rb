@@ -33,13 +33,11 @@ module Figaro
     private
 
     def default_path
-      rails_not_initialized! unless ::Rails.root
-
-      ::Rails.root.join("config", "application.yml")
+      raise NotImplementedError
     end
 
     def default_environment
-      ::Rails.env
+      raise NotImplementedError
     end
 
     def raw_configuration
@@ -69,10 +67,6 @@ module Figaro
 
     def skip?(key)
       ::ENV.key?(key.to_s)
-    end
-
-    def rails_not_initialized!
-      raise RailsNotInitialized
     end
 
     def invalid_yaml!(error)

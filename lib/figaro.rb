@@ -13,7 +13,7 @@ module Figaro
   end
 
   def application
-    @application ||= Figaro::Application.new
+    @application ||= Figaro::Rails::Application.new
   end
 
   def load

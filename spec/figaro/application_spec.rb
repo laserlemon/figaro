@@ -4,11 +4,14 @@ require "tempfile"
 
 module Figaro
   describe Application do
-    describe "#path" do
-      before do
-        Application.any_instance.stub(default_path: "/path/to/app/config/application.yml")
-      end
+    before do
+      Application.any_instance.stub(
+        default_path: "/path/to/app/config/application.yml",
+        default_environment: "development"
+      )
+    end
 
+    describe "#path" do
       it "uses the default" do
         application = Application.new
 
@@ -47,10 +50,6 @@ module Figaro
     end
 
     describe "#environment" do
-      before do
-        Application.any_instance.stub(default_environment: "development")
-      end
-
       it "uses the default" do
         application = Application.new
 
@@ -235,42 +234,6 @@ YAML
         expect(application).to receive(:warn).once
 
         application.load
-      end
-    end
-
-    describe "#default_path" do
-      let!(:application) { Application.new }
-
-      it "defaults to config/application.yml in Rails.root" do
-        ::Rails.stub(root: Pathname.new("/path/to/app"))
-
-        expect {
-          ::Rails.stub(root: Pathname.new("/app"))
-        }.to change {
-          application.send(:default_path).to_s
-        }.from("/path/to/app/config/application.yml").to("/app/config/application.yml")
-      end
-
-      it "raises an error when Rails.root isn't set yet" do
-        ::Rails.stub(root: nil)
-
-        expect {
-          application.send(:default_path)
-        }.to raise_error(RailsNotInitialized)
-      end
-    end
-
-    describe "#default_environment" do
-      let!(:application) { Application.new }
-
-      it "defaults to Rails.env" do
-        ::Rails.stub(env: "development")
-
-        expect {
-          ::Rails.stub(env: "test")
-        }.to change {
-          application.send(:default_environment).to_s
-        }.from("development").to("test")
       end
     end
   end
