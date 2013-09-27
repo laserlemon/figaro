@@ -152,7 +152,7 @@ YAML
 
         expect {
           application.configuration
-        }.to raise_error(InvalidYAML)
+        }.to raise_error(InvalidConfiguration)
       end
 
       it "processes ERB" do
