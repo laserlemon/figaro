@@ -12,9 +12,6 @@ before_script:
   - unset RAILS_ENV
   - unset RACK_ENV
 matrix:
-  exclude:
-    - gemfile: gemfiles/rails40.gemfile
-      rvm: 2.0.0
   include:
     - gemfile: Gemfile
       rvm: 2.0.0
