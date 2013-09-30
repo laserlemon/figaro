@@ -198,6 +198,7 @@ YAML
 
       before do
         ::ENV.delete("foo")
+        ::ENV.delete("FIGARO_foo")
 
         application.stub(configuration: { "foo" => "bar" })
       end
@@ -218,6 +219,19 @@ YAML
         }.not_to change {
           ::ENV["foo"]
         }
+      end
+
+      it "sets keys that have already been set internally" do
+        application.load
+
+        application2 = Application.new
+        application2.stub(configuration: { "foo" => "baz" })
+
+        expect {
+          application2.load
+        }.to change {
+          ::ENV["foo"]
+        }.from("bar").to("baz")
       end
 
       it "warns when a key isn't a string" do

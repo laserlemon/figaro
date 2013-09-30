@@ -5,6 +5,8 @@ require "figaro/error"
 
 module Figaro
   class Application
+    FIGARO_ENV_PREFIX = "FIGARO_"
+
     attr_writer :path, :environment
 
     def initialize(options = {})
@@ -63,10 +65,11 @@ module Figaro
       non_string_configuration!(value) unless value.is_a?(String)
 
       ::ENV[key.to_s] = value.to_s
+      ::ENV[FIGARO_ENV_PREFIX + key.to_s] = value.to_s
     end
 
     def skip?(key)
-      ::ENV.key?(key.to_s)
+      ::ENV.key?(key.to_s) && !::ENV.key?(FIGARO_ENV_PREFIX + key.to_s)
     end
 
     def invalid_configuration!(error)
