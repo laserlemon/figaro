@@ -48,8 +48,6 @@ module Figaro
 
     def parse(path)
       File.exist?(path) && YAML.load(ERB.new(File.read(path)).result) || {}
-    rescue StandardError, SyntaxError => error
-      invalid_configuration!(error)
     end
 
     def global_configuration
@@ -70,12 +68,6 @@ module Figaro
 
     def skip?(key)
       ::ENV.key?(key.to_s) && !::ENV.key?(FIGARO_ENV_PREFIX + key.to_s)
-    end
-
-    def invalid_configuration!(error)
-      invalid_configuration = InvalidConfiguration.new(error.message)
-      invalid_configuration.set_backtrace(error.backtrace)
-      raise invalid_configuration
     end
 
     def non_string_configuration!(value)

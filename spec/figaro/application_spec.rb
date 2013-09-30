@@ -145,16 +145,6 @@ YAML
         expect(application.configuration).to eq({})
       end
 
-      it "raises an error when the YAML is invalid" do
-        application = Application.new(path: yaml_to_path(<<-YAML))
-foo: bar: baz
-YAML
-
-        expect {
-          application.configuration
-        }.to raise_error(InvalidConfiguration)
-      end
-
       it "processes ERB" do
         application = Application.new(path: yaml_to_path(<<-YAML))
 foo: <%= "bar".upcase %>
