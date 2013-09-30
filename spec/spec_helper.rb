@@ -1,6 +1,6 @@
 if ENV["COVERAGE"]
-  require "simplecov"
-  SimpleCov.start { add_filter("spec") }
+  require "coveralls"
+  Coveralls.wear!
 end
 
 require "figaro"
