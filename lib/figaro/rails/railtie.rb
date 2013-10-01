@@ -1,7 +1,7 @@
 module Figaro
   module Rails
     class Railtie < ::Rails::Railtie
-      config.before_configuration do
+      initializer "figaro.load", before: :load_environment_config do
         Figaro.load
       end
 

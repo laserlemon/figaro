@@ -9,4 +9,5 @@ group :test do
   gem "coveralls", "~> 0.6", require: false
   gem "rake", "~> 10.1"
   gem "rspec", "~> 2.13"
+  gem "sqlite3", "~> 1.3"
 end

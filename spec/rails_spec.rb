@@ -7,7 +7,6 @@ describe Figaro::Rails do
         --skip-gemfile \
         --skip-bundle \
         --skip-keeps \
-        --skip-active-record \
         --skip-sprockets \
         --skip-javascript \
         --skip-test-unit \
@@ -15,9 +14,10 @@ describe Figaro::Rails do
       CMD
     cd("example")
     write_file("Gemfile", <<-EOF)
-      gem "rails"
-      gem "figaro", path: "#{ROOT}"
-      EOF
+gem "rails"
+gem "sqlite3"
+gem "figaro", path: "#{ROOT}"
+EOF
     run_simple("bundle install")
   end
 
@@ -27,6 +27,18 @@ describe Figaro::Rails do
       run_simple("bundle exec rails runner 'puts Figaro.env.hello'")
 
       assert_partial_output("world", all_stdout)
+    end
+
+    it "happens before database initialization" do
+      write_file("config/database.yml", <<-EOF)
+development:
+  adapter: sqlite3
+  database: db/<%= ENV["FOO"] %>.sqlite3
+EOF
+      write_file("config/application.yml", "FOO: bar")
+      run_simple("bundle exec rake db:migrate")
+
+      check_file_presence(["db/bar.sqlite3"], true)
     end
   end
 
