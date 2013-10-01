@@ -52,7 +52,7 @@ describe Figaro::ENV do
       end
 
       it "raises an error if no ENV key matches" do
-        expect { env.goodbye! }.to raise_error(NoMethodError)
+        expect { env.goodbye! }.to raise_error(Figaro::MissingKey)
       end
     end
 

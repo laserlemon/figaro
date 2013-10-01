@@ -19,7 +19,7 @@ module Figaro
       _, value = ::ENV.detect { |k, _| k.upcase == key }
 
       case punctuation
-      when "!" then value || super
+      when "!" then value || missing_key!(key)
       when "?" then !!value
       when nil then value
       else super
@@ -28,6 +28,10 @@ module Figaro
 
     def extract_key_from_method(method)
       method.to_s.upcase.match(/^(.+?)([!?=])?$/).captures
+    end
+
+    def missing_key!(key)
+      raise MissingKey.new("Missing required Figaro configuration key #{key.inspect}.")
     end
   end
 end
