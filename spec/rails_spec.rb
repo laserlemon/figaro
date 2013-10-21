@@ -10,6 +10,7 @@ describe Figaro::Rails do
         --skip-sprockets \
         --skip-javascript \
         --skip-test-unit \
+        --no-rc \
         --quiet
       CMD
     cd("example")
