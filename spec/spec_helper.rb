@@ -6,7 +6,7 @@ end
 require "figaro"
 
 require "bundler"
-Bundler.require(:test)
+Bundler.require(:test, :default)
 
 require "pathname"
 ROOT = Pathname.new(File.expand_path("../..", __FILE__))
