@@ -16,6 +16,16 @@ module Figaro
           }.from("/path/to/app/config/application.yml").to("/app/config/application.yml")
         end
 
+        it "can be overridden with FIGARO_CONFIG ENV var" do
+          ::Rails.stub(root: Pathname.new("/path/to/app"))
+
+          expect {
+            ::ENV.stub(:[]).with("FIGARO_CONFIG").and_return("/etc/app/application.yml")
+          }.to change {
+            application.send(:default_path).to_s
+          }.from("/path/to/app/config/application.yml").to("/etc/app/application.yml")
+        end
+
         it "raises an error when Rails.root isn't set yet" do
           ::Rails.stub(root: nil)
 
