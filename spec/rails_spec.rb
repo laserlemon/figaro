@@ -61,7 +61,9 @@ EOF
     it "is included" do
       run_simple("bundle exec rake --tasks figaro:heroku")
 
-      assert_partial_output("rake figaro:heroku[app]  # Configure Heroku according to application.yml", all_stdout)
+      assert_partial_output("rake figaro:heroku[app]       # Configure Heroku according to application.yml", all_stdout)
+      assert_partial_output("rake figaro:heroku:diff[app]  # Compare Heroku config to that from application.yml", all_stdout)
+      assert_partial_output("rake figaro:heroku:show[app]  # Show the changes that will be made to Heroku according to application.yml", all_stdout)
     end
   end
 end
