@@ -1,9 +1,7 @@
 begin
   require "rails"
 rescue LoadError
-end
-
-if defined?(::Rails)
+else
   require "figaro/rails/application"
   require "figaro/rails/railtie"
 end
