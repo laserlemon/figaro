@@ -8,7 +8,7 @@ module Figaro::Tasks
       it "configures Heroku" do
         heroku.stub(vars: "FOO=bar")
 
-        heroku.should_receive(:heroku).once.with("config:set FOO=bar")
+        expect(heroku).to receive(:heroku).once.with("config:set FOO=bar")
 
         heroku.invoke
       end
@@ -16,7 +16,7 @@ module Figaro::Tasks
 
     describe "#heroku" do
       it "runs a command on Heroku" do
-        heroku.should_receive(:`).once.with("heroku info")
+        expect(heroku).to receive(:`).once.with("heroku info")
 
         heroku.heroku("info")
       end
@@ -24,7 +24,7 @@ module Figaro::Tasks
       it "runs a command on a specific Heroku app" do
         heroku = Heroku.new("my-app")
 
-        heroku.should_receive(:`).once.with("heroku info --app my-app")
+        expect(heroku).to receive(:`).once.with("heroku info --app my-app")
 
         heroku.heroku("info")
       end
@@ -77,14 +77,14 @@ OUT
 
     it "configures Heroku" do
       Figaro::Tasks::Heroku.stub(:new).with(nil).and_return(heroku)
-      heroku.should_receive(:invoke).once
+      expect(heroku).to receive(:invoke).once
 
       task.invoke
     end
 
     it "configures a specific Heroku app" do
       Figaro::Tasks::Heroku.stub(:new).with("my-app").and_return(heroku)
-      heroku.should_receive(:invoke).once
+      expect(heroku).to receive(:invoke).once
 
       task.invoke("my-app")
     end
