@@ -7,8 +7,11 @@ gemfile:
   - gemfiles/rails31.gemfile
   - gemfiles/rails32.gemfile
   - gemfiles/rails40.gemfile
+  - gemfiles/rails41.gemfile
 language: ruby
 matrix:
+  allow_failures:
+    - rvm: ruby-head
   include:
     - gemfile: Gemfile
       rvm: 2.0.0
@@ -16,4 +19,6 @@ matrix:
 rvm:
   - 1.9.3
   - 2.0.0
+  - 2.1.0
+  - ruby-head
 script: rspec

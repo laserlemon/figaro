@@ -1,4 +1,4 @@
-/.bundle
+.bundle
 /Gemfile.lock
 /coverage
 /gemfiles/*.gemfile.lock
