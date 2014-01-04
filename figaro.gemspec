@@ -14,6 +14,8 @@ Gem::Specification.new do |gem|
   gem.add_dependency "bundler", "~> 1.0"
   gem.add_dependency "rails", ">= 3", "< 5"
 
+  gem.add_development_dependency "rake", "~> 10.1"
+
   gem.files         = `git ls-files`.split($\)
   gem.test_files    = gem.files.grep(/^(features|spec)/)
   gem.require_paths = ["lib"]
