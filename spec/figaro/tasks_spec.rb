@@ -14,26 +14,6 @@ module Figaro::Tasks
       end
     end
 
-    describe "#vars" do
-      it "returns Figaro's vars for Heroku's environment" do
-        heroku.stub(environment: "staging")
-        Figaro.stub(:vars).with("staging").and_return("FOO=bar")
-
-        expect(heroku.vars).to eq("FOO=bar")
-      end
-    end
-
-    describe "#environment" do
-      it "returns Heroku's environment" do
-        heroku.stub(:heroku).with("run 'echo $RAILS_ENV'").and_return(<<-OUT)
-Running `echo $RAILS_ENV` attached to terminal... up, run.1234
-staging
-OUT
-
-        expect(heroku.environment).to eq("staging")
-      end
-    end
-
     describe "#heroku" do
       it "runs a command on Heroku" do
         heroku.should_receive(:`).once.with("heroku info")
@@ -47,6 +27,47 @@ OUT
         heroku.should_receive(:`).once.with("heroku info --app my-app")
 
         heroku.heroku("info")
+      end
+    end
+
+    describe "#vars" do
+      let(:application) { Figaro::Application.new }
+
+      before do
+        heroku.stub(application: application)
+      end
+
+      it "returns Figaro's vars for the application" do
+        application.stub(configuration: { "FOO" => "bar" })
+
+        expect(heroku.vars).to eq("FOO=bar")
+      end
+
+      it "escapes values" do
+        application.stub(configuration: { "FOO" => "bar baz" })
+
+        expect(heroku.vars).to eq('FOO=bar\ baz')
+      end
+    end
+
+    describe "#application" do
+      it "returns a Figaro application with Heroku's environment" do
+        heroku.stub(environment: "staging")
+
+        application = heroku.application
+        expect(application).to be_a(Figaro.backend)
+        expect(application.environment).to eq("staging")
+      end
+    end
+
+    describe "#environment" do
+      it "returns Heroku's environment" do
+        heroku.stub(:heroku).with("run 'echo $RAILS_ENV'").and_return(<<-OUT)
+Running `echo $RAILS_ENV` attached to terminal... up, run.1234
+staging
+OUT
+
+        expect(heroku.environment).to eq("staging")
       end
     end
   end

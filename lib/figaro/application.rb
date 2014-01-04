@@ -7,6 +7,8 @@ module Figaro
   class Application
     FIGARO_ENV_PREFIX = "FIGARO_"
 
+    include Enumerable
+
     attr_writer :path, :environment
 
     def initialize(options = {})
@@ -27,9 +29,13 @@ module Figaro
     end
 
     def load
-      configuration.each do |key, value|
+      each do |key, value|
         set(key, value) unless skip?(key)
       end
+    end
+
+    def each(&block)
+      configuration.each(&block)
     end
 
     private
