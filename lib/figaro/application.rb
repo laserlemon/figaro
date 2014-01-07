@@ -5,7 +5,7 @@ require "figaro/error"
 
 module Figaro
   class Application
-    FIGARO_ENV_PREFIX = "FIGARO_"
+    FIGARO_ENV_PREFIX = "_FIGARO_"
 
     include Enumerable
 

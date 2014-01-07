@@ -188,7 +188,7 @@ YAML
 
       before do
         ::ENV.delete("foo")
-        ::ENV.delete("FIGARO_foo")
+        ::ENV.delete("_FIGARO_foo")
 
         application.stub(configuration: { "foo" => "bar" })
       end
