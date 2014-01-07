@@ -6,14 +6,14 @@ module Figaro
   class CLI < Thor
     desc "heroku:set", "Send Figaro configuration to Heroku"
 
-    option "app",
+    method_option "app",
       aliases: ["a"],
       desc: "Specify a Heroku app"
-    option "environment",
+    method_option "environment",
       aliases: ["e"],
       default: "development",
       desc: "Specify an application environment"
-    option "path",
+    method_option "path",
       aliases: ["p"],
       default: "config/application.yml",
       desc: "Specify a configuration file path"
