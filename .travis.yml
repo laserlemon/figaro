@@ -3,7 +3,9 @@ before_install:
 before_script:
   - unset RAILS_ENV
   - unset RACK_ENV
-branches: master
+branches:
+  only:
+    - master
 gemfile:
   - gemfiles/rails30.gemfile
   - gemfiles/rails31.gemfile
@@ -23,4 +25,4 @@ rvm:
   - 2.0.0
   - 2.1.0
   - ruby-head
-script: rspec
+script: bundle exec rspec
