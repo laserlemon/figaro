@@ -50,12 +50,4 @@ EOF
       check_file_content(".gitignore", %r(^/config/application\.yml$), true)
     end
   end
-
-  describe "rake figaro:heroku" do
-    it "is included" do
-      run_simple("rake --tasks figaro:heroku")
-
-      assert_partial_output("rake figaro:heroku[app]  # Configure Heroku according to application.yml", all_stdout)
-    end
-  end
 end
