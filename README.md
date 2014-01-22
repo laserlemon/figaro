@@ -98,6 +98,13 @@ Optionally, you can pass in the name of the Heroku app:
 ```bash
 rake figaro:heroku[my-awesome-app]
 ```
+\* Note to zsh users: passing parameters into a rake task will not work like in the bash example above due to file-globbing. You will need to escape the brackets, wrap in single quotes, or add `noglob` like this to pass parameters:
+
+```bash
+rake figaro:heroku\[my-awesome-app\]
+rake 'figaro:heroku[my-awesome-app]'
+noglob rake figaro:heroku[my-awesome-app]
+```
 
 Additionally, if `RAILS_ENV` is configured on your Heroku server, Figaro will use that environment automatically in determining your proper configuration.
 
