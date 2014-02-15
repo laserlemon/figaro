@@ -6,6 +6,6 @@ namespace :figaro do
 
   desc "Configure .travis.yml according to application.yml"
   task :travis do
-      system 'cat config/application.yml | travis encrypt --split --add'
+      system 'cat config/application.yml | grep -v \# | travis encrypt --split --add'
   end
 end
