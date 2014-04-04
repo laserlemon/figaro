@@ -70,6 +70,13 @@ production:
 
 In this case, `ENV["HELLO"]` will produce `"developers"` in development, `"users"` in production and `"world"` otherwise.
 
+### Example for database.yml
+
+```
+  username: <%= ENV["POSTGRES_USR"] %> 
+  password: <%= ENV["POSTGRES_PWD"] %> 
+```
+
 
 ## How does it work with Heroku?
 
