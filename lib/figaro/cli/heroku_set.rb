@@ -14,7 +14,7 @@ module Figaro
       end
 
       def for_app
-        options[:app] ? "--app #{options[:app]}" : nil
+        options[:app] ? "--app=#{options[:app]}" : nil
       end
 
       def vars
