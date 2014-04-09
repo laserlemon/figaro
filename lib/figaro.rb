@@ -1,6 +1,5 @@
 require "figaro/application"
 require "figaro/env"
-require "figaro/rails"
 
 module Figaro
   extend self
@@ -23,3 +22,5 @@ module Figaro
     application.load
   end
 end
+
+require "figaro/rails"
