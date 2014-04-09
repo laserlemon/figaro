@@ -9,19 +9,25 @@ module Figaro
 
     include Enumerable
 
-    attr_writer :path, :environment
-
     def initialize(options = {})
-      @path = options[:path]
-      @environment = options[:environment]
+      @options = options.inject({}) { |m, (k, v)| m[k.to_sym] = v; m }
     end
 
     def path
-      (@path || default_path).to_s
+      @options.fetch(:path) { default_path }.to_s
+    end
+
+    def path=(path)
+      @options[:path] = path
     end
 
     def environment
-      (@environment || default_environment).to_s
+      environment = @options.fetch(:environment) { default_environment }
+      environment.nil? ? nil : environment.to_s
+    end
+
+    def environment=(environment)
+      @options[:environment] = environment
     end
 
     def configuration
@@ -45,7 +51,7 @@ module Figaro
     end
 
     def default_environment
-      raise NotImplementedError
+      nil
     end
 
     def raw_configuration

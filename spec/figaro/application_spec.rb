@@ -76,6 +76,12 @@ module Figaro
         expect(application.environment).not_to be_a(Symbol)
       end
 
+      it "respects nil" do
+        application = Application.new(environment: nil)
+
+        expect(application.environment).to eq(nil)
+      end
+
       it "follows a changing default" do
         application = Application.new
 
