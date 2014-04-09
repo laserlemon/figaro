@@ -7,33 +7,33 @@ describe Figaro do
     end
   end
 
-  describe ".backend" do
-    let(:backend) { double(:backend) }
+  describe ".adapter" do
+    let(:adapter) { double(:adapter) }
 
-    it "defaults to the generic application backend" do
-      expect(Figaro.backend).to eq(Figaro::Application)
+    it "defaults to the generic application adapter" do
+      expect(Figaro.adapter).to eq(Figaro::Application)
     end
 
     it "is configurable" do
       expect {
-        Figaro.backend = backend
+        Figaro.adapter = adapter
       }.to change {
-        Figaro.backend
-      }.from(Figaro::Application).to(backend)
+        Figaro.adapter
+      }.from(Figaro::Application).to(adapter)
     end
   end
 
   describe ".application" do
-    let(:backend) { double(:backend) }
+    let(:adapter) { double(:adapter) }
     let(:application) { double(:application) }
     let(:custom_application) { double(:custom_application) }
 
     before do
-      Figaro.stub(:backend) { backend }
-      backend.stub(:new).with(no_args) { application }
+      Figaro.stub(:adapter) { adapter }
+      adapter.stub(:new).with(no_args) { application }
     end
 
-    it "defaults to a new backend application" do
+    it "defaults to a new adapter application" do
       expect(Figaro.application).to eq(application)
     end
 
