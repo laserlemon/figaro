@@ -11,8 +11,7 @@ module Figaro
       desc: "Specify a Heroku app"
     method_option "environment",
       aliases: ["-e"],
-      desc: "Specify an application environment",
-      required: true
+      desc: "Specify an application environment"
     method_option "path",
       aliases: ["-p"],
       default: "config/application.yml",

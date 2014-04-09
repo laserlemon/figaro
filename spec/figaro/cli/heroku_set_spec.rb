@@ -11,7 +11,7 @@ describe "figaro heroku:set" do
 
   it "sends Figaro configuration to Heroku" do
     expect {
-      run_simple("figaro heroku:set -e development")
+      run_simple("figaro heroku:set")
     }.to change {
       commands.count
     }.from(0).to(1)
@@ -21,12 +21,18 @@ describe "figaro heroku:set" do
     expect(command.args).to eq(["config:set", "foo=bar"])
   end
 
-  it "requires environment" do
+  it "respects path" do
+    write_file("env.yml", "foo: bar")
+
     expect {
-      run_simple("figaro heroku:set")
-    }.not_to change {
+      run_simple("figaro heroku:set -p env.yml")
+    }.to change {
       commands.count
-    }
+    }.from(0).to(1)
+
+    command = commands.last
+    expect(command.name).to eq("heroku")
+    expect(command.args).to eq(["config:set", "foo=bar"])
   end
 
   it "respects environment" do
@@ -47,23 +53,9 @@ EOF
     expect(command.args).to eq(["config:set", "foo=baz"])
   end
 
-  it "respects path" do
-    write_file("env.yml", "foo: bar")
-
-    expect {
-      run_simple("figaro heroku:set -e development -p env.yml")
-    }.to change {
-      commands.count
-    }.from(0).to(1)
-
-    command = commands.last
-    expect(command.name).to eq("heroku")
-    expect(command.args).to eq(["config:set", "foo=bar"])
-  end
-
   it "targets a specific Heroku app" do
     expect {
-      run_simple("figaro heroku:set -e development -a foo-bar-app")
+      run_simple("figaro heroku:set -a foo-bar-app")
     }.to change {
       commands.count
     }.from(0).to(1)
