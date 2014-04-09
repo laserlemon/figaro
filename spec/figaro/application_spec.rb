@@ -207,8 +207,10 @@ YAML
         }.from(nil).to("bar")
       end
 
-      it "skips keys that have already been set externally" do
+      it "skips keys (and warns) that have already been set externally" do
         ::ENV["foo"] = "baz"
+
+        expect(application).to receive(:warn)
 
         expect {
           application.load
@@ -232,7 +234,7 @@ YAML
       it "warns when a key isn't a string" do
         application.stub(configuration: { foo: "bar" })
 
-        expect(application).to receive(:warn).once
+        expect(application).to receive(:warn)
 
         application.load
       end
@@ -240,7 +242,7 @@ YAML
       it "warns when a value isn't a string" do
         application.stub(configuration: { "foo" => ["bar"] })
 
-        expect(application).to receive(:warn).once
+        expect(application).to receive(:warn)
 
         application.load
       end

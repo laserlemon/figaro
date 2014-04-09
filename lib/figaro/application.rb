@@ -36,7 +36,7 @@ module Figaro
 
     def load
       each do |key, value|
-        set(key, value) unless skip?(key)
+        skip?(key) ? key_skipped!(key) : set(key, value)
       end
     end
 
@@ -84,6 +84,10 @@ module Figaro
 
     def non_string_configuration!(value)
       warn "WARNING: Use strings for Figaro configuration. #{value.inspect} was converted to #{value.to_s.inspect}."
+    end
+
+    def key_skipped!(key)
+      warn "WARNING: Skipping key #{key.inspect}. Already set in ENV."
     end
   end
 end
