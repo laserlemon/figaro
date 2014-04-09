@@ -1,5 +1,3 @@
-before_install:
-  - gem update bundler
 before_script:
   - unset RAILS_ENV
   - unset RACK_ENV
@@ -23,6 +21,6 @@ matrix:
 rvm:
   - 1.9.3
   - 2.0.0
-  - 2.1.0
+  - "2.1"
   - ruby-head
 script: bundle exec rspec
