@@ -12,7 +12,7 @@ module Figaro
   end
 
   def backend
-    @backend ||= Figaro::Rails::Application
+    @backend ||= Figaro::Application
   end
 
   def application
