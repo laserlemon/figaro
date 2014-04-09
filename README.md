@@ -1,9 +1,9 @@
 # Figaro
-[![Gem Version](https://badge.fury.io/rb/figaro.svg)](http://badge.fury.io/rb/figaro)
-[![Build Status](https://travis-ci.org/laserlemon/figaro.svg?branch=master)](https://travis-ci.org/laserlemon/figaro)
-[![Code Climate](https://codeclimate.com/github/laserlemon/figaro.png)](https://codeclimate.com/github/laserlemon/figaro)
-[![Coverage Status](https://codeclimate.com/github/laserlemon/figaro/coverage.png)](https://codeclimate.com/github/laserlemon/figaro)
-[![Dependency Status](https://gemnasium.com/laserlemon/figaro.svg)](https://gemnasium.com/laserlemon/figaro)
+[![Gem Version](https://img.shields.io/gem/v/figaro.svg)](http://badge.fury.io/rb/figaro)
+[![Build Status](https://img.shields.io/travis/laserlemon/figaro/master.svg)](https://travis-ci.org/laserlemon/figaro)
+[![Code Climate](https://img.shields.io/codeclimate/github/laserlemon/figaro.svg)](https://codeclimate.com/github/laserlemon/figaro)
+[![Coverage Status](https://img.shields.io/codeclimate/coverage/github/laserlemon/figaro.svg)](https://codeclimate.com/github/laserlemon/figaro)
+[![Dependency Status](https://img.shields.io/gemnasium/laserlemon/figaro.svg)](https://gemnasium.com/laserlemon/figaro)
 
 Simple Rails app configuration
 
