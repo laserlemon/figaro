@@ -214,11 +214,10 @@ YAML
       it "sets keys that have already been set internally" do
         application.load
 
-        application2 = Application.new
-        application2.stub(configuration: { "foo" => "baz" })
+        application.stub(configuration: { "foo" => "baz" })
 
         expect {
-          application2.load
+          application.load
         }.to change {
           ::ENV["foo"]
         }.from("bar").to("baz")
