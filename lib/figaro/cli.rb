@@ -7,14 +7,14 @@ module Figaro
     desc "heroku:set", "Send Figaro configuration to Heroku"
 
     method_option "app",
-      aliases: ["a"],
+      aliases: ["-a"],
       desc: "Specify a Heroku app"
     method_option "environment",
-      aliases: ["e"],
+      aliases: ["-e"],
       desc: "Specify an application environment",
       required: true
     method_option "path",
-      aliases: ["p"],
+      aliases: ["-p"],
       default: "config/application.yml",
       desc: "Specify a configuration file path"
 
