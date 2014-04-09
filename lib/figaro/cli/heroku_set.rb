@@ -18,7 +18,11 @@ module Figaro
       end
 
       def vars
-        configuration.keys.map { |k| %(#{k}="$#{k}") }.join(" ")
+        configuration.keys.map { |k| var(k) }.join(" ")
+      end
+
+      def var(key)
+        Gem.win_platform? ? "#{key}=%#{key}%" : "#{key}=$#{key}"
       end
     end
   end
