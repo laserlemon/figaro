@@ -4,6 +4,12 @@ before_script:
 branches:
   only:
     - master
+env:
+  global:
+    secure: | # CODECLIMATE_REPO_TOKEN
+      Pm3j2/BtAzMtqRMP83rFvDtpUNeIAdLMzwH62In+3h/AE8gHDArGYS+jmChw
+      2hKVjwzVUTWZlpSEocqAg/YIDB3BJzWmyc6UP+VA0gji6HsufXYTmKAVPSVY
+      TQ7mPPP7hm95e3SkFbLdLbGkQfLdjIKeMY5lY/knX+QKUCjO52Y=
 gemfile:
   - gemfiles/rails30.gemfile
   - gemfiles/rails31.gemfile
