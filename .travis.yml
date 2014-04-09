@@ -22,7 +22,7 @@ matrix:
     - rvm: ruby-head
   include:
     - gemfile: Gemfile
-      rvm: 2.0.0
+      rvm: "2.1"
       env: COVERAGE=1
 rvm:
   - 1.9.3
