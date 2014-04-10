@@ -246,6 +246,16 @@ YAML
 
         application.load
       end
+
+      it "allows nil values" do
+        application.stub(configuration: { "foo" => nil })
+
+        expect {
+          application.load
+        }.not_to change {
+          ::ENV["foo"]
+        }
+      end
     end
   end
 end
