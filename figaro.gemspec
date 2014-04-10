@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name    = "figaro"
-  gem.version = "0.7.0"
+  gem.version = "1.0.0.rc1"
 
   gem.author      = "Steve Richert"
   gem.email       = "steve.richert@gmail.com"
