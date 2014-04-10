@@ -1,8 +1,6 @@
 require "erb"
 require "yaml"
 
-require "figaro/error"
-
 module Figaro
   class Application
     FIGARO_ENV_PREFIX = "_FIGARO_"

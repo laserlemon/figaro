@@ -1,5 +1,6 @@
-require "figaro/application"
+require "figaro/error"
 require "figaro/env"
+require "figaro/application"
 
 module Figaro
   extend self
@@ -20,6 +21,11 @@ module Figaro
 
   def load
     application.load
+  end
+
+  def require(*keys)
+    missing_keys = keys.flatten - ::ENV.keys
+    raise MissingKeys.new(missing_keys) if missing_keys.any?
   end
 end
 
