@@ -10,7 +10,7 @@ module Figaro
       private
 
       def command
-        "heroku config:set #{for_app} #{vars}"
+        "heroku config:set #{vars} #{for_app}"
       end
 
       def for_app
