@@ -22,7 +22,7 @@ module Figaro
       end
 
       def var(key)
-        Gem.win_platform? ? "#{key}=%#{key}%" : "#{key}=$#{key}"
+        Gem.win_platform? ? %(#{key}="%#{key}%") : %(#{key}="$#{key}")
       end
     end
   end

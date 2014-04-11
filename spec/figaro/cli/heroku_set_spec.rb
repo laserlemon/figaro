@@ -65,4 +65,18 @@ EOF
     expect(command.args.shift).to eq("config:set")
     expect(command.args).to match_array(["foo=bar", "--app=foo-bar-app"])
   end
+
+  it "handles values with special characters" do
+    overwrite_file("config/application.yml", "foo: bar baz")
+
+    expect {
+      run_simple("figaro heroku:set")
+    }.to change {
+      commands.count
+    }.from(0).to(1)
+
+    command = commands.last
+    expect(command.name).to eq("heroku")
+    expect(command.args).to eq(["config:set", "foo=bar baz"])
+  end
 end
