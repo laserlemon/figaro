@@ -35,6 +35,17 @@ EOF
 
       check_file_presence(["db/bar.sqlite3"], true)
     end
+
+    it "happens before application configuration" do
+      insert_into_file_after("config/application.rb", /< Rails::Application$/, <<-EOL)
+    config.foo = ENV["FOO"]
+EOL
+
+      write_file("config/application.yml", "FOO: bar")
+      run_simple("rails runner 'puts Rails.application.config.foo'")
+
+      assert_partial_output("bar", all_stdout)
+    end
   end
 
   describe "rails generate figaro:install" do
