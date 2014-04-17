@@ -19,8 +19,8 @@ module Figaro
       _, value = ::ENV.detect { |k, _| k.downcase == key }
 
       case punctuation
-      when "!" then value || missing_key!(key)
-      when "?" then !!value
+      when "!" then send(key) || missing_key!(key)
+      when "?" then !!send(key)
       when nil then value
       else super
       end

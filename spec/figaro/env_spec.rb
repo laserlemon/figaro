@@ -28,6 +28,11 @@ describe Figaro::ENV do
       it "returns nil if no ENV key matches" do
         expect(env.goodbye).to eq(nil)
       end
+
+      it "respects a stubbed plain method" do
+        env.stub(bar: "baz")
+        expect(env.bar).to eq("baz")
+      end
     end
 
     context "bang methods" do
@@ -49,6 +54,11 @@ describe Figaro::ENV do
       it "raises an error if no ENV key matches" do
         expect { env.goodbye! }.to raise_error(Figaro::MissingKey)
       end
+
+      it "respects a stubbed plain method" do
+        env.stub(bar: "baz")
+        expect { expect(env.bar!).to eq("baz") }.not_to raise_error
+      end
     end
 
     context "boolean methods" do
@@ -69,6 +79,11 @@ describe Figaro::ENV do
 
       it "returns false if no ENV key matches" do
         expect(env.goodbye?).to eq(false)
+      end
+
+      it "respects a stubbed plain method" do
+        env.stub(bar: "baz")
+        expect(env.bar?).to eq(true)
       end
     end
 
