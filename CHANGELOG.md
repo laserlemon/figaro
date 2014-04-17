@@ -1,4 +1,4 @@
-## 1.0.0.rc1 / Unreleased
+## 1.0.0.rc1 / 2014-04-17
 
 * [FEATURE] Add bang and boolean methods to `Figaro.env`
 * [ENHANCEMENT] Detach `Figaro.env` from the configuration file hash
