@@ -234,4 +234,4 @@ My name is Steve Richert and I wrote Figaro in March, 2012 with overwhelming enc
 
 Figaro is open source and contributions from the community are encouraged! No contribution is too small.
 
-See Figaro's [contribution guidelines](#contributing) for more information.
+See Figaro's [contribution guidelines](CONTRIBUTING.md) for more information.
