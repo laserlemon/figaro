@@ -17,11 +17,14 @@ describe Figaro::Rails do
   end
 
   describe "initialization" do
-    it "loads application.yml" do
-      write_file("config/application.yml", "hello: world")
-      run_simple("rails runner 'puts Figaro.env.hello'")
+    before do
+      write_file("config/application.yml", "foo: bar")
+    end
 
-      assert_partial_output("world", all_stdout)
+    it "loads application.yml" do
+      run_simple("rails runner 'puts Figaro.env.foo'")
+
+      assert_partial_output("bar", all_stdout)
     end
 
     it "happens before database initialization" do
@@ -30,7 +33,7 @@ development:
   adapter: sqlite3
   database: db/<%= ENV["foo"] %>.sqlite3
 EOF
-      write_file("config/application.yml", "foo: bar")
+
       run_simple("rake db:migrate")
 
       check_file_presence(["db/bar.sqlite3"], true)
@@ -41,7 +44,6 @@ EOF
     config.foo = ENV["foo"]
 EOL
 
-      write_file("config/application.yml", "foo: bar")
       run_simple("rails runner 'puts Rails.application.config.foo'")
 
       assert_partial_output("bar", all_stdout)
