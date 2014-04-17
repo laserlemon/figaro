@@ -4,13 +4,8 @@ describe Figaro::ENV do
   subject(:env) { Figaro::ENV }
 
   before do
-    ENV["HELLO"] = "world"
-    ENV["foo"] = "bar"
-  end
-
-  after do
-    ENV.delete("HELLO")
-    ENV.delete("foo")
+    ::ENV["HELLO"] = "world"
+    ::ENV["foo"] = "bar"
   end
 
   describe "#method_missing" do

@@ -66,11 +66,6 @@ describe Figaro do
       ::ENV["hello"] = "world"
     end
 
-    after do
-      ::ENV["foo"] = nil
-      ::ENV["hello"] = nil
-    end
-
     context "when no keys are missing" do
       it "does nothing" do
         expect {

@@ -193,9 +193,6 @@ YAML
       let!(:application) { Application.new }
 
       before do
-        ::ENV.delete("foo")
-        ::ENV.delete("_FIGARO_foo")
-
         application.stub(configuration: { "foo" => "bar" })
       end
 
