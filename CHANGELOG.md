@@ -12,6 +12,7 @@
 * [BUGFIX] Fix character escaping for `figaro heroku:set` on Windows
 * [FEATURE] Warn when a preexisting configuration key is skipped during load
 * [FEATURE] Add the ability to fail fast in the absence of required keys
+* [FEATURE] Tie into Rails' earliest possible `before_configuration` hook
 
 ## 0.7.0 / 2013-06-27
 
