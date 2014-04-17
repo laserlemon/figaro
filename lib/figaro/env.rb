@@ -6,7 +6,7 @@ module Figaro
       key, punctuation = extract_key_from_method(method)
 
       case punctuation
-      when "!" then ::ENV.keys.any? { |k| k.upcase == key } || super
+      when "!" then ::ENV.keys.any? { |k| k.downcase == key } || super
       when "?", nil then true
       else super
       end
@@ -16,7 +16,7 @@ module Figaro
 
     def method_missing(method, *)
       key, punctuation = extract_key_from_method(method)
-      _, value = ::ENV.detect { |k, _| k.upcase == key }
+      _, value = ::ENV.detect { |k, _| k.downcase == key }
 
       case punctuation
       when "!" then value || missing_key!(key)
@@ -27,7 +27,7 @@ module Figaro
     end
 
     def extract_key_from_method(method)
-      method.to_s.upcase.match(/^(.+?)([!?=])?$/).captures
+      method.to_s.downcase.match(/^(.+?)([!?=])?$/).captures
     end
 
     def missing_key!(key)
