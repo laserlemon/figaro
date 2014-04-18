@@ -1,4 +1,4 @@
-# ![Figaro](doc/title.png)
+# ![Figaro](https://raw.githubusercontent.com/laserlemon/figaro/1f6e709/doc/title.png)
 
 Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML file
 
