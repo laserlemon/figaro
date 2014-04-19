@@ -2,7 +2,7 @@
 
 Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML file
 
-[![Gom Version](https://img.shields.io/gem/v/figaro.svg)](http://badge.fury.io/rb/figaro)
+[![Gem Version](https://img.shields.io/gem/v/figaro.svg)](http://badge.fury.io/rb/figaro)
 [![Build Status](https://img.shields.io/travis/laserlemon/figaro/master.svg)](https://travis-ci.org/laserlemon/figaro)
 [![Code Climate](https://img.shields.io/codeclimate/github/laserlemon/figaro.svg)](https://codeclimate.com/github/laserlemon/figaro)
 [![Coverage Status](https://img.shields.io/codeclimate/coverage/github/laserlemon/figaro.svg)](https://codeclimate.com/github/laserlemon/figaro)
