@@ -23,9 +23,14 @@ module Figaro
     application.load
   end
 
-  def require(*keys)
-    missing_keys = keys.flatten - ::ENV.keys
-    raise MissingKeys.new(missing_keys) if missing_keys.any?
+  def require(*required)
+    if required.first.respond_to?(:keys)
+      missing = required.first.reject{ |k,v| ::ENV.keys.include?(k.to_s) }
+    else
+      missing = required.flatten - ::ENV.keys
+    end
+
+    raise MissingKeys.new(missing) if missing.any?
   end
 end
 

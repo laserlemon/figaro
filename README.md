@@ -114,6 +114,17 @@ Figaro.require("pusher_app_id", "pusher_key", "pusher_secret")
 
 If any of the configuration keys above are not set, your application will raise an error during initialization. This method is preferred because it prevents runtime errors in a production application due to improper configuration.
 
+You can also document the different configuration keys by specifying them with a hash:
+
+```ruby
+# config/initializers/figaro.rb
+
+Figaro.require({
+  google_analytics_key: 'Get it at https://www.google.com/analytics/web/ (e.g: UA-12345678-1)',
+  # ...
+})
+```
+
 To require configuration keys lazily, reference the variables via "bang" methods on `Figaro.env`:
 
 ```ruby

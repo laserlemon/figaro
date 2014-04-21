@@ -66,35 +66,47 @@ describe Figaro do
       ::ENV["hello"] = "world"
     end
 
-    context "when no keys are missing" do
-      it "does nothing" do
-        expect {
-          Figaro.require("foo", "hello")
-        }.not_to raise_error
+    context "called with an array" do
+      context "when no keys are missing" do
+        it "does nothing" do
+          expect {
+            Figaro.require("foo", "hello")
+          }.not_to raise_error
+        end
       end
 
-      it "accepts an array" do
-        expect {
-          Figaro.require(["foo", "hello"])
-        }.not_to raise_error
+      context "when keys are missing" do
+        it "raises an error for the missing keys" do
+          expect {
+            Figaro.require("foo", "goodbye", "baz")
+          }.to raise_error(Figaro::MissingKeys) { |error|
+            expect(error.message).not_to include("foo")
+            expect(error.message).to include("goodbye")
+            expect(error.message).to include("baz")
+          }
+        end
       end
     end
 
-    context "when keys are missing" do
-      it "raises an error for the missing keys" do
-        expect {
-          Figaro.require("foo", "goodbye", "baz")
-        }.to raise_error(Figaro::MissingKeys) { |error|
-          expect(error.message).not_to include("foo")
-          expect(error.message).to include("goodbye")
-          expect(error.message).to include("baz")
-        }
+    context "called with a hash" do
+      context "when no keys are missing" do
+        it "does nothing" do
+          expect {
+            Figaro.require(foo: 'foo explained', hello: 'hello explained')
+          }.not_to raise_error
+        end
       end
 
-      it "accepts an array" do
-        expect {
-          Figaro.require(["foo", "goodbye", "baz"])
-        }.to raise_error(Figaro::MissingKeys)
+      context "when keys are missing" do
+        it "raises an error for the missing keys including explanations" do
+          expect {
+            Figaro.require(foo: 'foo explained', goodbye: 'goodbye explained', baz: 'baz explained')
+          }.to raise_error(Figaro::MissingKeys) { |error|
+            expect(error.message).not_to include("foo")
+            expect(error.message).to include("- goodbye: goodbye explained")
+            expect(error.message).to include("- baz: baz explained")
+          }
+        end
       end
     end
   end
