@@ -62,5 +62,11 @@ EOL
 
       check_file_content(".gitignore", %r(^/config/application\.yml$), true)
     end
+    
+    it "inserts application.yml into spring config files" do
+      run_simple("rails generate figaro:install")
+      check_file_content("config/spring.rb", %r((Spring\.watch).*(\"config\/application\.yml\")), true)
+    end
+    
   end
 end
