@@ -20,16 +20,8 @@ module Figaro
       end
       
       def spring_configuration
-        if File.exists?(".spring.rb")
-          spring_file = "spring.rb"
-        elsif File.exists?("config/spring.rb")
-          spring_file = "config/spring.rb"          
-        else
-          spring_file = "config/spring.rb"          
-          create_file(spring_file)
-        end
-        
-        append_to_file spring_file, 'Spring.watch "config/application.yml"' 
+        create_file("config/spring.rb") unless File.exists?("config/spring.rb")
+        append_to_file "config/spring.rb", 'Spring.watch "config/application.yml"' 
       end
       
     end
