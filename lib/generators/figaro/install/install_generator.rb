@@ -22,6 +22,7 @@ module Figaro
       def spring_configuration
         create_file("config/spring.rb") unless File.exists?("config/spring.rb")
         append_to_file "config/spring.rb", 'Spring.watch "config/application.yml"' 
+        system('touch config/application.rb') # causes spring to load the changes we introduced above.
       end
       
     end
