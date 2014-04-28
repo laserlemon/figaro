@@ -5,8 +5,13 @@ module Figaro
   class MissingKey < Error; end
 
   class MissingKeys < Error
-    def initialize(keys)
-      super("Missing required configuration keys: #{keys.inspect}")
+    def initialize(missing)
+      if missing.respond_to?(:keys)
+        list = missing.map{ |k,v| "- #{k}: #{v}" }.join("\n").prepend("\n")
+      else
+        list = missing.inspect
+      end
+      super("Missing required configuration keys: #{list}")
     end
   end
 end
