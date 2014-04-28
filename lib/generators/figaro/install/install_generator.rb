@@ -20,9 +20,17 @@ module Figaro
       end
       
       def spring_configuration
-        create_file("config/spring.rb") unless File.exists?("config/spring.rb")
-        append_to_file "config/spring.rb", 'Spring.watch "config/application.yml"' 
-        system('touch config/application.rb') # causes spring to load the changes we introduced above.
+        if File.exists?('Gemfile')
+          spring_included = false #not extracted because we're in an installer
+          File.open("Gemfile", 'r+') do |file|
+            file.each_line{|line| spring_included = true if /gem ['"]spring['"]/.match line}
+          end
+          if spring_included
+            create_file("config/spring.rb") unless File.exists?("config/spring.rb")
+            append_to_file "config/spring.rb", 'Spring.watch "config/application.yml"' 
+            system('touch config/application.rb') # causes spring to load the changes we introduced above.
+          end
+        end
       end
       
     end
