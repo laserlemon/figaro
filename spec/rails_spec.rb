@@ -51,7 +51,7 @@ EOL
 
   describe "rails generate figaro:install" do
     it "generates application.yml" do
-      run_simple("rails generate figaro:install")
+      run_simple("rails generate figaro:install")   
       check_file_presence(["config/application.yml"], true)
     end
 
@@ -61,14 +61,8 @@ EOL
     end
     
     it "inserts application.yml into spring config files" do
-      run_simple("rails generate figaro:install")
+      run_simple("rails generate figaro:install --spring")
       check_file_content("config/spring.rb", %r((Spring\.watch).*(\"config\/application\.yml\")), true)
-    end
-    
-    it "doesn't touch spring config files if gem isn't present" do
-      overwrite_file('Gemfile', '')
-      run_simple("rails generate figaro:install")
-      check_file_presence(["config/spring.rb"], false)
     end
     
   end

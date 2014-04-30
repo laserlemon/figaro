@@ -8,5 +8,8 @@ group :test do
   gem "aruba", "~> 0.5"
   gem "codeclimate-test-reporter", "~> 0.3.0", require: false
   gem "rspec", "~> 2.14"
+  gem 'pry'
+
+  gem 'debugger'
   gem "sqlite3", "~> 1.3"
 end
