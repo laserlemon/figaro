@@ -22,6 +22,12 @@ module Figaro
       def application
         @application ||= Figaro::Application.new(options)
       end
+
+      if defined? Bundler
+        def system(*)
+          Bundler.with_clean_env { super }
+        end
+      end
     end
   end
 end
