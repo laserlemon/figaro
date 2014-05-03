@@ -14,6 +14,29 @@ Figaro was written to make it easy to securely configure Rails applications.
 
 Configuration values often include sensitive information. Figaro strives to be secure by default by encouraging a convention that keeps configuration out of Git.
 
+## Installation
+
+Installing the gem:
+```sh
+$ gem install figaro
+```
+
+
+#### Installing figaro in your Rails app
+
+Add to Gemfile:
+
+```rb
+gem 'figaro'
+```
+
+then:
+
+```sh
+$ bundle install
+$ rails generate figaro:install
+```
+
 ## How does Figaro work?
 
 Figaro is inspired by the [Twelve-Factor App](http://12factor.net) methodology, which states:
