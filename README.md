@@ -24,6 +24,23 @@ This is straightforward in production environments but local development environ
 
 Figaro parses a Git-ignored YAML file in your application and loads its values into `ENV`.
 
+### Getting Started
+
+Add Figaro to your Gemfile and `bundle install`:
+
+```ruby
+gem "figaro"
+```
+
+Figaro includes a Rails generator for easy installation:
+
+
+```bash
+rails generate figaro:install
+```
+
+This creates a commented `config/application.yml` file and adds it to your `.gitignore`. Add your own configuration to this file and you're done!
+
 ### Example
 
 Given the following configuration file:
