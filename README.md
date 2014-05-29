@@ -8,6 +8,8 @@ Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML fi
 [![Coverage Status](https://img.shields.io/codeclimate/coverage/github/laserlemon/figaro.svg)](https://codeclimate.com/github/laserlemon/figaro)
 [![Dependency Status](https://img.shields.io/gemnasium/laserlemon/figaro.svg)](https://gemnasium.com/laserlemon/figaro)
 
+Using version 0.7.0? [Check out the old Readme.](https://github.com/laserlemon/figaro/blob/cc0c45186dd6b5cdb80b4ac83989a33e36eb3a4c/README.md)
+
 ## Why does Figaro exist?
 
 Figaro was written to make it easy to securely configure Rails applications.
