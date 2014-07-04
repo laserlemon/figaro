@@ -22,7 +22,7 @@ module Figaro
       HerokuSet.run(options)
     end
 
-    desc "travis:encrypt", "Encrypt and add configuration to .travis.yml"
+    desc "travis:encrypt", "Encrypt Figaro configuration for .travis.yml"
 
     method_option "environment",
       aliases: ["-e"],
