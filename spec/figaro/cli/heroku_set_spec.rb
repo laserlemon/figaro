@@ -59,4 +59,10 @@ EOF
     expect(command.name).to eq("heroku")
     expect(command.args).to eq(["config:set", "foo=bar baz"])
   end
+
+  it 'alerts the user when an unknown option is used' do
+    run_simple('figaro heroku:set --bogus', false) # Don't fail on error
+
+    assert_failing_with("Unknown switches '--bogus'")
+  end
 end
