@@ -60,4 +60,20 @@ EOF
     expect(command.name).to eq("travis")
     expect(command.args).to eq(["encrypt", "--split", "foo=bar\ndead=beef"])
   end
+
+  it 'passes unknown options to travis' do
+    run_simple("figaro travis:encrypt --awesome")
+
+    command = commands.last
+    expect(command.name).to eq("travis")
+    expect(command.args).to eq(["encrypt", "--awesome", "--split", "foo=bar"])
+  end
+
+  it 'allows the user to override the split option' do
+    run_simple("figaro travis:encrypt --no-split")
+
+    command = commands.last
+    expect(command.name).to eq("travis")
+    expect(command.args).to eq(["encrypt", "--no-split", "foo=bar"])
+  end
 end

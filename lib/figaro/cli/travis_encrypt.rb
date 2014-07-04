@@ -10,11 +10,16 @@ module Figaro
       private
 
       def command
-        %(travis encrypt #{travis_options} --split "#{vars}")
+        %(travis encrypt #{travis_options} "#{vars}")
       end
 
       def travis_options
-        options_ary = []
+        options_ary = options[:extra_args]
+
+        if !options_ary.include?('--no-split') && !options_ary.include?('--split')
+          options_ary << '--split'
+        end
+
         if options[:add]
           options_ary << '--add'
 

@@ -5,6 +5,9 @@ require "figaro/cli/travis_encrypt"
 
 module Figaro
   class CLI < Thor
+    stop_on_unknown_option! :'travis:encrypt'
+    check_unknown_options! except: :'travis:encrypt'
+
     desc "heroku:set", "Send Figaro configuration to Heroku"
 
     method_option "app",
@@ -38,8 +41,12 @@ module Figaro
       type: :boolean,
       desc: "Override existing env vars in .travis.yml"
 
-    define_method "travis:encrypt" do
-      TravisEncrypt.run(options)
+    define_method "travis:encrypt" do |*args|
+      TravisEncrypt.run(options.merge(extra_args: args))
+    end
+
+    def self.exit_on_failure?
+      true
     end
   end
 end
