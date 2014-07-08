@@ -57,4 +57,18 @@ EOF
     expect(command.name).to eq("heroku")
     expect(command.args).to eq(["config:set", "foo=bar baz"])
   end
+
+  it "handles values that are of Fixnum class" do
+    overwrite_file("config/application.yml", <<-EOF)
+foo: 4815162342
+test:
+  foo: 4815162342
+EOF
+
+    run_simple("figaro heroku:set -e test")
+
+    command = commands.last
+    expect(command.name).to eq("heroku")
+    expect(command.args).to eq(["config:set", "foo=4815162342"])
+  end
 end

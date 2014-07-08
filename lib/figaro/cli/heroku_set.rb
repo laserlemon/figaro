@@ -4,7 +4,11 @@ module Figaro
   class CLI < Thor
     class HerokuSet < Task
       def run
-        system(configuration, command)
+        config = configuration
+        config.each do |k, v|
+          config[k] = v.to_s
+        end
+        system(config, command)
       end
 
       private
