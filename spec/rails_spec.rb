@@ -49,18 +49,4 @@ EOL
       assert_partial_output("bar", all_stdout)
     end
   end
-
-  describe "rails generate figaro:install" do
-    it "generates application.yml" do
-      run_simple("rails generate figaro:install")
-
-      check_file_presence(["config/application.yml"], true)
-    end
-
-    it "ignores application.yml" do
-      run_simple("rails generate figaro:install")
-
-      check_file_content(".gitignore", %r(^/config/application\.yml$), true)
-    end
-  end
 end

@@ -1,7 +1,5 @@
 require "spec_helper"
 
-require "figaro/cli"
-
 describe "figaro heroku:set" do
   before do
     create_dir("example")
