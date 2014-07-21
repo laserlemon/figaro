@@ -41,6 +41,8 @@ Figaro installation is easy:
 $ figaro install
 ```
 
+Note: if figaro install doesn't work, try $ rails generate figaro:install
+
 This creates a commented `config/application.yml` file and adds it to your `.gitignore`. Add your own configuration to this file and you're done!
 
 ### Example
