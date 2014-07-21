@@ -7,17 +7,17 @@ module Figaro
         let!(:application) { Application.new }
 
         it "defaults to config/application.yml in Rails.root" do
-          ::Rails.stub(root: Pathname.new("/path/to/app"))
+          allow(::Rails).to receive(:root) { Pathname.new("/path/to/app") }
 
           expect {
-            ::Rails.stub(root: Pathname.new("/app"))
+            allow(::Rails).to receive(:root) { Pathname.new("/app") }
           }.to change {
             application.send(:default_path).to_s
           }.from("/path/to/app/config/application.yml").to("/app/config/application.yml")
         end
 
         it "raises an error when Rails.root isn't set yet" do
-          ::Rails.stub(root: nil)
+          allow(::Rails).to receive(:root) { nil }
 
           expect {
             application.send(:default_path)
@@ -29,10 +29,10 @@ module Figaro
         let!(:application) { Application.new }
 
         it "defaults to Rails.env" do
-          ::Rails.stub(env: "development")
+          allow(::Rails).to receive(:env) { "development" }
 
           expect {
-            ::Rails.stub(env: "test")
+            allow(::Rails).to receive(:env) { "test" }
           }.to change {
             application.send(:default_environment).to_s
           }.from("development").to("test")

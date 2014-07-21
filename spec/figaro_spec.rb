@@ -29,8 +29,8 @@ describe Figaro do
     let(:custom_application) { double(:custom_application) }
 
     before do
-      Figaro.stub(:adapter) { adapter }
-      adapter.stub(:new).with(no_args) { application }
+      allow(Figaro).to receive(:adapter) { adapter }
+      allow(adapter).to receive(:new).with(no_args) { application }
     end
 
     it "defaults to a new adapter application" do
@@ -50,7 +50,7 @@ describe Figaro do
     let(:application) { double(:application) }
 
     before do
-      Figaro.stub(:application) { application }
+      allow(Figaro).to receive(:application) { application }
     end
 
     it "loads the application configuration" do

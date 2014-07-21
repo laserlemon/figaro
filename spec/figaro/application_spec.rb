@@ -5,10 +5,8 @@ require "tempfile"
 module Figaro
   describe Application do
     before do
-      Application.any_instance.stub(
-        default_path: "/path/to/app/config/application.yml",
-        default_environment: "development"
-      )
+      allow_any_instance_of(Application).to receive(:default_path) { "/path/to/app/config/application.yml" }
+      allow_any_instance_of(Application).to receive(:default_environment) { "development" }
     end
 
     describe "#path" do
@@ -42,7 +40,7 @@ module Figaro
         application = Application.new
 
         expect {
-          application.stub(default_path: "/app/env.yml")
+          allow(application).to receive(:default_path) { "/app/env.yml" }
         }.to change {
           application.path
         }.from("/path/to/app/config/application.yml").to("/app/env.yml")
@@ -86,7 +84,7 @@ module Figaro
         application = Application.new
 
         expect {
-          application.stub(default_environment: "test")
+          allow(application).to receive(:default_environment) { "test" }
         }.to change {
           application.environment
         }.from("development").to("test")
@@ -164,10 +162,10 @@ YAML
         path_2 = yaml_to_path("foo: baz")
 
         application = Application.new
-        application.stub(default_path: path_1)
+        allow(application).to receive(:default_path) { path_1 }
 
         expect {
-          application.stub(default_path: path_2)
+          allow(application).to receive(:default_path) { path_2 }
         }.to change {
           application.configuration
         }.from("foo" => "bar").to("foo" => "baz")
@@ -179,10 +177,10 @@ foo: bar
 test:
   foo: baz
 YAML
-        application.stub(default_environment: "development")
+        allow(application).to receive(:default_environment) { "development" }
 
         expect {
-          application.stub(default_environment: "test")
+          allow(application).to receive(:default_environment) { "test" }
         }.to change {
           application.configuration
         }.from("foo" => "bar").to("foo" => "baz")
@@ -193,7 +191,7 @@ YAML
       let!(:application) { Application.new }
 
       before do
-        application.stub(configuration: { "foo" => "bar" })
+        allow(application).to receive(:configuration) { { "foo" => "bar" } }
       end
 
       it "merges values into ENV" do
@@ -219,7 +217,7 @@ YAML
       it "sets keys that have already been set internally" do
         application.load
 
-        application.stub(configuration: { "foo" => "baz" })
+        allow(application).to receive(:configuration) { { "foo" => "baz" } }
 
         expect {
           application.load
@@ -229,7 +227,7 @@ YAML
       end
 
       it "warns when a key isn't a string" do
-        application.stub(configuration: { foo: "bar" })
+        allow(application).to receive(:configuration) { { foo: "bar" } }
 
         expect(application).to receive(:warn)
 
@@ -237,7 +235,7 @@ YAML
       end
 
       it "warns when a value isn't a string" do
-        application.stub(configuration: { "foo" => ["bar"] })
+        allow(application).to receive(:configuration) { { "foo" => ["bar"] } }
 
         expect(application).to receive(:warn)
 
@@ -245,7 +243,7 @@ YAML
       end
 
       it "allows nil values" do
-        application.stub(configuration: { "foo" => nil })
+        allow(application).to receive(:configuration) { { "foo" => nil } }
 
         expect {
           application.load
