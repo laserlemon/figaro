@@ -1,4 +1,4 @@
-require "figaro/cli/task"
+require "thor/group"
 
 module Figaro
   class CLI < Thor
