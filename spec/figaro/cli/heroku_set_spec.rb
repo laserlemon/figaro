@@ -71,4 +71,18 @@ EOF
     expect(command.name).to eq("heroku")
     expect(command.args).to eq(["config:set", "foo=4815162342"])
   end
+
+  it "handles values of many special characters" do
+    overwrite_file("config/application.yml", <<-EOF)
+test_config_value: 1!2@3#4\\$5%6^7&8*9(0)1-2_3=4+5'6'7'8\\"9\\"0\\"1.2,3<4>5:6;7\\`8~9[0]1{2}
+test:
+  test_config_value: 1!2@3#4\\$5%6^7&8*9(0)1-2_3=4+5'6'7'8\\"9\\"0\\"1.2,3<4>5:6;7\\`8~9[0]1{2}
+EOF
+
+    run_simple("figaro heroku:set -e test")
+
+    command = commands.last
+    expect(command.name).to eq("heroku")
+    expect(command.args).to eq(["config:set", "test_config_value=1!2@3#4$5%6^7&8*9(0)1-2_3=4+5'6'7'8\"9\"0\"1.2,3<4>5:6;7\`8~9[0]1{2}"])
+  end
 end
