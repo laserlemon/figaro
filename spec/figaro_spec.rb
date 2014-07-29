@@ -60,7 +60,7 @@ describe Figaro do
     end
   end
 
-  describe ".require" do
+  describe ".require_keys" do
     before do
       ::ENV["foo"] = "bar"
       ::ENV["hello"] = "world"
@@ -69,13 +69,13 @@ describe Figaro do
     context "when no keys are missing" do
       it "does nothing" do
         expect {
-          Figaro.require("foo", "hello")
+          Figaro.require_keys("foo", "hello")
         }.not_to raise_error
       end
 
       it "accepts an array" do
         expect {
-          Figaro.require(["foo", "hello"])
+          Figaro.require_keys(["foo", "hello"])
         }.not_to raise_error
       end
     end
@@ -83,7 +83,7 @@ describe Figaro do
     context "when keys are missing" do
       it "raises an error for the missing keys" do
         expect {
-          Figaro.require("foo", "goodbye", "baz")
+          Figaro.require_keys("foo", "goodbye", "baz")
         }.to raise_error(Figaro::MissingKeys) { |error|
           expect(error.message).not_to include("foo")
           expect(error.message).to include("goodbye")
@@ -93,7 +93,7 @@ describe Figaro do
 
       it "accepts an array" do
         expect {
-          Figaro.require(["foo", "goodbye", "baz"])
+          Figaro.require_keys(["foo", "goodbye", "baz"])
         }.to raise_error(Figaro::MissingKeys)
       end
     end
