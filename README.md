@@ -281,8 +281,25 @@ For more information:
 $ figaro help heroku:set
 ```
 
-**NOTE:** The environment option is required for the `heroku:set` command. The
-Rake task in Figaro 0.7 used the default of "development" if unspecified.
+**NOTE:** The environment option is required for the `heroku:set` command. The Rake task in Figaro 0.7 used the default of "development" if unspecified.
+
+### Issues with missing environment variables
+
+Read on if you upgraded to 1.0.0 and are experiencing problems with Figaro not loading updated values from your `config/application.yml`.
+
+As part of the changes to Figaro for 1.0.0 (specifically, [this commit](https://github.com/laserlemon/figaro/commit/ac00b48025d38819615c926ad394a23948d6f914)), some guard logic was introduced which prevents Figaro from changing environment variables unless it was responsible for setting them in the first place.
+
+It does this by creating a shadow environment variable with a prefix of *FIGARO_*. If that shadow variable does not exist, then Figaro will skip loading new values for that environment variable.
+
+Prior to 0.7 - the shadow variables were _not_ created. Therefore, if you attempt to restart your services running under an application server that caches the environment (for example, via a USR2 signal in unicorn), you will find that Figaro will skip loading any new values from your application.yml file and will continue using the old values.
+
+The easiest way to fix this is to simply restart your application server (i.e., completely stop and restart). Figaro will initialize all your environment variables (and shadow variables) and continue being awesome.
+
+If however, you can't have any downtime and you don't have another way to do the restart (such as swapping your machine behind a load balancer), then you can still fix this with a little bit of monkeying around in the Figaro code:
+
+1. Update your deployed copy of `lib/figaro/application.rb` and modify the `def skip?` method to always return false.
+2. Restart your service gracefully. The patch forces Figaro to reload every variable and set the shadow variable for each.
+3. Undo your patch to `lib/figaro/application.rb` and restart your service gracefully again.
 
 ## Who wrote Figaro?
 
