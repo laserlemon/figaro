@@ -26,7 +26,7 @@ module Figaro
   end
 
   def path
-    @path ||= Rails.root.join("config", "application.yml")
+    @path ||=  (Rails.root || Pathname.new('')).join("config", "application.yml")
   end
 
   def environment
