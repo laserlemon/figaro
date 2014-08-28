@@ -41,7 +41,7 @@ Figaro installation is easy:
 $ figaro install
 ```
 
-> Command not found!?  You're probaly on the older stable branch.  Try `rails generate figaro:install` More info [HERE](https://github.com/laserlemon/figaro/issues/131)
+> Command not found!?  You're probaly on the older stable branch.  Try `rails generate figaro:install` and for more info read the issue [HERE](https://github.com/laserlemon/figaro/issues/131).
 
 This creates a commented `config/application.yml` file and adds it to your `.gitignore`. Add your own configuration to this file and you're done!
 
