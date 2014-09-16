@@ -163,7 +163,7 @@ $ figaro heroku:set -e production
 OR
 
 ```bash
-$ bundle exec rake figaro:heroku --app YOURAPP
+$ bundle exec rake figaro:heroku[YOURAPP]
 ```
 
 
