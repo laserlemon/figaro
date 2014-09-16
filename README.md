@@ -160,6 +160,12 @@ Using the `figaro` command, you can set values from your configuration file all 
 ```bash
 $ figaro heroku:set -e production
 ```
+OR
+
+```bash
+$ bundle exec rake figaro:heroku --app YOURAPP
+```
+
 
 For more information:
 
