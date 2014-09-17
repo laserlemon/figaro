@@ -10,8 +10,6 @@ Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML fi
 
 **NOTE:** If you're using Figaro 0.7 or prior, please refer to the [appropriate documentation](https://github.com/laserlemon/figaro/tree/0-stable#readme) or [upgrade](#how-do-i-upgrade-to-figaro-10) to Figaro 1.0.
 
-Using version 0.7.0? [Check out the old Readme.](https://github.com/laserlemon/figaro/blob/cc0c45186dd6b5cdb80b4ac83989a33e36eb3a4c/README.md)
-
 ## Why does Figaro exist?
 
 Figaro was written to make it easy to securely configure Rails applications.
