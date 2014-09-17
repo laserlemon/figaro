@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Figaro::ENV do
   subject(:env) { Figaro::ENV }
 

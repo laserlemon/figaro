@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Figaro do
   describe ".env" do
     it "falls through to Figaro::ENV" do

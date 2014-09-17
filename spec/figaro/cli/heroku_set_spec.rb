@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe "figaro heroku:set" do
   before do
     create_dir("example")

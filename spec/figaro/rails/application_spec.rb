@@ -1,5 +1,3 @@
-require "spec_helper"
-
 module Figaro
   module Rails
     describe Application do

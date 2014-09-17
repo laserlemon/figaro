@@ -1,5 +1,3 @@
-require "spec_helper"
-
 describe Figaro::Rails do
   before do
     run_simple(<<-CMD)
