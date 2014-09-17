@@ -8,6 +8,8 @@ Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML fi
 [![Coverage Status](https://img.shields.io/codeclimate/coverage/github/laserlemon/figaro.svg?style=flat-square)](https://codeclimate.com/github/laserlemon/figaro)
 [![Dependency Status](https://img.shields.io/gemnasium/laserlemon/figaro.svg?style=flat-square)](https://gemnasium.com/laserlemon/figaro)
 
+**NOTE:** If you're using Figaro 0.7 or prior, please refer to the [appropriate documentation](https://github.com/laserlemon/figaro/tree/0-stable#readme) or [upgrade](#how-do-i-upgrade-to-figaro-10) to Figaro 1.0.
+
 Using version 0.7.0? [Check out the old Readme.](https://github.com/laserlemon/figaro/blob/cc0c45186dd6b5cdb80b4ac83989a33e36eb3a4c/README.md)
 
 ## Why does Figaro exist?
@@ -242,6 +244,47 @@ Rails 4.1 introduced the `secrets.yml` convention for Rails application configur
 The emergence of a configuration convention for Rails is an important step, but as long as the last three differences above exist, Figaro will continue to be developed as a more secure, more consistent, and more standards-compliant alternative to `secrets.yml`.
 
 For more information, read the original [The Marriage of Figaro… and Rails](http://www.collectiveidea.com/blog/archives/2013/12/18/the-marriage-of-figaro-and-rails/) blog post.
+
+## How do I upgrade to Figaro 1.0?
+
+In most cases, upgrading from Figaro 0.7 to 1.0 is painless. The format
+expectations for `application.yml` are the same in 1.0 and values from
+`application.yml` are loaded into `ENV` as they were in 0.7.
+
+However, there are breaking changes:
+
+### `Figaro.env`
+
+In Figaro 0.7, calling a method on the `Figaro.env` proxy would raise an error
+if a corresponding key were not set in `ENV`.
+
+In Figaro 1.0, calling a method on `Figaro.env` corresponding to an unset key
+will return `nil`. To emulate the behavior of Figaro 0.7, use "bang" methods as
+described in the [Required Keys](#required-keys) section.
+
+**NOTE:** In Figaro 0.7, `Figaro.env` inherited from `Hash` but in Figaro 1.0,
+hash access has been removed.
+
+### Heroku Configuration
+
+In Figaro 0.7, a Rake task existed to set remote Heroku configuration according
+to values in `application.yml`.
+
+In Figaro 1.0, the Rake task was replaced by a command for the `figaro`
+executable:
+
+```bash
+$ figaro heroku:set -e production
+```
+
+For more information:
+
+```bash
+$ figaro help heroku:set
+```
+
+**NOTE:** The environment option is required for the `heroku:set` command. The
+Rake task in Figaro 0.7 used the default of "development" if unspecified.
 
 ## Who wrote Figaro?
 
