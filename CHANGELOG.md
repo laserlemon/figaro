@@ -1,3 +1,11 @@
+## 1.0.0 / Unreleased
+
+* [BUGFIX] Make calls to Heroku with a clean Bundler environment
+* [ENHANCEMENT] Remove Rails as a runtime dependency
+* [FEATURE] Replace the Rails generator with the `figaro install` task
+* [ENHANCEMENT] Rename the `Figaro.require` method to `Figaro.require_keys`
+* [ENHANCEMENT] Begin to test against Rails 4.2 (beta)
+
 ## 1.0.0.rc1 / 2014-04-17
 
 * [FEATURE] Add bang and boolean methods to `Figaro.env`
