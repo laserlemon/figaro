@@ -1,4 +1,4 @@
-## 1.0.0 / Unreleased
+## 1.0.0 / 2014-09-17
 
 * [BUGFIX] Make calls to Heroku with a clean Bundler environment
 * [ENHANCEMENT] Remove Rails as a runtime dependency
