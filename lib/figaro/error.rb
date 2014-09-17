@@ -5,7 +5,7 @@ module Figaro
 
   class MissingKey < Error
     def initialize(key)
-      super("Missing required Figaro configuration key #{key.inspect}.")
+      super("Missing required configuration key: #{key.inspect}")
     end
   end
 
