@@ -34,7 +34,7 @@ module Figaro
     end
 
     def missing_key!(key)
-      raise MissingKey.new("Missing required Figaro configuration key #{key.inspect}.")
+      raise MissingKey.new(key)
     end
 
     def get_value(key)

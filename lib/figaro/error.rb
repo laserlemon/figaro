@@ -2,7 +2,12 @@ module Figaro
   class Error < StandardError; end
 
   class RailsNotInitialized < Error; end
-  class MissingKey < Error; end
+
+  class MissingKey < Error
+    def initialize(key)
+      super("Missing required Figaro configuration key #{key.inspect}.")
+    end
+  end
 
   class MissingKeys < Error
     def initialize(keys)
