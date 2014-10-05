@@ -77,7 +77,7 @@ module Figaro
     end
 
     def skip?(key)
-      ::ENV.key?(key.to_s) && !::ENV.key?(FIGARO_ENV_PREFIX + key.to_s)
+      ::ENV.key?(key.to_s) && !::ENV.key?(FIGARO_ENV_PREFIX + key.to_s) && !ENV['FIGARO_OVERRIDE'] == 'true'
     end
 
     def non_string_configuration!(value)
