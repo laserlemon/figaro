@@ -167,6 +167,28 @@ For more information:
 $ figaro help heroku:set
 ```
 
+#### Capistrano (version 3)
+
+This gem includes tasks to integrate with Capistrano v3 and Rails. Just require them and you're fine:
+
+```ruby
+# in Rails.root/Capfile
+...
+# Include tasks from other gems included in your Gemfile
+require 'capistrano/rvm'
+require 'capistrano/bundler'
+require 'capistrano/rails/assets'
+require 'capistrano/rails/migrations'
+require 'figaro/capistrano' # <=== Here's the require
+
+```
+Capistrano output
+
+```
+INFO Uploading /application/path/shared/application.yml 100.0%
+INFO [e7870ed6] Running /usr/bin/env ln -sf /application/path/shared/application.yml /application/path/releases/20150121133124/config/application.yml as deploy@app.example.org
+```
+
 #### Other Hosts
 
 If you're not deploying to Heroku, you have two options:
