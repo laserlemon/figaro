@@ -1,0 +1,49 @@
+require 'stringio'
+
+namespace :figaro do
+  desc <<-DESC
+    Upload application config to the server
+
+    You can override any of these defaults by setting the variables shown below.
+
+    set :figaro_target, -> { shared_path.join('application.yml') }
+    set :figaro_config, -> { release_path.join('config', 'application.yml') }
+  DESC
+  task :upload do
+    figaro_data = nil
+
+    run_locally do
+      figaro_cmd = %Q(Figaro::Rails::Application.new(environment: "#{fetch(:stage)}").configuration.to_yaml)
+      figaro_data = capture(:rails, "runner 'puts #{figaro_cmd}'")
+    end
+
+    if figaro_data
+      on roles(fetch(:figaro_roles)) do
+        upload! StringIO.new(figaro_data), fetch(:figaro_target)
+      end
+    end
+  end
+
+  desc <<-DESC
+    Symlink the application config to the release_path
+  DESC
+  task :symlink do
+    on roles(fetch(:figaro_roles)) do
+      execute :ln, '-sf', fetch(:figaro_target), fetch(:figaro_config)
+    end
+  end
+end
+
+namespace :load do
+  task :defaults do
+    set :figaro_target, -> { shared_path.join('application.yml') }
+    set :figaro_config, -> { release_path.join('config', 'application.yml') }
+    set :figaro_to_env, false
+    set :figaro_roles, :app
+  end
+end
+
+namespace :deploy do
+  after :updating, 'figaro:upload'
+  after :updating, 'figaro:symlink'
+end
