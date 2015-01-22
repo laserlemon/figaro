@@ -172,7 +172,7 @@ $ figaro help heroku:set
 This gem includes tasks to integrate with Capistrano v3 and Rails. Just require them and you're fine:
 
 ```ruby
-# in Rails.root/Capfile
+# in "#{Rails.root}/Capfile"
 ...
 # Include tasks from other gems included in your Gemfile
 require 'capistrano/rvm'
@@ -180,13 +180,30 @@ require 'capistrano/bundler'
 require 'capistrano/rails/assets'
 require 'capistrano/rails/migrations'
 require 'figaro/capistrano' # <=== Here's the require
-
 ```
 Capistrano output
 
 ```
 INFO Uploading /application/path/shared/application.yml 100.0%
 INFO [e7870ed6] Running /usr/bin/env ln -sf /application/path/shared/application.yml /application/path/releases/20150121133124/config/application.yml as deploy@app.example.org
+```
+
+You can also require and use a couple of Capistrano helper methods to use `application.yml` values in your capistrano
+recipes. To do that just include `Figaro::CapistranoHelper` module in your `Capfile` with
+
+```ruby
+# in "#{Rails.root}/Capfile"
+require 'figaro/capistrano_helper'
+```
+
+and you will have access to these two helpers
+
+```ruby
+# in config/deploy.rb
+# Will load newrelic key from application.yml in fetch(:stage) sections and raise if not set
+set :newrelic_license_key, fetch_secret!('NEW_RELIC_LICENSE_KEY')
+# Non bang version returns nil if the secret cannot be found
+set :newrelic_license_key, fetch_secret('NEW_RELIC_LICENSE_KEY') || '<default_key>'
 ```
 
 #### Other Hosts
