@@ -14,22 +14,22 @@ module Figaro
           }.from("/path/to/app/config/application.yml").to("/app/config/application.yml")
         end
 
-        it "defaults to path relative to Rails.root from the FIGARO_FILE_PATH environment variable" do
+        it "defaults to path relative to Rails.root from the FIGARO_PATH environment variable" do
           expect {
-            ::ENV["FIGARO_FILE_PATH"] = "./config/application.docker.yml"
+            ::ENV["FIGARO_PATH"] = "./config/application.docker.yml"
           }.to change {
             application.send(:default_path).to_s
           }.from("/path/to/app/config/application.yml").to("/path/to/app/config/application.docker.yml")
-          ::ENV["FIGARO_FILE_PATH"] = nil
+          ::ENV["FIGARO_PATH"] = nil
         end
 
-        it "defaults to absolute path from the FIGARO_FILE_PATH environment variable" do
+        it "defaults to absolute path from the FIGARO_PATH environment variable" do
           expect {
-            ::ENV["FIGARO_FILE_PATH"] = "/var/config/my-app.yml"
+            ::ENV["FIGARO_PATH"] = "/var/config/my-app.yml"
           }.to change {
             application.send(:default_path).to_s
           }.from("/path/to/app/config/application.yml").to("/var/config/my-app.yml")
-          ::ENV["FIGARO_FILE_PATH"] = nil
+          ::ENV["FIGARO_PATH"] = nil
         end
 
         it "raises an error when Rails.root isn't set yet" do

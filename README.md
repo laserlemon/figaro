@@ -149,11 +149,11 @@ Say your deployment process require you to have your configuration at a certain 
 You can achieve this by using an environment variable to tell Figaro where to look for your yaml file.
 
 ```bash
-$ docker run -e FIGARO_FILE_PATH=./config/application.docker.yml my-container rails s
+$ docker run -e FIGARO_PATH=./config/application.docker.yml my-container rails s
 ```
 
 ```bash
-$ FIGARO_FILE_PATH=/storage_device/configuration/my_app_variables.yml rails s
+$ FIGARO_PATH=/storage_device/configuration/my_app_variables.yml rails s
 ```
 
 If you're not using rails or if you want to determine the file path by other means, set the `Figaro.adapter.path` to your desired value.
