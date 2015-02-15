@@ -40,20 +40,24 @@ module Figaro
 
     # figaro dokku:set
 
-    desc "dokku:set --app=<app> --server=<server>", "Send Figaro configuration to a Dokku app."
+    desc "dokku:set", "Send Figaro configuration to a Dokku app."
     long_desc <<-LONGDESC
-      Sends the Figaro configuration to a Dokku app named <app> on Dokku server <server>.
+      Sends the Figaro configuration to a Dokku APP on the Dokku SERVER.
 
-      Since Dokku does not provide a client, this command requires that:
-      1. the local machine has ssh access to the Dokku server for the 'dokku' user
-      2. the Dokku server  (e.g. dokku-example.com)
-      3. the app name
+      Since Dokku does not provide a client, this command requires that:\n\n
+      1. the 'dokku' user can ssh into the Dokku server from the local machine\n\n
+      2. the Dokku server (e.g. dokku-example.com) and app name (e.g. my-app) are specified
+      \n\n
     LONGDESC
 
+    method_option "server",
+      required: true,
+      aliases: ["-s"],
+      desc: "Specify a Dokku server (e.g. dokku-example.com)"
     method_option "app",
       required: true, 
       aliases: ["-a"],
-      desc: "Specify a Dokku app"
+      desc: "Specify a Dokku app (e.g. my-dokku-app)"
     method_option "environment",
       aliases: ["-e"],
       desc: "Specify an application environment"
@@ -61,10 +65,6 @@ module Figaro
       aliases: ["-p"],
       default: "config/application.yml",
       desc: "Specify a configuration file path"
-    method_option "server",
-      required: true,
-      aliases: ["-s"],
-      desc: "Specify a Dokku server (dokku-example.com)"
  
     define_method "dokku:set" do
       require "figaro/cli/dokku_set"
