@@ -43,9 +43,9 @@ module Figaro
     desc 'eb:set', 'Send Figaro configuration to Elasticbeanstalk'
 
     method_option 'env',
-                  desc: 'Specify an Elasticbeanstalk application environment'
+                  desc: 'Specify an Amazon Elasticbeanstalk application environment'
     method_option 'profile',
-                  desc: 'Specify a AWS profile'
+                  desc: 'Specify an AWS profile'
     method_option 'verbose',
                   aliases: ['-v'],
                   desc: 'Toggle verbose output',
