@@ -29,7 +29,7 @@ module Figaro
     end
 
     def configuration
-      global_configuration.merge(environment_configuration)
+      global_configuration.merge(environment_configuration || {})
     end
 
     def load
