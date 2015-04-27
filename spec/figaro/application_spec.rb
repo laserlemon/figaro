@@ -155,6 +155,17 @@ YAML
         expect(application.configuration).to eq("foo" => "BAR")
       end
 
+      it "handles an empty environment block" do
+        application = Application.new(path: yaml_to_path(<<-YAML))
+test:
+YAML
+        allow(application).to receive(:default_environment) { "test" }
+        expect {
+          application.configuration
+        }.to_not raise_error
+        expect(application.configuration).to eq({"test" => nil})
+      end
+
       it "follows a changing default path" do
         path_1 = yaml_to_path("foo: bar")
         path_2 = yaml_to_path("foo: baz")
