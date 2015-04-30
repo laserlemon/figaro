@@ -1,3 +1,7 @@
+## 1.1.1 / 2015-04-30
+
+* [BUGFIX] Fix crash when environment-specific configuration is `nil`
+
 ## 1.1.0 / 2015-01-27
 
 * [FEATURE] Support --remote when setting Heroku configuration
