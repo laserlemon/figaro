@@ -167,9 +167,29 @@ For more information:
 $ figaro help heroku:set
 ```
 
+#### AWS Elastic Beanstalk
+
+Elastic Beanstalk makes setting application configuration easy too:
+
+```bash
+$ eb setenv google_analytics_key=UA-35722661-5
+```
+
+Using the `figaro` command, you can set values from your configuration file all at once:
+
+```bash
+$ figaro eb:set -e production
+```
+
+For more information:
+
+```bash
+$ figaro help eb:set
+```
+
 #### Other Hosts
 
-If you're not deploying to Heroku, you have two options:
+If you're not deploying to Heroku or Elastic Beanstalk, you have two options:
 
 * Generate a remote configuration file
 * Set `ENV` variables directly
