@@ -47,7 +47,7 @@ EOF
   end
 
   it "targets a specific Heroku git remote" do
-    run_simple("figaro heroku:set --remote production")
+    run_simple("figaro heroku:set -r production")
 
     command = commands.last
     expect(command.name).to eq("heroku")
