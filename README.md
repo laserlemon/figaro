@@ -133,6 +133,14 @@ Figaro.require_keys("pusher_app_id", "pusher_key", "pusher_secret")
 
 If any of the configuration keys above are not set, your application will raise an error during initialization. This method is preferred because it prevents runtime errors in a production application due to improper configuration.
 
+You can also require keys from a `*.yml` file. This is especially advantageous if you're using an application setup where `config/application.yml` is indexed in `.gitignore`. The following will prevent the application from starting if some environment variables are missing (e.g. on Heroku):
+
+```ruby
+# config/initializers/figaro.rb
+
+Figaro.require_keys_from_file("config/application.example.yml", Rails.env)
+```
+
 To require configuration keys lazily, reference the variables via "bang" methods on `Figaro.env`:
 
 ```ruby

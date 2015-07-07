@@ -27,6 +27,11 @@ module Figaro
     missing_keys = keys.flatten - ::ENV.keys
     raise MissingKeys.new(missing_keys) if missing_keys.any?
   end
+
+  def require_keys_from_file(path, environment)
+    target_application = adapter.new(path: path, environment: environment)
+    require_keys(target_application.configuration.keys)
+  end
 end
 
 require "figaro/rails"

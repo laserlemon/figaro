@@ -96,4 +96,44 @@ describe Figaro do
       end
     end
   end
+
+  describe ".require_keys_from_file" do
+    let(:adapter) { double(:adapter) }
+    let(:application) { double(:application) }
+
+    before do
+      allow(Figaro).to receive(:adapter) { adapter }
+      allow(adapter).to receive(:new) { application }
+      allow(application).to receive(:configuration) do
+        { "required_key" => "foobar" }
+      end
+    end
+
+    context "when no keys are missing" do
+      before do
+        ::ENV["required_key"] = "barfoo"
+      end
+
+      it "does nothing" do
+        expect {
+          Figaro.require_keys_from_file("/mocked/away.yml", "development")
+        }.not_to raise_error
+      end
+    end
+
+    context "when keys are missing" do
+      before do
+        ::ENV["different_key"] = "bar"
+      end
+
+      it "raises an error for the missing keys" do
+        expect {
+          Figaro.require_keys_from_file("/mocked/away.yml", "development")
+        }.to raise_error(Figaro::MissingKeys) { |error|
+          expect(error.message).not_to include("different_key")
+          expect(error.message).to include("required_key")
+        }
+      end
+    end
+  end
 end
