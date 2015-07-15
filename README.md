@@ -38,7 +38,7 @@ Figaro installation is easy:
 
 
 ```bash
-$ figaro install
+$ bundle exec figaro install
 ```
 
 This creates a commented `config/application.yml` file and adds it to your `.gitignore`. Add your own configuration to this file and you're done!
