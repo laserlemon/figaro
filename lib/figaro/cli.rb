@@ -38,5 +38,28 @@ module Figaro
       require "figaro/cli/heroku_set"
       HerokuSet.run(options)
     end
+
+    # figaro rhc:set
+
+    desc "rhc:set", "Send Figaro configuration to OpenShift"
+
+    method_option "app",
+      aliases: ["-a"],
+      desc: "Specify an OpenShift app"
+    method_option "namespace",
+      aliases: ["-n"],
+      desc: "Specify an OpenShift namespace"
+    method_option "environment",
+      aliases: ["-e"],
+      desc: "Specify an application environment"
+    method_option "path",
+      aliases: ["-p"],
+      default: "config/application.yml",
+      desc: "Specify a configuration file path"
+
+    define_method "rhc:set" do
+      require "figaro/cli/rhc_set"
+      RhcSet.run(options)
+    end
   end
 end
