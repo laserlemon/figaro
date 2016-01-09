@@ -10,7 +10,7 @@ module Figaro
       private
 
       def command
-        "ssh #{ssh_creds} config:set #{for_app} #{vars}"
+        "dokku #{ssh_creds} config:set #{for_app} #{vars}"
       end
 
       def ssh_creds

@@ -3,44 +3,24 @@ describe "figaro dokku:set" do
     create_dir("example")
     cd("example")
     write_file("config/application.yml", "foo: bar")
-
-    # setup cmd-line base
-    @cli_input_base = "figaro dokku:set --app=foo-bar-app --server=dokku-server"
-    # setup common expected values
-    @cmd = "ssh"
-    @args_base = ["dokku@dokku-server", "config:set", "foo-bar-app"]
   end
 
-  it "sends Figaro configuration to a Dokku app" do
-    run_simple(@cli_input_base)
+  it "sends Figaro configuration to dokku" do
+    run_simple("figaro dokku:set")
 
     command = commands.last
-    expect(command.name).to eq(@cmd)
-    expect(command.args).to eq(@args_base << "foo=bar")
-  end
-
-  it "fails if a Dokku app is not specified" do
-    run_simple("figaro dokku:set --server=dokku-server")
-
-    command = commands.last
-    expect(command).to be_nil
-  end
-
-  it "fails if a Dokku server is not specified" do
-    run_simple("figaro dokku:set --app=foo-bar-app")
-
-    command = commands.last
-    expect(command).to be_nil
+    expect(command.name).to eq("dokku")
+    expect(command.args).to eq(["config:set", "foo=bar"])
   end
 
   it "respects path" do
     write_file("env.yml", "foo: bar")
 
-    run_simple(@cli_input_base + " -p env.yml")
+    run_simple("figaro dokku:set -p env.yml")
 
     command = commands.last
-    expect(command.name).to eq(@cmd)
-    expect(command.args).to eq(@args_base << "foo=bar")
+    expect(command.name).to eq("dokku")
+    expect(command.args).to eq(["config:set", "foo=bar"])
   end
 
   it "respects environment" do
@@ -48,22 +28,22 @@ describe "figaro dokku:set" do
 foo: bar
 test:
   foo: baz
-EOF
+    EOF
 
-    run_simple(@cli_input_base + " -e test")
+    run_simple("figaro dokku:set -e test")
 
     command = commands.last
-    expect(command.name).to eq(@cmd)
-    expect(command.args).to eq(@args_base << "foo=baz")
+    expect(command.name).to eq("dokku")
+    expect(command.args).to eq(["config:set", "foo=baz"])
   end
 
   it "handles values with special characters" do
     overwrite_file("config/application.yml", "foo: bar baz")
 
-    run_simple(@cli_input_base)
+    run_simple("figaro dokku:set")
 
     command = commands.last
-    expect(command.name).to eq(@cmd)
-    expect(command.args).to eq(@args_base << "foo=bar baz")
+    expect(command.name).to eq("dokku")
+    expect(command.args).to eq(["config:set", "foo=bar baz"])
   end
 end
