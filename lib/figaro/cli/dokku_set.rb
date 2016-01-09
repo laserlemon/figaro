@@ -10,17 +10,7 @@ module Figaro
       private
 
       def command
-        "dokku #{ssh_creds} config:set #{for_app} #{vars}"
-      end
-
-      def ssh_creds
-        # hard code the dokku user because a non-dokku user requires the 'dokku' command
-        # TODO: support alternative users and automatically add the 'dokku' command
-        options[:server] ? "dokku@#{options[:server]}" : nil
-      end
-
-      def for_app
-        options[:app] ? "#{options[:app]}" : nil
+        "dokku config:set #{vars}"
       end
 
       def vars
