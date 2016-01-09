@@ -46,8 +46,8 @@ module Figaro
       Sends the Figaro configuration to a Dokku APP on the Dokku SERVER.
 
       Since Dokku does not provide a client, this command requires that:\n\n
-      1. Add git remote dokku repository\n\n
-      2. Do following command `gem install dokku-cli`
+      1. Add git remote dokku repository => `git remote add dokku dokku@example-dokku-server.com:example-app`\n\n
+      2. Do following command => `gem install dokku-cli`
       \n\n
     LONGDESC
 

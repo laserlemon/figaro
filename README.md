@@ -169,16 +169,16 @@ $ figaro help heroku:set
 
 #### Dokku
 
-[Dokku](https://github.com/progrium/dokku), like Heroku, provides a way to set application configuration ENV variables via the command line. However, there is no local client at this moment, so you need to run the commands remotely via ssh.
+[Dokku](https://github.com/progrium/dokku), like Heroku, provides a way to set application configuration ENV variables via the command line.
 
 ```bash
-$ ssh <dokku@example-dokku-server.com> config:set google_analytics_key=UA-35722661-5
+$ dokku config:set google_analytics_key=UA-35722661-5
 ```
 
 Using the `figaro` command, you can set values from your configuration file all at once:
 
 ```bash
-$ figaro dokku:set --server=<example-dokku-server.com> --app=<example-app> -e production
+$ figaro dokku:set -e production
 ```
 
 For more information:
@@ -189,9 +189,8 @@ $ figaro help dokku:set
 
 In this initial implementation, you need to:
 
-1. Explicitly specify the Dokku server and app via the --app and --server options
-1. Ensure that the 'dokku' user can ssh into the Dokku server from the local machine (this involves ensuring that the local user's ssh key is in the list of the Dokku server's authorized keys)
-
+1. Add git remote dokku repository => `git remote add dokku dokku@example-dokku-server.com:example-app`
+2. Do following command => `gem install dokku-cli`
 
 #### Other Hosts
 
