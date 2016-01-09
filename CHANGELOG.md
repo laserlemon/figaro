@@ -1,3 +1,12 @@
+## 1.1.1 / 2015-04-30
+
+* [BUGFIX] Fix crash when environment-specific configuration is `nil`
+
+## 1.1.0 / 2015-01-27
+
+* [FEATURE] Support --remote when setting Heroku configuration
+* [ENHANCEMENT] Test against Rails 4.2 (stable)
+
 ## 1.0.0 / 2014-09-17
 
 * [BUGFIX] Make calls to Heroku with a clean Bundler environment

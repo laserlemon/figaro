@@ -65,7 +65,7 @@ module Figaro
     end
 
     def environment_configuration
-      raw_configuration.fetch(environment) { {} }
+      raw_configuration[environment] || {}
     end
 
     def set(key, value)
