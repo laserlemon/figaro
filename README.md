@@ -147,6 +147,20 @@ Pusher.secret = Figaro.env.pusher_secret!
 
 Figaro is written with deployment in mind. In fact, [Heroku](https://www.heroku.com)'s use of `ENV` for application configuration was the original inspiration for Figaro.
 
+#### Showing / exporting the config
+
+```bash
+$ figaro show -e production
+```
+
+Will print the given environment's configuration to the shell.
+
+For more information:
+
+```bash
+$ figaro help show
+```
+
 #### Heroku
 
 Heroku already makes setting application configuration easy:
