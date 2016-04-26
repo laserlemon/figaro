@@ -30,7 +30,7 @@ module Figaro
     end
 
     def has_key?(key)
-      ::ENV.any? { |k, _| k.downcase == key }
+      ::ENV.has_key?(key) || ::ENV.has_key?(key.upcase)
     end
 
     def missing_key!(key)
