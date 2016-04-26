@@ -38,8 +38,7 @@ module Figaro
     end
 
     def get_value(key)
-      _, value = ::ENV.detect { |k, _| k.downcase == key }
-      value
+      ::ENV[key] || ::ENV[key.upcase]
     end
   end
 end
