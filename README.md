@@ -167,6 +167,26 @@ For more information:
 $ figaro help heroku:set
 ```
 
+#### Scalingo
+
+The scalingo cli makes setting application environment variable easy:
+
+```bash
+$ scalingo env-set stripe_api_key=foobarabcdef123456789
+```
+
+Using the `figaro` command, you can set values from your configuration file all at once:
+
+```bash
+$ figaro scalingo:set -e production
+```
+
+For more information:
+
+```bash
+$ figaro help scalingo:set
+```
+
 #### Other Hosts
 
 If you're not deploying to Heroku, you have two options:
