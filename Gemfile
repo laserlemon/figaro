@@ -1,4 +1,7 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-# Specify your gem's dependencies in figaro.gemspec
 gemspec
+
+group :test do
+  gem "rspec", "~> 3.5"
+end
