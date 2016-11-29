@@ -1,5 +1,8 @@
 require "figaro/version"
+require "figaro/config"
 
 module Figaro
-  # Your code goes here...
+  def self.config
+    Thread.current[:figaro_config] ||= Figaro::Config.load
+  end
 end
