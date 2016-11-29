@@ -72,7 +72,7 @@ module Figaro
     end
 
     def evaluate(option)
-      option.respond_to?(:to_proc) ? instance_eval(&option) : option
+      option.respond_to?(:to_proc) ? instance_exec(&option) : option
     end
 
     private
