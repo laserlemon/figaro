@@ -1,10 +1,10 @@
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "figaro/version"
 
 Gem::Specification.new do |spec|
   spec.name    = "figaro"
-  spec.version = Figaro::VERSION
+  spec.version = Figaro.version
 
   spec.author = "Steve Richert"
   spec.email  = "steve.richert@gmail.com"
