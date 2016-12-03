@@ -1,9 +1,6 @@
 require "pathname"
 
-require "figaro/types/string"
-require "figaro/types/integer"
-require "figaro/types/decimal"
-require "figaro/types/boolean"
+require "figaro/types"
 
 module Figaro
   class Config
