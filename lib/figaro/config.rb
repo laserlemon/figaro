@@ -1,6 +1,6 @@
 require "pathname"
 
-require "figaro/types"
+require "figaro/dsl"
 
 module Figaro
   class Config
@@ -25,6 +25,7 @@ module Figaro
     end
 
     def initialize(envfile_path)
+      @dsl = Figaro::DSL.new(self)
       @envfile_path = Pathname.new(envfile_path).expand_path.to_s
       @envfile_content = File.read(@envfile_path)
       @variables = []
@@ -34,30 +35,12 @@ module Figaro
     end
 
     def load
-      instance_eval(@envfile_content, @envfile_path, 1)
+      @dsl.instance_eval(@envfile_content, @envfile_path, 1)
     end
 
-    def variable(name, type, options = {})
-      type.new(self, name, options).tap do |variable|
-        @variables << variable
-        add_variable_methods(variable)
-      end
-    end
-
-    def string(name, options = {})
-      variable(name, Figaro::Types::String, options)
-    end
-
-    def integer(name, options = {})
-      variable(name, Figaro::Types::Integer, options)
-    end
-
-    def decimal(name, options = {})
-      variable(name, Figaro::Types::Decimal, options)
-    end
-
-    def boolean(name, options = {})
-      variable(name, Figaro::Types::Boolean, options)
+    def <<(variable)
+      @variables << variable
+      add_variable_methods(variable)
     end
 
     def get(key, &default)
