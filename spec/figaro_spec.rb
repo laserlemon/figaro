@@ -1,11 +1,10 @@
 require "spec_helper"
 
 describe Figaro do
-  it "has a version number" do
-    expect(Figaro::VERSION).not_to be nil
-  end
-
-  it "does something useful" do
-    expect(false).to eq(true)
+  describe ".version" do
+    it "exists" do
+      expect(Figaro).to respond_to(:version)
+      expect(Figaro.version).to be_a(Gem::Version)
+    end
   end
 end
