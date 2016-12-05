@@ -7,4 +7,14 @@ describe Figaro do
       expect(Figaro.version).to be_a(Gem::Version)
     end
   end
+
+  describe ".config" do
+    it "loads and memoizes the Figaro config" do
+      config = double
+      expect(Figaro::Config).to receive(:load).with(no_args).once { config }
+
+      expect(Figaro.config).to eq(config)
+      expect(Figaro.config).to eq(config)
+    end
+  end
 end
