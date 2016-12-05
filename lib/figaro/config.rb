@@ -1,6 +1,7 @@
 require "pathname"
 
 require "figaro/dsl"
+require "figaro/error"
 
 module Figaro
   class Config
@@ -36,6 +37,7 @@ module Figaro
 
     def load
       @dsl.instance_eval(@envfile_content, @envfile_path, 1)
+      validate!
     end
 
     def <<(variable)
@@ -63,6 +65,10 @@ module Figaro
         define_method(:"#{variable.name}=", &variable.method(:value=))
         define_method(:"#{variable.name}?", &variable.method(:value?))
       end
+    end
+
+    def validate!
+      raise Figaro::Error unless @variables.all?(&:valid?)
     end
   end
 end

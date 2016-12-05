@@ -4,7 +4,7 @@ module Figaro
 
     def initialize(config, name, options)
       @config, @name, @options = config, name, options
-      @key = options.fetch(:from) { name.to_s.upcase }
+      @key = options.fetch(:key) { default_key }
       @default = options[:default]
       @required = options.fetch(:required, true)
     end
@@ -18,7 +18,7 @@ module Figaro
     end
 
     def value
-      load(config.get(key) { default })
+      load(config.get(key) { self.value = default })
     end
 
     def value=(value)
@@ -35,6 +35,16 @@ module Figaro
 
     def required?
       !!config.evaluate(@required)
+    end
+
+    def valid?
+      required? ? value? : true
+    end
+
+    private
+
+    def default_key
+      name.to_s.upcase
     end
   end
 end
