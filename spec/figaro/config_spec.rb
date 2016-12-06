@@ -90,7 +90,7 @@ module Figaro
           expect(ENV["BAR"]).to eq(nil)
         end
 
-        it "loads an string variable from a custom ENV key" do
+        it "loads a string variable from a custom ENV key" do
           ENV["FU"] = "bar"
           write_envfile <<-EOF
             string :foo, key: "FU"
@@ -305,6 +305,165 @@ module Figaro
           expect(config.foo).to eq(-3)
           expect(config.foo?).to eq(true)
           expect(ENV["FOO"]).to eq("-3")
+        end
+      end
+
+      context "decimal" do
+        it "loads a set decimal variable" do
+          ENV["FOO"] = "1.23"
+          write_envfile <<-EOF
+            decimal :foo
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to be_a(BigDecimal)
+          expect(config.foo).to eq(1.23)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("1.23")
+        end
+
+        it "loads an unset decimal variable with a string default value" do
+          write_envfile <<-EOF
+            decimal :foo, default: "1.23"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to be_a(BigDecimal)
+          expect(config.foo).to eq(1.23)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("1.23")
+        end
+
+        it "loads an unset decimal variable with a float default value" do
+          write_envfile <<-EOF
+            decimal :foo, default: 1.23
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to be_a(BigDecimal)
+          expect(config.foo).to eq(1.23)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("1.23")
+        end
+
+        it "loads a set decimal variable with a default value" do
+          ENV["FOO"] = "2.34"
+          write_envfile <<-EOF
+            decimal :foo, default: "1.23"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to be_a(BigDecimal)
+          expect(config.foo).to eq(2.34)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("2.34")
+        end
+
+        it "raises an error if an unset decimal variable is required" do
+          write_envfile <<-EOF
+            decimal :foo
+            EOF
+
+          expect { Figaro::Config.load }.to raise_error(Figaro::Error)
+        end
+
+        it "loads an optional, unset decimal variable" do
+          write_envfile <<-EOF
+            decimal :foo, required: false
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(nil)
+          expect(config.foo?).to eq(false)
+          expect(ENV["FOO"]).to eq(nil)
+        end
+
+        it "loads an unset decimal variable when dynamically optional" do
+          write_envfile <<-EOF
+            decimal :foo, required: false
+            decimal :bar, required: -> { foo? }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:bar)
+          expect(config).to respond_to(:bar=)
+          expect(config).to respond_to(:bar?)
+          expect(config.bar).to eq(nil)
+          expect(config.bar?).to eq(false)
+          expect(ENV["BAR"]).to eq(nil)
+        end
+
+        it "loads a decimal variable from a custom ENV key" do
+          ENV["FU"] = "1.23"
+          write_envfile <<-EOF
+            decimal :foo, key: "FU"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to be_a(BigDecimal)
+          expect(config.foo).to eq(1.23)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FU"]).to eq("1.23")
+        end
+
+        it "loads a decimal variable with a dynamically set default value" do
+          ENV["FOO"] = "1.23"
+          write_envfile <<-EOF
+            decimal :foo
+            decimal :bar, default: -> { foo }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:bar)
+          expect(config).to respond_to(:bar=)
+          expect(config).to respond_to(:bar?)
+          expect(config.bar).to be_a(BigDecimal)
+          expect(config.bar).to eq(1.23)
+          expect(config.bar?).to eq(true)
+          expect(ENV["BAR"]).to eq("1.23")
+        end
+
+        it "loads a negative decimal variable" do
+          ENV["FOO"] = "-1.23"
+          write_envfile <<-EOF
+            decimal :foo
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to be_a(BigDecimal)
+          expect(config.foo).to eq(-1.23)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("-1.23")
         end
       end
     end

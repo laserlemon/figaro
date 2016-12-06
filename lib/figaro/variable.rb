@@ -18,7 +18,7 @@ module Figaro
     end
 
     def value
-      load(config.get(key) { self.value = default })
+      load(config.get(key) { set_and_get_default_value })
     end
 
     def value=(value)
@@ -45,6 +45,15 @@ module Figaro
 
     def default_key
       name.to_s.upcase
+    end
+
+    # Used in #value because using #value= returns the given argument, no matter
+    # what the method returns. Within #value's config.get block, we need the
+    # returned value to be the string value persisted to ENV. Otherwise, decimal
+    # variables choke on float default values.
+    def set_and_get_default_value
+      self.value = default
+      config.get(key) { nil }
     end
   end
 end
