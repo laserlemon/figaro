@@ -342,6 +342,7 @@ module Figaro
           expect(ENV["FOO"]).to eq("1.23")
         end
 
+        # TODO: Decide whether to allow loading from a float. Floats are buggy.
         it "loads an unset decimal variable with a float default value" do
           write_envfile <<-EOF
             decimal :foo, default: 1.23
