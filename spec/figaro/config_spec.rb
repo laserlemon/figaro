@@ -35,7 +35,7 @@ module Figaro
           expect(ENV["FOO"]).to eq("bar")
         end
 
-        it "loads an unset string variable with a default value" do
+        it "loads a set string variable with a default value" do
           ENV["FOO"] = "baz"
           write_envfile <<-EOF
             string :foo, default: "bar"
@@ -153,6 +153,158 @@ module Figaro
           expect(config.foo).to eq("1")
           expect(config.foo?).to eq(true)
           expect(ENV["FOO"]).to eq("1")
+        end
+      end
+
+      context "integer" do
+        it "loads a set integer variable" do
+          ENV["FOO"] = "3"
+          write_envfile <<-EOF
+            integer :foo
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(3)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("3")
+        end
+
+        it "loads an unset integer variable with a default value" do
+          write_envfile <<-EOF
+            integer :foo, default: 3
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(3)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("3")
+        end
+
+        it "loads a set integer variable with a default value" do
+          ENV["FOO"] = "4"
+          write_envfile <<-EOF
+            integer :foo, default: 3
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(4)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("4")
+        end
+
+        it "raises an error if an unset integer variable is required" do
+          write_envfile <<-EOF
+            integer :foo
+            EOF
+
+          expect { Figaro::Config.load }.to raise_error(Figaro::Error)
+        end
+
+        it "loads an optional, unset integer variable" do
+          write_envfile <<-EOF
+            integer :foo, required: false
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(nil)
+          expect(config.foo?).to eq(false)
+          expect(ENV["FOO"]).to eq(nil)
+        end
+
+        it "loads an unset integer variable when dynamically optional" do
+          write_envfile <<-EOF
+            integer :foo, required: false
+            integer :bar, required: -> { foo? }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:bar)
+          expect(config).to respond_to(:bar=)
+          expect(config).to respond_to(:bar?)
+          expect(config.bar).to eq(nil)
+          expect(config.bar?).to eq(false)
+          expect(ENV["BAR"]).to eq(nil)
+        end
+
+        it "loads an integer variable from a custom ENV key" do
+          ENV["FU"] = "3"
+          write_envfile <<-EOF
+            integer :foo, key: "FU"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(3)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FU"]).to eq("3")
+        end
+
+        it "loads a integer variable with a dynamically set default value" do
+          ENV["FOO"] = "3"
+          write_envfile <<-EOF
+            integer :foo
+            integer :bar, default: -> { foo }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:bar)
+          expect(config).to respond_to(:bar=)
+          expect(config).to respond_to(:bar?)
+          expect(config.bar).to eq(3)
+          expect(config.bar?).to eq(true)
+          expect(ENV["BAR"]).to eq("3")
+        end
+
+        it "loads a integer variable with a non-integer default value" do
+          write_envfile <<-EOF
+            integer :foo, default: "3"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(3)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("3")
+        end
+
+        it "loads a negative integer variable" do
+          ENV["FOO"] = "-3"
+          write_envfile <<-EOF
+            integer :foo
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(-3)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("-3")
         end
       end
     end
