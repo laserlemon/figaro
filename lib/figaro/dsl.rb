@@ -27,5 +27,9 @@ module Figaro
     def boolean(name, options = {})
       variable(name, Figaro::Types::Boolean, options)
     end
+
+    def array(name, options = {})
+      variable(name, Figaro::Types::Array, options)
+    end
   end
 end

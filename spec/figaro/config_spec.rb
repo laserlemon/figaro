@@ -571,7 +571,7 @@ module Figaro
           expect(ENV["FU"]).to eq("true")
         end
 
-        it "loads a string variable with a dynamically set default value" do
+        it "loads a boolean variable with a dynamically set default value" do
           ENV["FOO"] = "true"
           write_envfile <<-EOF
             boolean :foo
@@ -601,6 +601,173 @@ module Figaro
           expect(config.foo).to eq(true)
           expect(config.foo?).to eq(true)
           expect(ENV["FOO"]).to eq("yes")
+        end
+      end
+
+      context "array" do
+        it "loads a set array variable" do
+          ENV["FOO"] = "bar,baz"
+          write_envfile <<-EOF
+            array :foo
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(["bar", "baz"])
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("bar,baz")
+        end
+
+        it "loads a set array variable with a custom separator" do
+          ENV["FOO"] = "bar|baz"
+          write_envfile <<-EOF
+            array :foo, separator: "|"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(["bar", "baz"])
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("bar|baz")
+        end
+
+        it "loads an unset array variable with a default value" do
+          write_envfile <<-EOF
+            array :foo, default: ["bar", "baz"]
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(["bar", "baz"])
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("bar,baz")
+        end
+
+        it "loads an unset array variable with a default value and a custom separator" do
+          write_envfile <<-EOF
+            array :foo, default: ["bar", "baz"], separator: "|"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(["bar", "baz"])
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("bar|baz")
+        end
+
+        it "loads a set array variable with a default value" do
+          ENV["FOO"] = "bar,baz"
+          write_envfile <<-EOF
+            array :foo, default: ["bar", "baz", "qux"]
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(["bar", "baz"])
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("bar,baz")
+        end
+
+        it "raises an error if an unset array variable is required" do
+          write_envfile <<-EOF
+            array :foo
+            EOF
+
+          expect { Figaro::Config.load }.to raise_error(Figaro::Error)
+        end
+
+        it "loads an optional, unset array variable" do
+          write_envfile <<-EOF
+            array :foo, required: false
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(nil)
+          expect(config.foo?).to eq(false)
+          expect(ENV["FOO"]).to eq(nil)
+        end
+
+        it "loads an unset array variable when dynamically optional" do
+          write_envfile <<-EOF
+            array :foo, required: false
+            array :bar, required: -> { foo? }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:bar)
+          expect(config).to respond_to(:bar=)
+          expect(config).to respond_to(:bar?)
+          expect(config.bar).to eq(nil)
+          expect(config.bar?).to eq(false)
+          expect(ENV["BAR"]).to eq(nil)
+        end
+
+        it "loads an array variable from a custom ENV key" do
+          ENV["FU"] = "bar,baz"
+          write_envfile <<-EOF
+            array :foo, key: "FU"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(["bar", "baz"])
+          expect(config.foo?).to eq(true)
+          expect(ENV["FU"]).to eq("bar,baz")
+        end
+
+        it "loads an array variable with a dynamically set default value" do
+          ENV["FOO"] = "bar,baz"
+          write_envfile <<-EOF
+            array :foo
+            array :bar, default: -> { foo }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:bar)
+          expect(config).to respond_to(:bar=)
+          expect(config).to respond_to(:bar?)
+          expect(config.bar).to eq(["bar", "baz"])
+          expect(config.bar?).to eq(true)
+          expect(ENV["BAR"]).to eq("bar,baz")
+        end
+
+        it "loads an array variable with a non-array default value" do
+          write_envfile <<-EOF
+            array :foo, default: "bar,baz"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(["bar", "baz"])
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("bar,baz")
         end
       end
     end
