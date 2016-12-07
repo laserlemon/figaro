@@ -38,7 +38,7 @@ module Figaro
     end
 
     def valid?
-      required? ? value? : true
+      required? ? !value.nil? : true
     end
 
     private

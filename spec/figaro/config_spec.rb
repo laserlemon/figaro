@@ -467,6 +467,142 @@ module Figaro
           expect(ENV["FOO"]).to eq("-1.23")
         end
       end
+
+      context "boolean" do
+        it "loads a boolean variable set to true" do
+          ENV["FOO"] = "true"
+          write_envfile <<-EOF
+            boolean :foo
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(true)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("true")
+        end
+
+        it "loads an unset boolean variable with a default value" do
+          write_envfile <<-EOF
+            boolean :foo, default: true
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(true)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("true")
+        end
+
+        it "loads a set boolean variable with a default value" do
+          ENV["FOO"] = "false"
+          write_envfile <<-EOF
+            boolean :foo, default: true
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(false)
+          expect(config.foo?).to eq(false)
+          expect(ENV["FOO"]).to eq("false")
+        end
+
+        it "raises an error if an unset boolean variable is required" do
+          write_envfile <<-EOF
+            boolean :foo
+            EOF
+
+          expect { Figaro::Config.load }.to raise_error(Figaro::Error)
+        end
+
+        it "loads an optional, unset boolean variable" do
+          write_envfile <<-EOF
+            boolean :foo, required: false
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(nil)
+          expect(config.foo?).to eq(false)
+          expect(ENV["FOO"]).to eq(nil)
+        end
+
+        it "loads an unset boolean variable when dynamically optional" do
+          write_envfile <<-EOF
+            boolean :foo, required: false
+            boolean :bar, required: -> { foo? }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:bar)
+          expect(config).to respond_to(:bar=)
+          expect(config).to respond_to(:bar?)
+          expect(config.bar).to eq(nil)
+          expect(config.bar?).to eq(false)
+          expect(ENV["BAR"]).to eq(nil)
+        end
+
+        it "loads a boolean variable from a custom ENV key" do
+          ENV["FU"] = "true"
+          write_envfile <<-EOF
+            boolean :foo, key: "FU"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(true)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FU"]).to eq("true")
+        end
+
+        it "loads a string variable with a dynamically set default value" do
+          ENV["FOO"] = "true"
+          write_envfile <<-EOF
+            boolean :foo
+            boolean :bar, default: -> { foo }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:bar)
+          expect(config).to respond_to(:bar=)
+          expect(config).to respond_to(:bar?)
+          expect(config.bar).to eq(true)
+          expect(config.bar?).to eq(true)
+          expect(ENV["BAR"]).to eq("true")
+        end
+
+        it "loads a boolean variable with a non-boolean default value" do
+          write_envfile <<-EOF
+            boolean :foo, default: "yes"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(true)
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("yes")
+        end
+      end
     end
   end
 end
