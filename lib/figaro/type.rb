@@ -4,12 +4,24 @@ module Figaro
   class Type
     def self.register(type_class)
       if defined? type_class::NAME
-        Figaro::DSL.type(type_class::NAME, type_class)
+        type_name = type_class::NAME
+        registered[type_name] = type_class
+        Figaro::DSL.type(type_name, type_class)
       end
     end
 
-    def self.load(name_or_class)
-      all.fetch(name_or_class) { name_or_class }
+    def self.registered
+      @registered ||= {}
+    end
+
+    def self.load(name_or_class, type_options = {})
+      type_class = registered.fetch(name_or_class) { name_or_class }
+
+      if type_class.respond_to?(:load) && type_class.respond_to?(:dump)
+        type_class
+      else
+        type_class.new(type_options)
+      end
     end
 
     attr_reader :options

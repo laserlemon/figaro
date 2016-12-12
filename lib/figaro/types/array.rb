@@ -8,7 +8,7 @@ module Figaro
       def load(value)
         case value
         when nil then nil
-        when ::String then value.split(separator)
+        when ::String then value.split(separator).map { |e| type.load(e) }
         when ::Array then value
         else raise
         end
@@ -17,7 +17,7 @@ module Figaro
       def dump(value)
         case value
         when nil then nil
-        when ::Array then value.join(separator)
+        when ::Array then value.map { |e| type.dump(e) }.join(separator)
         else value.to_s
         end
       end
@@ -26,6 +26,13 @@ module Figaro
 
       def separator
         options.fetch(:separator, ",")
+      end
+
+      def type
+        @type ||= Figaro::Type.load(
+          options.fetch(:type, :string),
+          options.fetch(:type_options, {})
+        )
       end
     end
   end
