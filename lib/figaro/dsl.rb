@@ -1,35 +1,21 @@
-require "figaro/types"
+require "figaro/variable"
 
 module Figaro
   class DSL
+    def self.type(type_name, type_class)
+      define_method(type_name) do |name, options = {}|
+        variable(name, type_class, options)
+      end
+    end
+
     attr_reader :config
 
     def initialize(config)
       @config = config
     end
 
-    def variable(name, type, options = {})
-      type.new(config, name, options).tap { |variable| config << variable }
-    end
-
-    def string(name, options = {})
-      variable(name, Figaro::Types::String, options)
-    end
-
-    def integer(name, options = {})
-      variable(name, Figaro::Types::Integer, options)
-    end
-
-    def decimal(name, options = {})
-      variable(name, Figaro::Types::Decimal, options)
-    end
-
-    def boolean(name, options = {})
-      variable(name, Figaro::Types::Boolean, options)
-    end
-
-    def array(name, options = {})
-      variable(name, Figaro::Types::Array, options)
+    def variable(name, type_class, options = {})
+      config << Variable.new(config, name, type_class, options)
     end
   end
 end

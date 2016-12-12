@@ -1,11 +1,27 @@
-require "figaro/variable"
+require "figaro/type"
 
 module Figaro
   module Types
-    class Integer < Figaro::Variable
+    class Integer < Figaro::Type
+      NAME = :integer
+
       def load(value)
-        value.nil? ? nil : Integer(value)
+        case value
+        when nil then nil
+        when /\A\-?\d+\z/ then Integer(value)
+        when ::Integer then value
+        else raise
+        end
+      end
+
+      def dump(value)
+        case value
+        when nil then nil
+        else value.to_s
+        end
       end
     end
   end
 end
+
+Figaro::Type.register(Figaro::Types::Integer)

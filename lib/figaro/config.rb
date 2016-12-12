@@ -1,6 +1,6 @@
 require "pathname"
 
-require "figaro/dsl"
+require "figaro/types"
 require "figaro/error"
 
 module Figaro

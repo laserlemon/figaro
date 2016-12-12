@@ -769,6 +769,38 @@ module Figaro
           expect(config.foo?).to eq(true)
           expect(ENV["FOO"]).to eq("bar,baz")
         end
+
+        it "loads an array variable with non-string values" do
+          ENV["FOO"] = "1,2,3"
+          write_envfile <<-EOF
+            array :foo, type: :integer
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq([1, 2, 3])
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("1,2,3")
+        end
+
+        it "loads a nested array variable with non-string values" do
+          ENV["FOO"] = "1,2,3|4,5,6|7,8,9"
+          write_envfile <<-EOF
+            array :foo, separator: "|", type: :array, type_options: { type: :integer }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("1,2,3|4,5,6|7,8,9")
+        end
       end
     end
   end

@@ -1,20 +1,24 @@
 module Figaro
   class Variable
-    attr_reader :config, :name, :options, :key
+    attr_reader :config, :name, :options, :key, :type
 
-    def initialize(config, name, options)
+    def initialize(config, name, type_class, options)
       @config, @name, @options = config, name, options
-      @key = options.fetch(:key) { default_key }
-      @default = options[:default]
-      @required = options.fetch(:required, true)
+
+      options = options.dup
+      @key = options.delete(:key) { default_key }
+      @default = options.delete(:default)
+      @required = options.delete(:required) { true }
+
+      @type = type_class.new(options)
     end
 
     def load(value)
-      value
+      type.load(value)
     end
 
     def dump(value)
-      value.nil? ? nil : value.to_s
+      type.dump(value)
     end
 
     def value

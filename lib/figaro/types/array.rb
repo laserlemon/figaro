@@ -1,13 +1,16 @@
-require "figaro/variable"
+require "figaro/type"
 
 module Figaro
   module Types
-    class Array < Figaro::Variable
+    class Array < Figaro::Type
+      NAME = :array
+
       def load(value)
         case value
         when nil then nil
+        when ::String then value.split(separator)
         when ::Array then value
-        else value.split(separator)
+        else raise
         end
       end
 
@@ -27,3 +30,5 @@ module Figaro
     end
   end
 end
+
+Figaro::Type.register(Figaro::Types::Array)
