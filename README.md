@@ -284,6 +284,22 @@ $ figaro help heroku:set
 **NOTE:** The environment option is required for the `heroku:set` command. The
 Rake task in Figaro 0.7 used the default of "development" if unspecified.
 
+### Spring Configuration
+
+If you are using Spring then add `config/application.yml` to watch list.
+
+```rb
+# config/spring.rb
+
+%w(
+  .ruby-version
+  .rbenv-vars
+  tmp/restart.txt
+  tmp/caching-dev.txt
+  config/application.yml
+).each { |path| Spring.watch(path) }
+```
+
 ## Who wrote Figaro?
 
 My name is Steve Richert and I wrote Figaro in March, 2012 with overwhelming encouragement from my employer, [Collective Idea](http://www.collectiveidea.com). Figaro has improved very much since then, thanks entirely to [inspiration](https://github.com/laserlemon/figaro/issues) and [contribution](https://github.com/laserlemon/figaro/graphs/contributors) from developers everywhere.
