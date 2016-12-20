@@ -72,6 +72,12 @@ module Figaro
       option.respond_to?(:to_proc) ? instance_exec(&option) : option
     end
 
+    def to_h
+      variables.each_with_object({}) do |variable, hash|
+        hash[variable.name] = variable.value
+      end
+    end
+
     private
 
     def add_variable_methods(variable)

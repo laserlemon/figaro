@@ -883,5 +883,25 @@ module Figaro
         end
       end
     end
+
+    describe "#to_h" do
+      it "builds a symbol-to-rich-value hash of variable values" do
+        write_envfile <<-EOF
+          string :foo, default: "bar"
+          decimal :price, default: "1.23"
+          integer :quantity, default: 4
+          boolean :secure, default: false
+          EOF
+
+        config = Figaro::Config.load
+
+        expect(config.to_h).to eq({
+          foo: "bar",
+          price: BigDecimal.new("1.23"),
+          quantity: 4,
+          secure: false
+        })
+      end
+    end
   end
 end
