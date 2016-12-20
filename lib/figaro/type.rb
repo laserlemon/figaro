@@ -19,8 +19,11 @@ module Figaro
 
       if type_class.respond_to?(:load) && type_class.respond_to?(:dump)
         type_class
-      else
-        type_class.new(type_options)
+      elsif type_class.respond_to?(:new)
+        case type_class.method(:new).arity
+        when 0 then type_class.new
+        when -2, -1, 1 then type_class.new(type_options)
+        end
       end
     end
 
