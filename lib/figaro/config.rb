@@ -1,7 +1,8 @@
 require "pathname"
 
-require "figaro/types"
+require "figaro/dsl"
 require "figaro/error"
+require "figaro/types"
 
 module Figaro
   class Config
@@ -15,22 +16,22 @@ module Figaro
       path = ENV["FIGARO_ENVFILE"]
       return path if path && !path.empty?
 
-      previous, current = nil, File.expand_path(Pathname.pwd)
+      previous, current = nil, File.expand_path(::Pathname.pwd)
 
-      until !File.directory?(current) || current == previous
-        path = File.join(current, ENVFILE)
-        return path if File.file?(path)
+      until !::File.directory?(current) || current == previous
+        path = ::File.join(current, ENVFILE)
+        return path if ::File.file?(path)
 
-        previous, current = current, File.expand_path("..", current)
+        previous, current = current, ::File.expand_path("..", current)
       end
     end
 
     def initialize(envfile_path)
       @dsl = Figaro::DSL.new(self)
-      @envfile_path = Pathname.new(envfile_path).expand_path.to_s
-      @envfile_content = File.read(@envfile_path)
+      @envfile_path = ::Pathname.new(envfile_path).expand_path.to_s
+      @envfile_content = ::File.read(@envfile_path)
       @variables = []
-      @variable_methods = Module.new
+      @variable_methods = ::Module.new
 
       extend @variable_methods
     end

@@ -31,11 +31,11 @@ module Figaro
     end
 
     def load(value)
-      raise NotImplementedError
+      raise ::NotImplementedError
     end
 
     def dump(value)
-      raise NotImplementedError
+      raise ::NotImplementedError
     end
   end
 end

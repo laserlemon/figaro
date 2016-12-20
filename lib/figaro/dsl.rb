@@ -15,7 +15,7 @@ module Figaro
     end
 
     def variable(name, type_class, options = {})
-      config << Variable.new(config, name, type_class, options)
+      config << Figaro::Variable.new(config, name, type_class, options)
     end
   end
 end
