@@ -882,6 +882,24 @@ module Figaro
           expect(ENV["FOO"]).to eq("1,2,3|4,5,6|7,8,9")
         end
       end
+
+      context "variable" do
+        it "loads variables with custom types" do
+          write_envfile <<-EOF
+            require "json"
+            variable :foo, JSON, default: { bar: "baz" }
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq({ "bar" => "baz" })
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq(%({"bar":"baz"}))
+        end
+      end
     end
 
     describe "#to_h" do
