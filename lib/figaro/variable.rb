@@ -1,32 +1,26 @@
+require "figaro/type"
+
 module Figaro
   class Variable
-    attr_reader :config, :name, :options, :key, :type
+    attr_reader :config, :name, :key, :type
 
     def initialize(config, name, type_class, options)
-      @config, @name, @options = config, name, options
+      @config, @name = config, name
 
       options = options.dup
       @key = options.delete(:key) { default_key }
       @default = options.delete(:default)
       @required = options.delete(:required) { true }
 
-      @type = type_class.new(options)
-    end
-
-    def load(value)
-      type.load(value)
-    end
-
-    def dump(value)
-      type.dump(value)
+      @type = Figaro::Type.load(type_class, options)
     end
 
     def value
-      load(config.get(key) { set_and_get_default_value })
+      type.load(config.get(key) { set_and_get_default_value })
     end
 
     def value=(value)
-      config.set(key, dump(value))
+      config.set(key, type.dump(value))
     end
 
     def value?
@@ -41,6 +35,7 @@ module Figaro
       !!config.evaluate(@required)
     end
 
+    # TODO: Allow a custom validation to be provided via options.
     def valid?
       required? ? !value.nil? : true
     end

@@ -67,6 +67,7 @@ module Figaro
       end
     end
 
+    # TODO: Use a specific Figaro::Error subclass with better messaging.
     def validate!
       raise Figaro::Error unless @variables.all?(&:valid?)
     end
