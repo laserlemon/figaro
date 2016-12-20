@@ -5,11 +5,11 @@ module Figaro
     attr_reader :config, :name, :key, :type
 
     def initialize(config, name, type_class, options)
-      @config, @name = config, name
+      @config, @name = config, name.to_sym
 
       options = options.dup
       @key = options.delete(:key) { default_key }
-      @default = options.delete(:default)
+      @default = config.defaults.fetch(name.to_s, options.delete(:default))
       @required = options.delete(:required) { true }
 
       @type = Figaro::Type.load(type_class, options)

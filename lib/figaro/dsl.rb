@@ -14,6 +14,10 @@ module Figaro
       @config = config
     end
 
+    def defaults(path)
+      config.load_defaults(path)
+    end
+
     def variable(name, type_class, options = {})
       config << Figaro::Variable.new(config, name, type_class, options)
     end

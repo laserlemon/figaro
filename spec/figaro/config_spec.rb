@@ -3,6 +3,86 @@ require "spec_helper"
 module Figaro
   describe Config do
     describe ".load" do
+      context "defaults" do
+        it "loads default values from a YAML file" do
+          write_file <<-EOF, path: "defaults.yml"
+            foo: "bar"
+            EOF
+          write_envfile <<-EOF
+            defaults "defaults.yml"
+            string :foo
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config.foo).to eq("bar")
+        end
+
+        it "overrides default values specified in the envfile" do
+          write_file <<-EOF, path: "defaults.yml"
+            foo: "baz"
+            EOF
+          write_envfile <<-EOF
+            defaults "defaults.yml"
+            string :foo, default: "bar"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config.foo).to eq("baz")
+        end
+
+        it "is overridden by ENV" do
+          ENV["FOO"] = "qux"
+          write_file <<-EOF, path: "defaults.yml"
+            foo: "baz"
+            EOF
+          write_envfile <<-EOF
+            defaults "defaults.yml"
+            string :foo, default: "bar"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config.foo).to eq("qux")
+        end
+
+        it "skips missing files" do
+          write_file <<-EOF, path: "defaults.yml"
+            foo: "baz"
+            EOF
+          write_envfile <<-EOF
+            defaults "missing.yml"
+            string :foo, default: "bar"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config.foo).to eq("bar")
+        end
+
+        it "uses the last default values seen when called multiple times" do
+          write_file <<-EOF, path: "defaults.yml"
+            foo: "baz"
+            hello: "world"
+            EOF
+          write_file <<-EOF, path: "overrides.yml"
+            foo: "qux"
+            EOF
+          write_envfile <<-EOF
+            defaults "defaults.yml"
+            defaults "overrides.yml"
+            string :foo, default: "bar"
+            string :hello
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config.foo).to eq("qux")
+          expect(config.hello).to eq("world")
+        end
+      end
+
       context "string" do
         it "loads a set string variable" do
           ENV["FOO"] = "bar"

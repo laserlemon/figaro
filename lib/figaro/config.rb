@@ -1,4 +1,5 @@
 require "pathname"
+require "yaml"
 
 require "figaro/dsl"
 require "figaro/error"
@@ -26,10 +27,13 @@ module Figaro
       end
     end
 
+    attr_reader :defaults, :variables
+
     def initialize(envfile_path)
       @dsl = Figaro::DSL.new(self)
       @envfile_path = ::Pathname.new(envfile_path).expand_path.to_s
       @envfile_content = ::File.read(@envfile_path)
+      @defaults = {}
       @variables = []
       @variable_methods = ::Module.new
 
@@ -39,6 +43,16 @@ module Figaro
     def load
       @dsl.instance_eval(@envfile_content, @envfile_path, 1)
       validate!
+    end
+
+    def load_defaults(path)
+      defaults = ::YAML.load_file(path) || {}
+    # TODO: Inform the developer that defaults could not be loaded.
+    rescue ::SystemCallError
+      defaults = {}
+    # TODO: Rescue other common error cases and provide helpful messaging.
+    else
+      @defaults.update(defaults)
     end
 
     def <<(variable)
