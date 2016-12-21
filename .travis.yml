@@ -1,5 +1,19 @@
-sudo: false
+before_install:
+  - gem update bundler rake
+branches:
+  only:
+    - master
+    - v2
+cache: bundler
 language: ruby
+matrix:
+  allow_failures:
+    - rvm: ruby-head
 rvm:
-  - 2.3.3
-before_install: gem install bundler -v 1.13.6
+  - "2.0"
+  - "2.1"
+  - "2.2"
+  - "2.3"
+  - ruby-head
+script: bundle exec rspec
+sudo: false
