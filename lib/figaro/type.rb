@@ -2,12 +2,9 @@ require "figaro/dsl"
 
 module Figaro
   class Type
-    def self.register(type_class)
-      if defined? type_class::NAME
-        type_name = type_class::NAME
-        registered[type_name] = type_class
-        Figaro::DSL.type(type_name, type_class)
-      end
+    def self.register(type_name, type_class)
+      registered[type_name] = type_class
+      Figaro::DSL.register_type(type_name, type_class)
     end
 
     def self.registered

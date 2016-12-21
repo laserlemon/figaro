@@ -2,8 +2,6 @@ require "figaro/type"
 
 module Figaro
   class Type::Boolean < Figaro::Type
-    NAME = :boolean
-
     def load(value)
       case value
       when nil then nil
@@ -22,4 +20,4 @@ module Figaro
   end
 end
 
-Figaro::Type.register(Figaro::Type::Boolean)
+Figaro::Type.register(:boolean, Figaro::Type::Boolean)

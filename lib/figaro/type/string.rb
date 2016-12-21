@@ -2,8 +2,6 @@ require "figaro/type"
 
 module Figaro
   class Type::String < Figaro::Type
-    NAME = :string
-
     def load(value)
       case value
       when nil then nil
@@ -21,4 +19,4 @@ module Figaro
   end
 end
 
-Figaro::Type.register(Figaro::Type::String)
+Figaro::Type.register(:string, Figaro::Type::String)

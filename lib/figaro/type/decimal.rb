@@ -4,8 +4,6 @@ require "figaro/type"
 
 module Figaro
   class Type::Decimal < Figaro::Type
-    NAME = :decimal
-
     def load(value)
       case value
       when nil then nil
@@ -26,4 +24,4 @@ module Figaro
   end
 end
 
-Figaro::Type.register(Figaro::Type::Decimal)
+Figaro::Type.register(:decimal, Figaro::Type::Decimal)

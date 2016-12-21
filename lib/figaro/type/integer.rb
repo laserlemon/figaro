@@ -2,8 +2,6 @@ require "figaro/type"
 
 module Figaro
   class Type::Integer < Figaro::Type
-    NAME = :integer
-
     def load(value)
       case value
       when nil then nil
@@ -22,4 +20,4 @@ module Figaro
   end
 end
 
-Figaro::Type.register(Figaro::Type::Integer)
+Figaro::Type.register(:integer, Figaro::Type::Integer)

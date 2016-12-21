@@ -2,8 +2,6 @@ require "figaro/type"
 
 module Figaro
   class Type::Array < Figaro::Type
-    NAME = :array
-
     def load(value)
       case value
       when nil then nil
@@ -36,4 +34,4 @@ module Figaro
   end
 end
 
-Figaro::Type.register(Figaro::Type::Array)
+Figaro::Type.register(:array, Figaro::Type::Array)
