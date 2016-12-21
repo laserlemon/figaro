@@ -3,7 +3,11 @@ require "yaml"
 
 require "figaro/dsl"
 require "figaro/error"
-require "figaro/types"
+require "figaro/type/array"
+require "figaro/type/boolean"
+require "figaro/type/decimal"
+require "figaro/type/integer"
+require "figaro/type/string"
 
 module Figaro
   class Config
