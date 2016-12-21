@@ -9,6 +9,7 @@ require "figaro/type/date"
 require "figaro/type/decimal"
 require "figaro/type/integer"
 require "figaro/type/string"
+require "figaro/type/time"
 
 module Figaro
   class Config
