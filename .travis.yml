@@ -1,5 +1,4 @@
 before_install:
-  - rvm get head
   - gem update bundler rake
 branches:
   only:
@@ -14,7 +13,7 @@ rvm:
   - "2.0"
   - "2.1"
   - "2.2"
-  - "2.3"
+  - 2.3.3
   - ruby-head
 script: bundle exec rspec
 sudo: false
