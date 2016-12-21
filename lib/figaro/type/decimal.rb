@@ -8,8 +8,6 @@ module Figaro
       case value
       when nil then nil
       when /\A\-?\d+(\.\d+)\z/ then BigDecimal(value)
-      when ::Float then BigDecimal(value.to_s)
-      when ::BigDecimal then value
       else raise
       end
     end

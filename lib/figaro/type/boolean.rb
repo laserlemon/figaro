@@ -5,8 +5,8 @@ module Figaro
     def load(value)
       case value
       when nil then nil
-      when true, /\A(t(rue)?|y(es)?|on|1)\z/i then true
-      when false, /\A(f(alse)?|n(o)?|off|0)\z/i then false
+      when /\A(t(rue)?|y(es)?|on|1)\z/i then true
+      when /\A(f(alse)?|n(o)?|off|0)\z/i then false
       else raise
       end
     end

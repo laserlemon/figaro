@@ -1018,21 +1018,6 @@ module Figaro
           expect(config.foo?).to eq(true)
           expect(ENV["FOO"]).to eq("12/21/2016")
         end
-
-        it "loads a date variable with a time default value" do
-          write_envfile <<-EOF
-            date :foo, default: -> { Time.now }
-            EOF
-
-          config = Figaro::Config.load
-
-          expect(config).to respond_to(:foo)
-          expect(config).to respond_to(:foo=)
-          expect(config).to respond_to(:foo?)
-          expect(config.foo).to eq(Date.today)
-          expect(config.foo?).to eq(true)
-          expect(ENV["FOO"]).to eq(Date.today.to_s)
-        end
       end
 
       context "time" do
@@ -1122,7 +1107,7 @@ module Figaro
           expect(ENV["BAR"]).to eq(nil)
         end
 
-        it "loads a decimal variable from a custom ENV key" do
+        it "loads a time variable from a custom ENV key" do
           ENV["FU"] = "2016-12-21T11:12:41-05:00"
           write_envfile <<-EOF
             time :foo, key: "FU"
@@ -1138,7 +1123,7 @@ module Figaro
           expect(ENV["FU"]).to eq("2016-12-21T11:12:41-05:00")
         end
 
-        it "loads a decimal variable with a dynamically set default value" do
+        it "loads a time variable with a dynamically set default value" do
           ENV["FOO"] = "2016-12-21T11:12:41-05:00"
           write_envfile <<-EOF
             time :foo

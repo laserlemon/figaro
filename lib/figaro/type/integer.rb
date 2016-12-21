@@ -6,7 +6,6 @@ module Figaro
       case value
       when nil then nil
       when /\A\-?\d+\z/ then Integer(value)
-      when ::Integer then value
       else raise
       end
     end

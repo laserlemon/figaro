@@ -8,7 +8,6 @@ module Figaro
       case value
       when nil then nil
       when ::String then ::Date.strptime(value, format)
-      when ::Date then value
       else raise
       end
     end
@@ -16,7 +15,7 @@ module Figaro
     def dump(value)
       case value
       when nil then nil
-      when ::Date, ::Time then value.strftime(format)
+      when ::Date then value.strftime(format)
       else value.to_s
       end
     end

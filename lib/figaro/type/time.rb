@@ -8,7 +8,6 @@ module Figaro
       case value
       when nil then nil
       when ::String then ::Time.strptime(value, format)
-      when ::Time then value
       else raise
       end
     end

@@ -6,7 +6,6 @@ module Figaro
       case value
       when nil then nil
       when ::String then value.split(separator).map { |e| type.load(e) }
-      when ::Array then value
       else raise
       end
     end
