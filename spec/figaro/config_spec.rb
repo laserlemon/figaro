@@ -1032,7 +1032,7 @@ module Figaro
           expect(config).to respond_to(:foo)
           expect(config).to respond_to(:foo=)
           expect(config).to respond_to(:foo?)
-          expect(config.foo).to eq(Time.new(2016, 12, 21, 11, 12, 41))
+          expect(config.foo).to eq(Time.new(2016, 12, 21, 11, 12, 41, -18_000))
           expect(config.foo?).to eq(true)
           expect(ENV["FOO"]).to eq("2016-12-21T11:12:41-05:00")
         end
@@ -1047,7 +1047,7 @@ module Figaro
           expect(config).to respond_to(:foo)
           expect(config).to respond_to(:foo=)
           expect(config).to respond_to(:foo?)
-          expect(config.foo).to eq(Time.new(2016, 12, 21, 11, 12, 41))
+          expect(config.foo).to eq(Time.new(2016, 12, 21, 11, 12, 41, -18_000))
           expect(config.foo?).to eq(true)
           expect(ENV["FOO"]).to eq("2016-12-21T11:12:41-05:00")
         end
@@ -1063,7 +1063,7 @@ module Figaro
           expect(config).to respond_to(:foo)
           expect(config).to respond_to(:foo=)
           expect(config).to respond_to(:foo?)
-          expect(config.foo).to eq(Time.new(2016, 12, 21, 11, 19, 20))
+          expect(config.foo).to eq(Time.new(2016, 12, 21, 11, 19, 20, -18_000))
           expect(config.foo?).to eq(true)
           expect(ENV["FOO"]).to eq("2016-12-21T11:19:20-05:00")
         end
@@ -1118,7 +1118,7 @@ module Figaro
           expect(config).to respond_to(:foo)
           expect(config).to respond_to(:foo=)
           expect(config).to respond_to(:foo?)
-          expect(config.foo).to eq(Time.new(2016, 12, 21, 11, 12, 41))
+          expect(config.foo).to eq(Time.new(2016, 12, 21, 11, 12, 41, -18_000))
           expect(config.foo?).to eq(true)
           expect(ENV["FU"]).to eq("2016-12-21T11:12:41-05:00")
         end
@@ -1135,7 +1135,7 @@ module Figaro
           expect(config).to respond_to(:bar)
           expect(config).to respond_to(:bar=)
           expect(config).to respond_to(:bar?)
-          expect(config.bar).to eq(Time.new(2016, 12, 21, 11, 12, 41))
+          expect(config.bar).to eq(Time.new(2016, 12, 21, 11, 12, 41, -18_000))
           expect(config.bar?).to eq(true)
           expect(ENV["BAR"]).to eq("2016-12-21T11:12:41-05:00")
         end
@@ -1183,6 +1183,8 @@ module Figaro
           decimal :price, default: "1.23"
           integer :quantity, default: 4
           boolean :secure, default: false
+          date :due_date, default: "2016-02-13"
+          time :start_time, default: "2016-02-13T01:19:00-05:00"
           EOF
 
         config = Figaro::Config.load
@@ -1191,7 +1193,9 @@ module Figaro
           foo: "bar",
           price: BigDecimal.new("1.23"),
           quantity: 4,
-          secure: false
+          secure: false,
+          due_date: Date.new(2016, 2, 13),
+          start_time: Time.new(2016, 2, 13, 1, 19, 0, -18_000),
         })
       end
     end
