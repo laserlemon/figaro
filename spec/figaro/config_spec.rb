@@ -1151,9 +1151,25 @@ module Figaro
           expect(config).to respond_to(:foo)
           expect(config).to respond_to(:foo=)
           expect(config).to respond_to(:foo?)
-          expect(config.foo).to eq(Time.new(2016, 12, 21))
+          expect(config.foo).to eq(Time.new(2016, 12, 21, 0, 0, 0, 0))
           expect(config.foo?).to eq(true)
           expect(ENV["FOO"]).to eq("12/21/2016")
+        end
+
+        it "assumes UTC when no time zone is given" do
+          ENV["FOO"] = "2016-12-21T11:12:41"
+          write_envfile <<-EOF
+            time :foo, format: "%FT%T"
+            EOF
+
+          config = Figaro::Config.load
+
+          expect(config).to respond_to(:foo)
+          expect(config).to respond_to(:foo=)
+          expect(config).to respond_to(:foo?)
+          expect(config.foo).to eq(Time.new(2016, 12, 21, 11, 12, 41, 0))
+          expect(config.foo?).to eq(true)
+          expect(ENV["FOO"]).to eq("2016-12-21T11:12:41")
         end
       end
 
