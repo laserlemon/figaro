@@ -1,6 +1,9 @@
 require "bundler"
 Bundler.setup
 
+require "simplecov"
+SimpleCov.start
+
 require "figaro"
 
 Bundler.require(:test)
