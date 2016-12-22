@@ -1,114 +1,344 @@
-# Figaro
-[![Gem Version](https://badge.fury.io/rb/figaro.png)](http://badge.fury.io/rb/figaro)
-[![Build Status](https://travis-ci.org/laserlemon/figaro.png?branch=master)](https://travis-ci.org/laserlemon/figaro)
-[![Code Climate](https://codeclimate.com/github/laserlemon/figaro.png)](https://codeclimate.com/github/laserlemon/figaro)
-[![Coverage Status](https://coveralls.io/repos/laserlemon/figaro/badge.png?branch=master)](https://coveralls.io/r/laserlemon/figaro)
-[![Dependency Status](https://gemnasium.com/laserlemon/figaro.png)](https://gemnasium.com/laserlemon/figaro)
+# ![Figaro](https://raw.githubusercontent.com/laserlemon/figaro/1f6e709/doc/title.png)
 
-Simple Rails app configuration
+[![Join the chat at https://gitter.im/laserlemon/figaro](https://badges.gitter.im/laserlemon/figaro.svg)](https://gitter.im/laserlemon/figaro?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-## What is this for?
+Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML file
 
-Figaro is for configuring Rails (3 and 4) apps, especially open source Rails apps.
+[![Gem Version](https://img.shields.io/gem/v/figaro.svg?style=flat-square)](http://badge.fury.io/rb/figaro)
+[![Build Status](https://img.shields.io/travis/laserlemon/figaro/master.svg?style=flat-square)](https://travis-ci.org/laserlemon/figaro)
+[![Code Climate](https://img.shields.io/codeclimate/github/laserlemon/figaro.svg?style=flat-square)](https://codeclimate.com/github/laserlemon/figaro)
+[![Coverage Status](https://img.shields.io/codeclimate/coverage/github/laserlemon/figaro.svg?style=flat-square)](https://codeclimate.com/github/laserlemon/figaro)
+[![Dependency Status](https://img.shields.io/gemnasium/laserlemon/figaro.svg?style=flat-square)](https://gemnasium.com/laserlemon/figaro)
 
-Open sourcing a Rails app can be a little tricky when it comes to sensitive configuration information like [Pusher](http://pusher.com/) or [Stripe](https://stripe.com/) credentials. You don't want to check private credentials into the repo but what other choice is there?
+**NOTE:** If you're using Figaro 0.7 or prior, please refer to the
+[appropriate documentation](https://github.com/laserlemon/figaro/tree/0-stable#readme)
+or [upgrade](#how-do-i-upgrade-to-figaro-10) to Figaro 1.0.
 
-Figaro provides a clean and simple way to configure your app and keep the private stuff… private.
+## Why does Figaro exist?
 
-## How does it work?
+Figaro was written to make it easy to securely configure Rails applications.
 
-There are a few similar solutions out there, and a lot of homegrown attempts. Most namespace your configuration under a `Config` (or similar) namespace. That's fine, but there's already a place to describe the application environment… `ENV`!
+Configuration values often include sensitive information. Figaro strives to be
+secure by default by encouraging a convention that keeps configuration out of
+Git.
 
-`ENV` is a collection of simple string key/value pairs and it works just great for application configuration.
+## How does Figaro work?
 
-As an added bonus, this is exactly how apps on [Heroku](http://www.heroku.com/) are configured. So if you configure your Rails app using `ENV`, you're already set to deploy to Heroku.
+Figaro is inspired by the [Twelve-Factor App](http://12factor.net) methodology,
+which states:
 
-## Give me an example.
+> The twelve-factor app stores config in environment variables (often shortened to env vars or env). Env vars are easy to change between deploys without changing any code; unlike config files, there is little chance of them being checked into the code repo accidentally; and unlike custom config files, or other config mechanisms such as Java System Properties, they are a language- and OS-agnostic standard.
 
-Okay. Add Figaro to your Gemfile and run the `bundle` command to install it:
+This is straightforward in production environments but local development
+environments are often shared between multiple applications, requiring multiple
+configurations.
+
+Figaro parses a Git-ignored YAML file in your application and loads its values
+into `ENV`.
+
+### Getting Started
+
+Add Figaro to your Gemfile and `bundle install`:
 
 ```ruby
 gem "figaro"
 ```
 
-Next up, use the generator provided by Figaro:
+Figaro installation is easy:
+
 
 ```bash
-rails generate figaro:install
+$ bundle exec figaro install
 ```
 
-This creates a commented `config/application.yml` file and ignores it in your `.gitignore`. Add your own configuration to this file and you're done!
+This creates a commented `config/application.yml` file and adds it to your
+`.gitignore`. Add your own configuration to this file and you're done!
 
-Your configuration will be available as key/value pairs in `ENV`. For example, here's `config/initializers/pusher.rb`:
+### Example
 
-```ruby
-Pusher.app_id = ENV["PUSHER_APP_ID"]
-Pusher.key    = ENV["PUSHER_KEY"]
-Pusher.secret = ENV["PUSHER_SECRET"]
-```
-
-In addition, you can access these same configuration values through Figaro itself:
-
-```ruby
-Pusher.app_id = Figaro.env.pusher_app_id
-Pusher.key    = Figaro.env.pusher_key
-Pusher.secret = Figaro.env.pusher_secret
-```
-
-But wait… I thought configuration via constant was bad! Well, this is different. Rather than storing a _copy_ of `ENV` internally, `Figaro.env` passes directly through to `ENV`, making it just like using `ENV` itself. So why two approaches? Having your configurations available via method calls makes it easy to stub them out in tests. Either way is fine. The choice is yours!
-
-If your app requires Rails-environment-specific configuration, you can also namespace your configuration under a key for `Rails.env`.
+Given the following configuration file:
 
 ```yaml
-HELLO: world
-development:
-  HELLO: developers
-production:
-  HELLO: users
+# config/application.yml
+
+pusher_app_id: "2954"
+pusher_key: "7381a978f7dd7f9a1117"
+pusher_secret: "abdc3b896a0ffb85d373"
 ```
 
-In this case, `ENV["HELLO"]` will produce `"developers"` in development, `"users"` in production and `"world"` otherwise.
+You can configure [Pusher](http://pusher.com) in an initializer:
 
-## How does it work with Heroku?
+```ruby
+# config/initializers/pusher.rb
 
-Heroku's beautifully simple application configuration was the [inspiration](http://laserlemon.com/blog/2011/03/08/heroku-friendly-application-configuration/) for Figaro.
+Pusher.app_id = ENV["pusher_app_id"]
+Pusher.key    = ENV["pusher_key"]
+Pusher.secret = ENV["pusher_secret"]
+```
 
-Typically, to configure your application `ENV` on Heroku, you would do the following from the command line using the `heroku` gem:
+**Please note:** `ENV` is a simple key/value store. All values will be converted
+to strings. Deeply nested configuration structures are not possible.
+
+### Environment-Specific Configuration
+
+Oftentimes, local configuration values change depending on Rails environment. In
+such cases, you can add environment-specific values to your configuration file:
+
+```yaml
+# config/application.yml
+
+pusher_app_id: "2954"
+pusher_key: "7381a978f7dd7f9a1117"
+pusher_secret: "abdc3b896a0ffb85d373"
+
+test:
+  pusher_app_id: "5112"
+  pusher_key: "ad69caf9a44dcac1fb28"
+  pusher_secret: "83ca7aa160fedaf3b350"
+```
+
+You can also nullify configuration values for a specific environment:
+
+```yaml
+# config/application.yml
+
+google_analytics_key: "UA-35722661-5"
+
+test:
+  google_analytics_key: ~
+```
+
+### Using `Figaro.env`
+
+`Figaro.env` is a convenience that acts as a proxy to `ENV`.
+
+In testing, it is sometimes more convenient to stub and unstub `Figaro.env` than
+to set and reset `ENV`. Whether your application uses `ENV` or `Figaro.env` is
+entirely a matter of personal preference.
+
+```yaml
+# config/application.yml
+
+stripe_api_key: "sk_live_dSqzdUq80sw9GWmuoI0qJ9rL"
+```
+
+```ruby
+ENV["stripe_api_key"] # => "sk_live_dSqzdUq80sw9GWmuoI0qJ9rL"
+ENV.key?("stripe_api_key") # => true
+ENV["google_analytics_key"] # => nil
+ENV.key?("google_analytics_key") # => false
+
+Figaro.env.stripe_api_key # => "sk_live_dSqzdUq80sw9GWmuoI0qJ9rL"
+Figaro.env.stripe_api_key? # => true
+Figaro.env.google_analytics_key # => nil
+Figaro.env.google_analytics_key? # => false
+```
+
+### Required Keys
+
+If a particular configuration value is required but not set, it's appropriate to
+raise an error. With Figaro, you can either raise these errors proactively or
+lazily.
+
+To proactively require configuration keys:
+
+```ruby
+# config/initializers/figaro.rb
+
+Figaro.require_keys("pusher_app_id", "pusher_key", "pusher_secret")
+```
+
+If any of the configuration keys above are not set, your application will raise
+an error during initialization. This method is preferred because it prevents
+runtime errors in a production application due to improper configuration.
+
+To require configuration keys lazily, reference the variables via "bang" methods
+on `Figaro.env`:
+
+```ruby
+# config/initializers/pusher.rb
+
+Pusher.app_id = Figaro.env.pusher_app_id!
+Pusher.key    = Figaro.env.pusher_key!
+Pusher.secret = Figaro.env.pusher_secret!
+```
+
+### Deployment
+
+Figaro is written with deployment in mind. In fact, [Heroku](https://www.heroku.com)'s
+use of `ENV` for application configuration was the original inspiration for
+Figaro.
+
+#### Heroku
+
+Heroku already makes setting application configuration easy:
 
 ```bash
-heroku config:add PUSHER_APP_ID=8926
-heroku config:add PUSHER_KEY=0463644d89a340ff1132
-heroku config:add PUSHER_SECRET=0eadfd9847769f94367b
-heroku config:add STRIPE_API_KEY=jHXKPPE0dUW84xJNYzn6CdWM2JfrCbPE
-heroku config:add STRIPE_PUBLIC_KEY=pk_HHtUKJwlN7USCT6nE5jiXgoduiNl3
+$ heroku config:set google_analytics_key=UA-35722661-5
 ```
 
-But Figaro provides a rake task to do just that! Just run:
+Using the `figaro` command, you can set values from your configuration file all
+at once:
 
 ```bash
-rake figaro:heroku
+$ figaro heroku:set -e production
 ```
 
-Optionally, you can pass in the name of the Heroku app:
+For more information:
 
 ```bash
-rake figaro:heroku[my-awesome-app]
+$ figaro help heroku:set
 ```
 
-Additionally, if `RAILS_ENV` is configured on your Heroku server, Figaro will use that environment automatically in determining your proper configuration.
+#### Other Hosts
 
-## What if I'm not using Heroku?
+If you're not deploying to Heroku, you have two options:
 
-No problem. Just add `config/application.yml` to your production app on the server.
+* Generate a remote configuration file
+* Set `ENV` variables directly
 
-## This sucks. How can I make it better?
+Generating a remote configuration file is preferred because of:
 
-1. Fork it.
-2. Make it better.
-3. Send me a pull request.
+* familiarity – Management of `config/application.yml` is like that of `config/database.yml`.
+* isolation – Multiple applications on the same server will not produce configuration key collisions.
 
-## Does Figaro have a mascot?
+## Is Figaro like [dotenv](https://github.com/bkeepers/dotenv)?
 
-Yes.
+Yes. Kind of.
 
-[![Figaro](http://images2.wikia.nocookie.net/__cb20100628192722/disney/images/5/53/Pinocchio-pinocchio-4947890-960-720.jpg "Figaro's mascot: Figaro")](http://en.wikipedia.org/wiki/Figaro_(Disney\))
+Figaro and dotenv were written around the same time to solve similar problems.
+
+### Similarities
+
+* Both libraries are useful for Ruby application configuration.
+* Both are popular and well maintained.
+* Both are inspired by Twelve-Factor App's concept of proper [configuration](http://12factor.net/config).
+* Both store configuration values in `ENV`.
+
+### Differences
+
+* Configuration File
+  * Figaro expects a single file.
+  * Dotenv supports separate files for each environment.
+* Configuration File Format
+  * Figaro expects YAML containing key/value pairs.
+  * Dotenv convention is a collection of `KEY=VALUE` pairs.
+* Security vs. Convenience
+  * Figaro convention is to never commit configuration files.
+  * Dotenv encourages committing configuration files containing development values.
+* Framework Focus
+  * Figaro was written with a focus on Rails development and conventions.
+  * Dotenv was written to accommodate any type of Ruby application.
+
+Either library may suit your configuration needs. It often boils down to
+personal preference.
+
+## Is application.yml like [secrets.yml](https://github.com/rails/rails/blob/v4.1.0/railties/lib/rails/generators/rails/app/templates/config/secrets.yml)?
+
+Yes. Kind of.
+
+Rails 4.1 introduced the `secrets.yml` convention for Rails application
+configuration. Figaro predated the Rails 4.1 release by two years.
+
+### Similarities
+
+* Both are useful for Rails application configuration.
+* Both are popular and well maintained.
+* Both expect a single YAML file.
+
+### Differences
+
+* Configuration Access
+  * Figaro stores configuration values in `ENV`.
+  * Rails stores configuration values in `Rails.application.secrets`.
+* Configuration File Structure
+  * Figaro expects YAML containing key/value string pairs.
+  * Secrets may contain nested structures with rich objects.
+* Security vs. Convenience
+  * Figaro convention is to never commit configuration files.
+  * Secrets are committed by default.
+* Consistency
+  * Figaro uses `ENV` for configuration in every environment.
+  * Secrets encourage using `ENV` for production only.
+* Approach
+  * Figaro is inspired by Twelve-Factor App's concept of proper [configuration](http://12factor.net/config).
+  * Secrets are… not.
+
+The emergence of a configuration convention for Rails is an important step, but
+as long as the last three differences above exist, Figaro will continue to be
+developed as a more secure, more consistent, and more standards-compliant
+alternative to `secrets.yml`.
+
+For more information, read the original [The Marriage of Figaro… and Rails](http://www.collectiveidea.com/blog/archives/2013/12/18/the-marriage-of-figaro-and-rails/) blog post.
+
+## How do I upgrade to Figaro 1.0?
+
+In most cases, upgrading from Figaro 0.7 to 1.0 is painless. The format
+expectations for `application.yml` are the same in 1.0 and values from
+`application.yml` are loaded into `ENV` as they were in 0.7.
+
+However, there are breaking changes:
+
+### `Figaro.env`
+
+In Figaro 0.7, calling a method on the `Figaro.env` proxy would raise an error
+if a corresponding key were not set in `ENV`.
+
+In Figaro 1.0, calling a method on `Figaro.env` corresponding to an unset key
+will return `nil`. To emulate the behavior of Figaro 0.7, use "bang" methods as
+described in the [Required Keys](#required-keys) section.
+
+**NOTE:** In Figaro 0.7, `Figaro.env` inherited from `Hash` but in Figaro 1.0,
+hash access has been removed.
+
+### Heroku Configuration
+
+In Figaro 0.7, a Rake task existed to set remote Heroku configuration according
+to values in `application.yml`.
+
+In Figaro 1.0, the Rake task was replaced by a command for the `figaro`
+executable:
+
+```bash
+$ figaro heroku:set -e production
+```
+
+For more information:
+
+```bash
+$ figaro help heroku:set
+```
+
+**NOTE:** The environment option is required for the `heroku:set` command. The
+Rake task in Figaro 0.7 used the default of "development" if unspecified.
+
+### Spring Configuration
+
+If you're using Spring, either [stop](http://collectiveidea.com/blog/archives/2015/02/04/spring-is-dead-to-me)
+or add `config/application.yml` to the watch list:
+
+```rb
+# config/spring.rb
+
+%w(
+  ...
+  config/application.yml
+).each { |path| Spring.watch(path) }
+```
+
+## Who wrote Figaro?
+
+My name is Steve Richert and I wrote Figaro in March, 2012 with overwhelming
+encouragement from my employer, [Collective Idea](http://www.collectiveidea.com).
+Figaro has improved very much since then, thanks entirely to [inspiration](https://github.com/laserlemon/figaro/issues)
+and [contribution](https://github.com/laserlemon/figaro/graphs/contributors)
+from developers everywhere.
+
+**Thank you!**
+
+## How can I help?
+
+Figaro is open source and contributions from the community are encouraged! No
+contribution is too small.
+
+See Figaro's [contribution guidelines](CONTRIBUTING.md) for more information.
