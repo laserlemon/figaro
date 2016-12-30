@@ -4,7 +4,11 @@ module Figaro
   class CLI < Thor
     class HerokuSet < Task
       def run
-        system(configuration, command)
+        config = configuration
+        config.each do |k, v|
+          config[k] = v.to_s
+        end
+        system(config, command)
       end
 
       private
@@ -22,11 +26,11 @@ module Figaro
       end
 
       def vars
-        configuration.keys.map { |k| var(k) }.join(" ")
+        configuration.map {|k, v| var(k, v) }.join(" ")
       end
 
-      def var(key)
-        Gem.win_platform? ? %(#{key}="%#{key}%") : %(#{key}="$#{key}")
+      def var(key, value)
+        Gem.win_platform? ? %(#{key}="%#{value}%") : %(#{key}="#{value}")
       end
     end
   end
