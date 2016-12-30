@@ -2,6 +2,14 @@ module Figaro
   module ENV
     extend self
 
+    def required_keys!(*keys)
+      missing_keys = keys.map { |key| key.upcase if send(key).to_s == '' }.compact
+
+      unless missing_keys.size.zero?
+        raise Figaro::MissingKey.new("Missing required Figaro configuration keys #{missing_keys.join(', ')}.")
+      end
+    end
+
     def respond_to?(method, *)
       key, punctuation = extract_key_from_method(method)
 

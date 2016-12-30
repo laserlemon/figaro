@@ -6,6 +6,28 @@ describe Figaro::ENV do
     ::ENV["foo"] = "bar"
   end
 
+  describe '#required_keys!' do
+    context 'when all keys are present' do
+      it 'raises no exceptions' do
+        expect{env.required_keys!(:hello, :foo)}.to_not raise_error(Figaro::MissingKey)
+      end
+
+      it 'handles plain strings' do
+        expect{env.required_keys!('hello', 'foo')}.to_not raise_error(Figaro::MissingKey)
+      end
+    end
+
+    context 'when missing keys' do
+      it 'raises MissingKey exception' do
+        expect{env.required_keys!(:hello, :baz)}.to raise_error(Figaro::MissingKey)
+      end
+
+      it 'emits all missing keys in error message' do
+        expect{env.required_keys!(:hello, :baz, :qux)}.to raise_error(Figaro::MissingKey, /BAZ, QUX/)
+      end
+    end
+  end
+
   describe "#method_missing" do
     context "plain methods" do
       it "makes ENV values accessible as lowercase methods" do
