@@ -181,6 +181,12 @@ at once:
 ```bash
 $ figaro heroku:set -e production
 ```
+OR
+
+```bash
+$ bundle exec rake figaro:heroku[YOURAPP]
+```
+
 
 For more information:
 
