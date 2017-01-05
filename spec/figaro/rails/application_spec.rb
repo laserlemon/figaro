@@ -1,6 +1,12 @@
+require 'figaro/rails/application'
+
 module Figaro
   module Rails
     describe Application do
+      before do
+        stub_const('Rails', double('Rails'))
+      end
+
       describe "#default_path" do
         let!(:application) { Application.new }
 
