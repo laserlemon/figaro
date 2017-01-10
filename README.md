@@ -174,6 +174,11 @@ Heroku already makes setting application configuration easy:
 ```bash
 $ heroku config:set google_analytics_key=UA-35722661-5
 ```
+Similarly you can view the current config variables in your project with:
+
+```bash
+$ heroku config
+```
 
 Using the `figaro` command, you can set values from your configuration file all
 at once:
