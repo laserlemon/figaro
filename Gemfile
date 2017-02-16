@@ -9,5 +9,5 @@ group :test do
   gem "codeclimate-test-reporter", require: false
   gem "rspec", "~> 3.1"
   gem "sqlite3", "~> 1.3"
-  gem "combustion"
+  gem "combustion", "~> 0.5.5"
 end
