@@ -6,6 +6,11 @@ if ENV["CODECLIMATE_REPO_TOKEN"]
   CodeClimate::TestReporter.start
 end
 
+require 'rails'
+require 'combustion'
+
+Combustion.initialize!
+
 require "figaro"
 
 Bundler.require(:test)

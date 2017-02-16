@@ -4,3 +4,5 @@
 /gemfiles/*.gemfile.lock
 /pkg
 /tmp
+**/*.sqllite
+**/log/*.log
