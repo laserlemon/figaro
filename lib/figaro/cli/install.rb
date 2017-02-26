@@ -18,8 +18,9 @@ module Figaro
         copy_file("application.yml", options[:path])
       end
 
+
       def ignore_configuration
-        if File.exists?(".gitignore")
+        if File.exists?(".gitignore") && is_not_ignored?
           append_to_file(".gitignore", <<-EOF)
 
 # Ignore application configuration
@@ -27,6 +28,11 @@ module Figaro
 EOF
         end
       end
+
+      private
+        def is_not_ignored?
+          !File.readlines(".gitignore").any?{ |l| l["/#{options[:path]}"] }
+        end
     end
   end
 end
