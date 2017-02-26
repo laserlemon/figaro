@@ -46,4 +46,20 @@ EOF
       check_file_presence([".gitignore"], false)
     end
   end
+
+  context "with a .gitignore file already ingnoring path" do
+    before do
+      write_file(".gitignore", <<-EOF)
+/foo
+/bar
+/config/application.yml
+EOF
+    end
+    it "doesn't repeat itself in .gitignore file" do
+      run_simple("figaro install")
+
+      check_file_content(".gitignore", %r(^/config/application\.yml$), true)
+      check_file_content(".gitignore", %r(^# Ignore application configuration$), false)
+    end
+  end
 end
