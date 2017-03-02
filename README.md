@@ -31,7 +31,7 @@ This is straightforward in production environments but local development
 environments are often shared between multiple applications, requiring multiple
 configurations.
 
-Figaro parses a Git-ignored YAML file in your application and loads its values
+Figaro creates and parses a Git-ignored YAML file in your application and loads its values
 into `ENV`.
 
 ### Getting Started
