@@ -187,6 +187,13 @@ For more information:
 ```bash
 $ figaro help heroku:set
 ```
+\* Note to zsh users: passing parameters into a rake task will not work like in the bash example above due to file-globbing. You will need to escape the brackets, wrap in single quotes, or add `noglob` like this to pass parameters:
+
+```bash
+rake figaro:heroku\[my-awesome-app\]
+rake 'figaro:heroku[my-awesome-app]'
+noglob rake figaro:heroku[my-awesome-app]
+```
 
 #### Other Hosts
 
