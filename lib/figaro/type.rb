@@ -1,5 +1,3 @@
-require "figaro/dsl"
-
 module Figaro
   class Type
     def self.register(type_name, type_class)
