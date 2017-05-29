@@ -5,7 +5,7 @@ module Figaro
     describe ".load" do
       context "defaults" do
         it "loads default values from a YAML file" do
-          write_file <<-EOF, path: "defaults.yml"
+          write_file <<-EOF, "defaults.yml"
             foo: "bar"
             EOF
           write_envfile <<-EOF
@@ -19,7 +19,7 @@ module Figaro
         end
 
         it "overrides default values specified in the envfile" do
-          write_file <<-EOF, path: "defaults.yml"
+          write_file <<-EOF, "defaults.yml"
             foo: "baz"
             EOF
           write_envfile <<-EOF
@@ -34,7 +34,7 @@ module Figaro
 
         it "is overridden by ENV" do
           ENV["FOO"] = "qux"
-          write_file <<-EOF, path: "defaults.yml"
+          write_file <<-EOF, "defaults.yml"
             foo: "baz"
             EOF
           write_envfile <<-EOF
@@ -48,7 +48,7 @@ module Figaro
         end
 
         it "skips missing files" do
-          write_file <<-EOF, path: "defaults.yml"
+          write_file <<-EOF, "defaults.yml"
             foo: "baz"
             EOF
           write_envfile <<-EOF
@@ -62,11 +62,11 @@ module Figaro
         end
 
         it "uses the last default values seen when called multiple times" do
-          write_file <<-EOF, path: "defaults.yml"
+          write_file <<-EOF, "defaults.yml"
             foo: "baz"
             hello: "world"
             EOF
-          write_file <<-EOF, path: "overrides.yml"
+          write_file <<-EOF, "overrides.yml"
             foo: "qux"
             EOF
           write_envfile <<-EOF

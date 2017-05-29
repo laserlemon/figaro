@@ -17,11 +17,11 @@ module WorkspaceHelpers
     FileUtils.rm_rf(DIR)
   end
 
-  def write_envfile(content, path: "Envfile")
-    write_file(content, path: path)
+  def write_envfile(content, path = "Envfile")
+    write_file(content, path)
   end
 
-  def write_file(content, path:)
+  def write_file(content, path)
     File.open(path, "w") { |file| file << content }
   end
 end

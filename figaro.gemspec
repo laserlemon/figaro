@@ -17,6 +17,8 @@ Gem::Specification.new do |spec|
   spec.files      = `git ls-files -z`.split("\x0")
   spec.test_files = spec.files.grep(/^spec/)
 
+  spec.required_ruby_version = ">= 1.9.3"
+
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
 end
