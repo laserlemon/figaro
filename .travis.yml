@@ -5,6 +5,7 @@ branches:
   only:
     - master
     - v2
+bundler_args: --without development
 dist: trusty
 env:
   global:
