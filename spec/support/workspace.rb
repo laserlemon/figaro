@@ -1,19 +1,21 @@
 require "fileutils"
 
 module WorkspaceHelpers
-  DIR = File.join("spec", "workspace")
+  DIR = File.expand_path("../../workspace", __FILE__)
 
-  def in_workspace
-    FileUtils.mkdir_p(DIR)
+  def in_workspace(&block)
+    create_workspace
+    FileUtils.cd(DIR, &block)
     clean_workspace
-    FileUtils.cd(DIR) { yield }
+  end
+
+  def create_workspace
+    FileUtils.mkdir_p(DIR)
   end
 
   def clean_workspace
-    FileUtils.rm(Dir[File.join(DIR, "*")])
+    FileUtils.rm_rf(DIR)
   end
-
-  module_function :clean_workspace
 
   def write_envfile(content, path: "Envfile")
     write_file(content, path: path)
@@ -31,9 +33,5 @@ RSpec.configure do |config|
     in_workspace do
       example.run
     end
-  end
-
-  config.after(:suite) do
-    WorkspaceHelpers.clean_workspace
   end
 end
