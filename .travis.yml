@@ -1,19 +1,28 @@
 before_install:
+  - gem install bundler rake
   - gem update bundler rake
 branches:
   only:
     - master
     - v2
+dist: trusty
+env:
+  global:
+    - JRUBY_OPTS="$JRUBY_OPTS --debug"
 language: ruby
 matrix:
   allow_failures:
     - rvm: "2.1"
     - rvm: ruby-head
+    - rvm: jruby-head
+    - rvm: rbx-3
 rvm:
   - "2.1"
   - "2.2"
   - "2.3"
   - "2.4"
   - ruby-head
+  - jruby-head
+  - rbx-3
 script: bundle exec rspec
 sudo: false
