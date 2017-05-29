@@ -7,6 +7,7 @@ branches:
 language: ruby
 matrix:
   allow_failures:
+    - rvm: "2.1"
     - rvm: ruby-head
 rvm:
   - "2.1"
