@@ -4,7 +4,6 @@ branches:
   only:
     - master
     - v2
-cache: bundler
 language: ruby
 matrix:
   allow_failures:
