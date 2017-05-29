@@ -46,7 +46,7 @@ module Figaro
     private
 
     def format
-      options.fetch(:format, "%FT%T%:z")
+      @format ||= options.fetch(:format, "%FT%T%:z")
     end
   end
 end

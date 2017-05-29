@@ -21,7 +21,7 @@ module Figaro
     private
 
     def separator
-      options.fetch(:separator, ",")
+      @separator ||= options.fetch(:separator, ",")
     end
 
     def type

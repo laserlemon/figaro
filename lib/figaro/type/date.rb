@@ -23,7 +23,7 @@ module Figaro
     private
 
     def format
-      options.fetch(:format, "%F")
+      @format ||= options.fetch(:format, "%F")
     end
   end
 end
