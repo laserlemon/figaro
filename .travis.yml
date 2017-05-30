@@ -18,8 +18,7 @@ matrix:
     - rvm: ruby-head
     - rvm: jruby-9.1.10.0
     - rvm: rbx-3.72
-  include:
-    <<: *allowed_failures
+  include: *allowed_failures
 rvm:
   - "2.2"
   - "2.3"
