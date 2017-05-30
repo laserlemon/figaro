@@ -1,6 +1,4 @@
 before_install:
-  - rvm get master
-  - rvm list known
   - gem install bundler rake
   - gem update bundler rake
 branches:
@@ -17,8 +15,8 @@ matrix:
     - rvm: "2.0"
     - rvm: "2.1"
     - rvm: ruby-head
-    - rvm: jruby
-    - rvm: rbx-3
+    - rvm: jruby-9.1.10.0
+    - rvm: rbx-3.72
   include: *allowed_failures
 rvm:
   - "2.2"
