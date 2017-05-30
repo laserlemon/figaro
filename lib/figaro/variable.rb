@@ -5,7 +5,8 @@ module Figaro
     attr_reader :config, :name, :key, :type
 
     def initialize(config, name, type_class, options)
-      @config, @name = config, name.to_sym
+      @config = config
+      @name = name.to_sym
 
       options = options.dup
       @key = options.delete(:key) { default_key }

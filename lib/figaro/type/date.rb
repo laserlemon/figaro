@@ -3,27 +3,29 @@ require "date"
 require "figaro/type"
 
 module Figaro
-  class Type::Date < Figaro::Type
-    def load(value)
-      case value
-      when nil then nil
-      when ::String then ::Date.strptime(value, format)
-      else raise
+  class Type
+    class Date < Figaro::Type
+      def load(value)
+        case value
+        when nil then nil
+        when ::String then ::Date.strptime(value, format)
+        else raise
+        end
       end
-    end
 
-    def dump(value)
-      case value
-      when nil then nil
-      when ::Date then value.strftime(format)
-      else value.to_s
+      def dump(value)
+        case value
+        when nil then nil
+        when ::Date then value.strftime(format)
+        else value.to_s
+        end
       end
-    end
 
-    private
+      private
 
-    def format
-      @format ||= options.fetch(:format, "%F")
+      def format
+        @format ||= options.fetch(:format, "%F")
+      end
     end
   end
 end

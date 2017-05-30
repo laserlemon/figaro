@@ -1,19 +1,21 @@
 require "figaro/type"
 
 module Figaro
-  class Type::String < Figaro::Type
-    def load(value)
-      case value
-      when nil then nil
-      when ::String then value
-      else raise
+  class Type
+    class String < Figaro::Type
+      def load(value)
+        case value
+        when nil then nil
+        when ::String then value
+        else raise
+        end
       end
-    end
 
-    def dump(value)
-      case value
-      when nil then nil
-      else value.to_s
+      def dump(value)
+        case value
+        when nil then nil
+        else value.to_s
+        end
       end
     end
   end

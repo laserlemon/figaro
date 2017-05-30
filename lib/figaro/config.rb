@@ -13,7 +13,7 @@ require "figaro/type/time"
 
 module Figaro
   class Config
-    ENVFILE = "Envfile"
+    ENVFILE = "Envfile".freeze
 
     def self.load(envfile_path = find_envfile)
       new(envfile_path).tap(&:load)
@@ -23,13 +23,15 @@ module Figaro
       path = ENV["FIGARO_ENVFILE"]
       return path if path && !path.empty?
 
-      previous, current = nil, File.expand_path(::Pathname.pwd)
+      previous = nil
+      current = File.expand_path(::Pathname.pwd)
 
       until !::File.directory?(current) || current == previous
         path = ::File.join(current, ENVFILE)
         return path if ::File.file?(path)
 
-        previous, current = current, ::File.expand_path("..", current)
+        previous = current
+        current = ::File.expand_path("..", current)
       end
     end
 

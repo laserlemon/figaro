@@ -28,11 +28,11 @@ module Figaro
       @options = options
     end
 
-    def load(value)
+    def load(_value)
       raise ::NotImplementedError
     end
 
-    def dump(value)
+    def dump(_value)
       raise ::NotImplementedError
     end
   end

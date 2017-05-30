@@ -11,7 +11,7 @@ describe Figaro do
   describe ".config" do
     it "loads and memoizes the Figaro config" do
       config = double
-      expect(Figaro::Config).to receive(:load).with(no_args).once { config }
+      expect(Figaro::Config).to receive(:load).with(no_args).and_return(config)
 
       expect(Figaro.config).to eq(config)
       expect(Figaro.config).to eq(config)

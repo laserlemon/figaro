@@ -3,20 +3,22 @@ require "bigdecimal"
 require "figaro/type"
 
 module Figaro
-  class Type::Decimal < Figaro::Type
-    def load(value)
-      case value
-      when nil then nil
-      when /\A\-?\d+(\.\d+)\z/ then BigDecimal(value)
-      else raise
+  class Type
+    class Decimal < Figaro::Type
+      def load(value)
+        case value
+        when nil then nil
+        when /\A\-?\d+(\.\d+)\z/ then BigDecimal(value)
+        else raise
+        end
       end
-    end
 
-    def dump(value)
-      case value
-      when nil then nil
-      when ::BigDecimal then value.to_s("F")
-      else value.to_s
+      def dump(value)
+        case value
+        when nil then nil
+        when ::BigDecimal then value.to_s("F")
+        else value.to_s
+        end
       end
     end
   end

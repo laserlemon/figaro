@@ -1211,7 +1211,7 @@ module Figaro
           quantity: 4,
           secure: false,
           due_date: Date.new(2016, 2, 13),
-          start_time: Time.new(2016, 2, 13, 1, 19, 0, -18_000),
+          start_time: Time.new(2016, 2, 13, 1, 19, 0, -18_000)
         })
       end
     end
