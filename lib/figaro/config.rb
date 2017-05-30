@@ -54,11 +54,16 @@ module Figaro
     end
 
     def load_defaults(path)
-      defaults = ::YAML.load_file(path) || {}
-    # TODO: Inform the developer that defaults could not be loaded.
-    rescue ::SystemCallError
-      defaults = {}
-    # TODO: Rescue other common error cases and provide helpful messaging.
+      defaults = ::YAML.load_file(path)
+      # TODO: Validate the loaded defaults to verify the returned value is a
+      # hash with a single level of nesting and string keys.
+    rescue # rubocop:disable Lint/HandleExceptions
+      # TODO: Tell the developer why defaults could not be loaded. This might
+      # happen if no file exists at the given path or a file exists but is not
+      # valid YAML. Invalid YAML should raise an exception. A missing file
+      # should be an acceptable case because a developer may depend on the
+      # presence of defaults locally but those defaults may not be present on
+      # the server.
     else
       @defaults.update(defaults)
     end
