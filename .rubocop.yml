@@ -23,6 +23,8 @@ Style/BracesAroundHashParameters:
 # These style conventions are personal preference.
 Layout/IndentHash:
   EnforcedStyle: consistent
+Naming/HeredocDelimiterNaming:
+  Enabled: false
 Style/DoubleNegation:
   Enabled: false
 Style/StringLiterals:

@@ -5,7 +5,7 @@ require "figaro/type"
 module Figaro
   class Type
     class Time < Figaro::Type
-      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Style/DateTime
       def load(value)
         case value
         when nil then nil
@@ -36,7 +36,7 @@ module Figaro
         else raise
         end
       end
-      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+      # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Style/DateTime
 
       def dump(value)
         case value
