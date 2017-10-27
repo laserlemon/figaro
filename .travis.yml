@@ -12,11 +12,10 @@ env:
 language: ruby
 matrix:
   allow_failures: &allowed_failures
-    - rvm: "2.0"
     - rvm: "2.1"
     - rvm: ruby-head
-    - rvm: jruby-9.1.10.0
-    - rvm: rbx-3.72
+    - rvm: jruby
+    - rvm: rbx-3
   include: *allowed_failures
 rvm:
   - "2.2"
