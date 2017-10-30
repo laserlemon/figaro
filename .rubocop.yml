@@ -21,8 +21,14 @@ Style/BracesAroundHashParameters:
     - spec/**/*
 
 # These style conventions are personal preference.
+Layout/AlignHash:
+  EnforcedLastArgumentHashStyle: ignore_implicit
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
 Layout/IndentHash:
   EnforcedStyle: consistent
+Layout/IndentHeredoc:
+  Enabled: false
 Naming/HeredocDelimiterNaming:
   Enabled: false
 Style/DoubleNegation:

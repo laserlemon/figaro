@@ -31,17 +31,17 @@ module Figaro
 
       def variable_names_must_be_simple
         names = variables.map(&:name).uniq
-        complex_names = names.select { |n| n.to_sym.inspect != ":#{n}" }
+        complex_names = names.reject { |n| n.to_sym.inspect == ":#{n}" }
 
-        if complex_names.any?
-          message = <<~ERR
-            ERROR:
-              Variable names must be simple. Use letters and underscores only.
-              Given:
-            ERR
-          complex_names.each { |n| message << "    #{n}\n" }
-          raise Thor::MalformattedArgumentError, message
-        end
+        return if complex_names.none?
+
+        message = <<-ERR
+ERROR:
+  Variable names must be simple. Use letters and underscores only.
+  Given:
+ERR
+        complex_names.each { |n| message << "    #{n}\n" }
+        raise Thor::MalformattedArgumentError, message
       end
 
       def variable_types_must_be_valid
@@ -49,16 +49,16 @@ module Figaro
         valid_types = Figaro::Type.registered.keys.map(&:to_s).sort
         invalid_types = (types - valid_types).sort
 
-        if invalid_types.any?
-          message = <<~ERR
-            ERROR:
-              Variable types must be valid. Valid types are:
-            ERR
-          valid_types.each { |t| message << "    #{t}\n" }
-          message << "  Given:\n"
-          invalid_types.each { |t| message << "    #{t}\n" }
-          raise Thor::MalformattedArgumentError, message
-        end
+        return if invalid_types.none?
+
+        message = <<-ERR
+ERROR:
+  Variable types must be valid. Valid types are:
+ERR
+        valid_types.each { |t| message << "    #{t}\n" }
+        message << "  Given:\n"
+        invalid_types.each { |t| message << "    #{t}\n" }
+        raise Thor::MalformattedArgumentError, message
       end
 
       def variables_must_be_unique
@@ -70,12 +70,10 @@ module Figaro
         variables.each do |variable|
           existing_variable_type = variable_types_by_name[variable.name]
 
-          if existing_variable_type
-            if variable.type == existing_variable_type
-              ignored_variables << variable
-            else
-              duplicate_variables << variable
-            end
+          if existing_variable_type && variable.type == existing_variable_type
+            ignored_variables << variable
+          elsif existing_variable_type
+            duplicate_variables << variable
           else
             variable_types_by_name[variable.name] = variable.type
             new_variables << variable
@@ -83,21 +81,21 @@ module Figaro
         end
 
         if ignored_variables.any?
-          message = <<~WRN
-            WARNING:
-              Duplicate variables were found and ignored.
-              Ignored:
-            WRN
+          message = <<-WRN
+WARNING:
+  Duplicate variables were found and ignored.
+  Ignored:
+WRN
           ignored_variables.each { |v| message << "    #{v}\n" }
           warn message
         end
 
         if duplicate_variables.any?
-          message = <<~ERR
-            ERROR:
-              Variables must be unique. Duplicate variable names were found.
-              Found:
-            ERR
+          message = <<-ERR
+ERROR:
+  Variables must be unique. Duplicate variable names were found.
+  Found:
+ERR
           duplicate_variables.each { |v| message << "    #{v}\n" }
           raise Thor::MalformattedArgumentError, message
         end
@@ -122,11 +120,11 @@ module Figaro
       end
 
       def ignore_configuration
-        append_to_file(".gitignore", <<~EOF)
+        append_to_file(".gitignore", <<-EOF)
 
-          # Ignore Figaro's local configuration file
-          /#{options[:path]}
-          EOF
+# Ignore Figaro's local configuration file
+/#{options[:path]}
+EOF
       end
     end
   end

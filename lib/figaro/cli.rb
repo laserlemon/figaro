@@ -3,22 +3,14 @@ require "thor"
 module Figaro
   class CLI < Thor
     def self.generator_method_options
-      method_option :force,
-        aliases: "-f",
-        desc: "Overwrite files that already exist",
-        type: :boolean
-      method_option :pretend,
-        aliases: "-p",
-        desc: "Run but do not make any changes",
-        type: :boolean
-      method_option :quiet,
-        aliases: "-q",
-        desc: "Suppress status output",
-        type: :boolean
-      method_option :skip,
-        aliases: "-s",
-        desc: "Skip files that already exist",
-        type: :boolean
+      method_option :force, type: :boolean, aliases: "-f",
+        desc: "Overwrite files that already exist"
+      method_option :pretend, type: :boolean, aliases: "-p",
+        desc: "Run but do not make any changes"
+      method_option :quiet, type: :boolean, aliases: "-q",
+        desc: "Suppress status output"
+      method_option :skip, type: :boolean, aliases: "-s",
+        desc: "Skip files that already exist"
     end
 
     # figaro install
