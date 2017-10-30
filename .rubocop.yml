@@ -29,8 +29,6 @@ Layout/IndentHash:
   EnforcedStyle: consistent
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
-Layout/IndentHeredoc:
-  Enabled: false
 Naming/HeredocDelimiterNaming:
   Enabled: false
 Style/DoubleNegation:
