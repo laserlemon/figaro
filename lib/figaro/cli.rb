@@ -1,7 +1,7 @@
 require "thor"
 
 module Figaro
-  class CLI < Thor
+  class CLI < ::Thor
     def self.generator_method_options
       method_option :force, type: :boolean, aliases: "-f",
         desc: "Overwrite files that already exist"

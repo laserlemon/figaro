@@ -1,8 +1,8 @@
 require "figaro"
 
 module Figaro
-  class CLI < Thor
-    class Install < Thor::Group
+  class CLI < ::Thor
+    class Install < ::Thor::Group
       class Variable
         attr_reader :name, :type
 
@@ -17,12 +17,12 @@ module Figaro
         end
       end
 
-      include Thor::Actions
+      include ::Thor::Actions
 
       attr_reader :variables, :environment_options
 
       def self.source_root
-        File.expand_path("../install", __FILE__)
+        ::File.expand_path("../install", __FILE__)
       end
 
       def load_variables
@@ -60,8 +60,8 @@ module Figaro
       end
 
       def infer_environment_options
-        keys = defined?(Rack) ? ["RACK_ENV"] : []
-        keys.unshift(defined?(Rails) ? "RAILS_ENV" : "APP_ENV")
+        keys = defined?(::Rack) ? ["RACK_ENV"] : []
+        keys.unshift(defined?(::Rails) ? "RAILS_ENV" : "APP_ENV")
         options = keys.count > 1 ? { keys: keys } : { key: keys.first }
         options[:default] = "development"
         @environment_options = options

@@ -24,7 +24,7 @@ module Figaro
       return path if path && !path.empty?
 
       previous = nil
-      current = File.expand_path(::Pathname.pwd)
+      current = ::File.expand_path(::Pathname.pwd)
 
       until !::File.directory?(current) || current == previous
         path = ::File.join(current, ENVFILE)
@@ -82,7 +82,7 @@ module Figaro
     end
 
     def evaluate(option)
-      if option.respond_to?(:to_proc) && !option.is_a?(Hash)
+      if option.respond_to?(:to_proc) && !option.is_a?(::Hash)
         instance_exec(&option)
       else
         option
