@@ -1,4 +1,5 @@
 require "figaro/config"
+require "figaro/utils"
 require "figaro/version"
 
 module Figaro
