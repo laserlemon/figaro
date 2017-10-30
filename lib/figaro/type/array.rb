@@ -7,7 +7,7 @@ module Figaro
         case value
         when nil then nil
         when ::String then value.split(separator).map { |e| type.load(e) }
-        else raise
+        else raise_type_load_error(value)
         end
       end
 

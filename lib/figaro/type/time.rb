@@ -33,7 +33,7 @@ module Figaro
             date_time.second + date_time.second_fraction,
             date_time.offset * 24 * 60 * 60
           )
-        else raise
+        else raise_type_load_error(value)
         end
       end
       # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Style/DateTime

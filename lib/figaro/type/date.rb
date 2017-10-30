@@ -9,7 +9,7 @@ module Figaro
         case value
         when nil then nil
         when ::String then ::Date.strptime(value, format)
-        else raise
+        else raise_type_load_error(value)
         end
       end
 

@@ -8,7 +8,7 @@ module Figaro
         when nil then nil
         when /\A(t(rue)?|y(es)?|on|1)\z/i then true
         when /\A(f(alse)?|n(o)?|off|0)\z/i then false
-        else raise
+        else raise_type_load_error(value)
         end
       end
 

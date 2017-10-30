@@ -1,5 +1,7 @@
 require "thor"
 
+require "figaro/cli/error"
+
 module Figaro
   class CLI < ::Thor
     def self.generator_method_options

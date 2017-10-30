@@ -35,5 +35,11 @@ module Figaro
     def dump(_value)
       raise ::NotImplementedError
     end
+
+    private
+
+    def raise_type_load_error(value)
+      raise Figaro::TypeLoadError, type: self, value: value
+    end
   end
 end

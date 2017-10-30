@@ -35,7 +35,8 @@ module Figaro
 
         return if complex_names.none?
 
-        raise ComplexVariableNames, complex_names
+        raise Figaro::CLI::ComplexVariableNamesError,
+          complex_names: complex_names
       end
 
       def variable_types_must_be_valid
@@ -45,7 +46,8 @@ module Figaro
 
         return if invalid_types.none?
 
-        raise InvalidVariableTypes, valid_types, invalid_types
+        raise Figaro::CLI::InvalidVariableTypesError,
+          valid_types: valid_types, invalid_types: invalid_types
       end
 
       def variable_names_must_be_unique
@@ -56,7 +58,8 @@ module Figaro
 
         return if duplicate_names.none?
 
-        raise DuplicateVariableNames, duplicate_names
+        raise Figaro::CLI::DuplicateVariableNamesError,
+          duplicate_names: duplicate_names
       end
 
       def infer_environment_options
