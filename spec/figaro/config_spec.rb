@@ -18,6 +18,25 @@ module Figaro
           expect(config.foo).to eq("bar")
         end
 
+        it "locates the nearest envfile in ancestor directories" do
+          create_directory("bar")
+          change_directory("bar")
+          write_envfile <<-EOF
+            string :foo, default: "bar"
+            EOF
+          create_directory("baz")
+          change_directory("baz")
+          write_envfile <<-EOF
+            string :foo, default: "baz"
+            EOF
+          create_directory("qux")
+          change_directory("qux")
+
+          config = Figaro::Config.load
+
+          expect(config.foo).to eq("baz")
+        end
+
         it "overrides default values specified in the envfile" do
           write_file <<-EOF, "defaults.yml"
             foo: "baz"
