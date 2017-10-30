@@ -14,6 +14,10 @@ module Figaro
       @config = config
     end
 
+    def environment(*)
+      # TODO
+    end
+
     def defaults(path)
       config.load_defaults(path)
     end
