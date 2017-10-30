@@ -13,7 +13,7 @@ require "figaro/type/time"
 
 module Figaro
   class Config
-    ENVFILE = "Envfile".freeze
+    ENVFILE = "env.rb".freeze
 
     def self.load(envfile_path = find_envfile)
       new(envfile_path).tap(&:load)
