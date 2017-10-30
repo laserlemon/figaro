@@ -35,13 +35,7 @@ module Figaro
 
         return if complex_names.none?
 
-        message = <<-ERR
-ERROR:
-  Variable names must be simple. Use letters and underscores only.
-  Given:
-ERR
-        complex_names.each { |n| message << "    #{n}\n" }
-        raise Thor::MalformattedArgumentError, message
+        raise ComplexVariableNames, complex_names
       end
 
       def variable_types_must_be_valid
@@ -51,56 +45,18 @@ ERR
 
         return if invalid_types.none?
 
-        message = <<-ERR
-ERROR:
-  Variable types must be valid. Valid types are:
-ERR
-        valid_types.each { |t| message << "    #{t}\n" }
-        message << "  Given:\n"
-        invalid_types.each { |t| message << "    #{t}\n" }
-        raise Thor::MalformattedArgumentError, message
+        raise InvalidVariableTypes, valid_types, invalid_types
       end
 
-      def variables_must_be_unique
-        variable_types_by_name = {}
-        new_variables = []
-        ignored_variables = []
-        duplicate_variables = []
+      def variable_names_must_be_unique
+        duplicate_names = variables
+          .group_by(&:name)
+          .select { |_name, group| group.count > 1 }
+          .keys
 
-        variables.each do |variable|
-          existing_variable_type = variable_types_by_name[variable.name]
+        return if duplicate_names.none?
 
-          if existing_variable_type && variable.type == existing_variable_type
-            ignored_variables << variable
-          elsif existing_variable_type
-            duplicate_variables << variable
-          else
-            variable_types_by_name[variable.name] = variable.type
-            new_variables << variable
-          end
-        end
-
-        if ignored_variables.any?
-          message = <<-WRN
-WARNING:
-  Duplicate variables were found and ignored.
-  Ignored:
-WRN
-          ignored_variables.each { |v| message << "    #{v}\n" }
-          warn message
-        end
-
-        if duplicate_variables.any?
-          message = <<-ERR
-ERROR:
-  Variables must be unique. Duplicate variable names were found.
-  Found:
-ERR
-          duplicate_variables.each { |v| message << "    #{v}\n" }
-          raise Thor::MalformattedArgumentError, message
-        end
-
-        variables.replace(new_variables)
+        raise DuplicateVariableNames, duplicate_names
       end
 
       def infer_environment_options

@@ -27,6 +27,8 @@ Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 Layout/IndentHash:
   EnforcedStyle: consistent
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
 Layout/IndentHeredoc:
   Enabled: false
 Naming/HeredocDelimiterNaming:
