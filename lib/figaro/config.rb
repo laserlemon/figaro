@@ -54,7 +54,7 @@ module Figaro
     end
 
     def load_defaults(path)
-      defaults = ::YAML.load_file(path)
+      defaults = ::YAML.load_file(path) || {}
       # TODO: Validate the loaded defaults to verify the returned value is a
       # hash with a single level of nesting and string keys.
     rescue # rubocop:disable Lint/HandleExceptions, Lint/RescueWithoutErrorClass
