@@ -26,7 +26,7 @@ module Figaro
       end
 
       def load_variables
-        @variables = args.map { |a| Variable.new(a) }
+        @variables = args.map { |a| Figaro::CLI::Install::Variable.new(a) }
       end
 
       def variable_names_must_be_simple
@@ -63,8 +63,8 @@ module Figaro
       end
 
       def infer_environment_options
-        keys = defined?(::Rack) ? ["RACK_ENV"] : []
-        keys.unshift(defined?(::Rails) ? "RAILS_ENV" : "APP_ENV")
+        keys = using_rack? ? ["RACK_ENV"] : []
+        keys.unshift(using_rails? ? "RAILS_ENV" : "APP_ENV")
         options = keys.count > 1 ? { keys: keys } : { key: keys.first }
         options[:default] = "development"
         @environment_options = options
@@ -84,6 +84,33 @@ module Figaro
           # Ignore Figaro's local configuration file
           /#{options[:path]}
           EOF
+      end
+
+      private
+
+      def using_rails?
+        return @using_rails if defined? @using_rails
+
+        @using_rails = bundled_gems.include?("rails") ||
+          ::File.exist?("bin/rails")
+      end
+
+      def using_rack?
+        return @using_rack if defined? @using_rack
+
+        @using_rack = using_rails? || bundled_gems.include?("rack")
+      end
+
+      def bundled_gems
+        return [] unless defined?(::Bundler) && defined?(::Bundler::Error)
+
+        @bundled_gems ||= begin
+          locked_gems = ::Bundler.locked_gems
+          specs = locked_gems ? locked_gems.specs : []
+          specs.map(&:name)
+        rescue Bundler::BundlerError
+          []
+        end
       end
     end
   end

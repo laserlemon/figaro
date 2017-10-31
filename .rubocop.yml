@@ -33,6 +33,8 @@ Naming/HeredocDelimiterNaming:
   Enabled: false
 Style/DoubleNegation:
   Enabled: false
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
 Style/StringLiterals:
   EnforcedStyle: double_quotes
 Style/SymbolArray:
