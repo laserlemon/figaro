@@ -2,9 +2,17 @@ require "figaro"
 
 module Figaro
   class CLI < ::Thor
-    class Exec < Struct.new(:command, :args, :options)
+    class Exec
       def self.invoke(*args)
         new(*args).invoke
+      end
+
+      attr_reader :command, :args, :options
+
+      def initialize(command, args, options)
+        @command = command
+        @args = args
+        @options = options
       end
 
       def invoke
