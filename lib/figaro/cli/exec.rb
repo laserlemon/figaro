@@ -2,7 +2,15 @@ require "figaro"
 
 module Figaro
   class CLI < ::Thor
-    class Exec < ::Thor::Group
+    class Exec < Figaro::CLI::Command
+      def invoke
+        validate_command
+        load_configuration
+        execute_command
+      end
+
+      private
+
       def validate_command
         return if command
         warn "figaro: exec needs a command to run"
@@ -22,8 +30,6 @@ module Figaro
         warn "figaro: command not found: #{command}"
         exit 127
       end
-
-      private
 
       def command
         @command ||= args.first

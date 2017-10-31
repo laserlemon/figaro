@@ -1,5 +1,6 @@
 require "thor"
 
+require "figaro/cli/command"
 require "figaro/cli/error"
 
 module Figaro
@@ -19,7 +20,7 @@ module Figaro
     desc "exec COMMAND", "Run a command with Figaro's configuration"
     def exec(*args)
       require "figaro/cli/exec"
-      invoke Figaro::CLI::Exec, args, options
+      Figaro::CLI::Exec.invoke(args, options)
     end
 
     # figaro install
