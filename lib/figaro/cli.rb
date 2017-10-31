@@ -15,6 +15,13 @@ module Figaro
         desc: "Skip files that already exist"
     end
 
+    # figaro exec
+    desc "exec COMMAND", "Run a command with Figaro's configuration"
+    def exec(*args)
+      require "figaro/cli/exec"
+      invoke Figaro::CLI::Exec, args, options
+    end
+
     # figaro install
     desc "install [name[:type] name[:type]] [options]", "Install Figaro"
     method_option :path,
@@ -23,7 +30,7 @@ module Figaro
     generator_method_options
     def install(*variables)
       require "figaro/cli/install"
-      invoke Install, variables, options
+      invoke Figaro::CLI::Install, variables, options
     end
   end
 end
