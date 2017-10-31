@@ -1,6 +1,5 @@
 require "thor"
 
-require "figaro/cli/command"
 require "figaro/cli/error"
 
 module Figaro
@@ -18,9 +17,9 @@ module Figaro
 
     # figaro exec
     desc "exec COMMAND", "Run a command with Figaro's configuration"
-    def exec(*args)
+    def exec(command, *args)
       require "figaro/cli/exec"
-      Figaro::CLI::Exec.invoke(args, options)
+      Figaro::CLI::Exec.invoke(command, args, options)
     end
 
     # figaro install
@@ -29,9 +28,9 @@ module Figaro
       default: "env.yml",
       desc: "Specify a path for Figaro's local configuration file"
     generator_method_options
-    def install(*variables)
+    def install(*args)
       require "figaro/cli/install"
-      invoke Figaro::CLI::Install, variables, options
+      invoke Figaro::CLI::Install, args, options
     end
   end
 end

@@ -2,7 +2,11 @@ require "figaro"
 
 module Figaro
   class CLI < ::Thor
-    class Exec < Figaro::CLI::Command
+    class Exec < Struct.new(:command, :args, :options)
+      def self.invoke(*args)
+        new(*args).invoke
+      end
+
       def invoke
         validate_command
         load_configuration
@@ -22,17 +26,13 @@ module Figaro
       end
 
       def execute_command
-        Kernel.exec(*args)
+        Kernel.exec(command, *args)
       rescue Errno::EACCES, Errno::ENOEXEC
         warn "figaro: not executable: #{command}"
         exit 126
       rescue Errno::ENOENT
         warn "figaro: command not found: #{command}"
         exit 127
-      end
-
-      def command
-        @command ||= args.first
       end
     end
   end

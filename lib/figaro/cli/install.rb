@@ -19,11 +19,9 @@ module Figaro
 
       include ::Thor::Actions
 
-      attr_reader :variables, :environment_options
+      source_root ::File.expand_path("../install", __FILE__)
 
-      def self.source_root
-        ::File.expand_path("../install", __FILE__)
-      end
+      attr_reader :variables, :environment_options
 
       def load_variables
         @variables = args.map { |a| Figaro::CLI::Install::Variable.new(a) }
@@ -70,15 +68,15 @@ module Figaro
         @environment_options = options
       end
 
-      def create_env_rb
+      def create_envfile
         template("env.rb.tt", "env.rb")
       end
 
-      def create_env_yml
+      def create_local_configuration_file
         template("env.yml.tt", options[:path])
       end
 
-      def ignore_configuration
+      def git_ignore_local_configuration_file
         append_to_file(".gitignore", Figaro::Utils.strip_heredoc(<<-EOF))
 
           # Ignore Figaro's local configuration file
