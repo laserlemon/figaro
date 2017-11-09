@@ -2,4 +2,9 @@
 
 require "figaro/cli"
 
-Figaro::CLI.start
+begin
+  Figaro::CLI.start
+rescue Figaro::Error => error
+  warn error.message
+  exit 1
+end
