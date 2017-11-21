@@ -18,7 +18,7 @@ module WorkspaceHelpers
     FileUtils.rm_rf(DIR)
   end
 
-  def write_envfile(content, path = Figaro::Config::ENVFILE)
+  def write_envfile(content, path = Figaro::Config.default_envfile_path)
     write_file(content, path)
   end
 

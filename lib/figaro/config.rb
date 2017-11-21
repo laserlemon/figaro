@@ -13,26 +13,19 @@ require "figaro/type/time"
 
 module Figaro
   class Config
-    ENVFILE = "env.rb".freeze
+    ENVFILE_PATH = "env.rb".freeze
+    ENVFILE_PATH_KEY = "FIGARO_ENVFILE".freeze
 
-    def self.load(envfile_path = find_envfile)
+    def self.load(envfile_path = find_envfile_path)
       new(envfile_path).tap(&:load)
     end
 
-    def self.find_envfile
-      path = ENV["FIGARO_ENVFILE"]
-      return path if path && !path.empty?
+    def self.find_envfile_path
+      Figaro::Utils.find_file_path(default_envfile_path)
+    end
 
-      previous = nil
-      current = ::File.expand_path(::Pathname.pwd)
-
-      until !::File.directory?(current) || current == previous
-        path = ::File.join(current, ENVFILE)
-        return path if ::File.file?(path)
-
-        previous = current
-        current = ::File.expand_path("..", current)
-      end
+    def self.default_envfile_path
+      ::Pathname.new(ENV[ENVFILE_PATH_KEY] || ENVFILE_PATH)
     end
 
     attr_reader :defaults, :variables
