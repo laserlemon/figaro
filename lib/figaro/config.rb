@@ -16,8 +16,8 @@ module Figaro
     ENVFILE_PATH = "env.rb".freeze
     ENVFILE_PATH_KEY = "FIGARO_ENVFILE".freeze
 
-    def self.load(envfile_path = find_envfile_path)
-      new(envfile_path).tap(&:load)
+    def self.load
+      new.tap(&:load)
     end
 
     def self.find_envfile_path
@@ -30,10 +30,10 @@ module Figaro
 
     attr_reader :defaults, :variables
 
-    def initialize(envfile_path)
+    def initialize
       @dsl = Figaro::DSL.new(self)
-      @envfile_path = ::Pathname.new(envfile_path).expand_path.to_s
-      @envfile_content = ::File.read(@envfile_path)
+      @envfile_path = self.class.find_envfile_path
+      @envfile_content = @envfile_path.read
       @defaults = {}
       @variables = []
       @variable_methods = ::Module.new
@@ -42,7 +42,7 @@ module Figaro
     end
 
     def load
-      @dsl.instance_eval(@envfile_content, @envfile_path, 1)
+      @dsl.instance_eval(@envfile_content, @envfile_path.to_s, 1)
       validate!
     end
 
