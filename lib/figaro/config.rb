@@ -36,9 +36,9 @@ module Figaro
       @envfile_content = @envfile_path.read
       @defaults = {}
       @variables = []
-      @variable_methods = ::Module.new
+      @accessors = ::Module.new
 
-      extend @variable_methods
+      extend @accessors
     end
 
     def load
@@ -63,7 +63,7 @@ module Figaro
 
     def <<(variable)
       @variables << variable
-      add_variable_methods(variable)
+      add_accessors(variable)
     end
 
     def get(key, &default)
@@ -90,8 +90,8 @@ module Figaro
 
     private
 
-    def add_variable_methods(variable)
-      @variable_methods.instance_eval do
+    def add_accessors(variable)
+      @accessors.instance_eval do
         define_method(variable.name, &variable.method(:value))
         define_method(:"#{variable.name}=", &variable.method(:value=))
         define_method(:"#{variable.name}?", &variable.method(:value?))
