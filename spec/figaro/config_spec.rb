@@ -1228,7 +1228,7 @@ module Figaro
 
         expect(config.to_h).to eq({
           foo: "bar",
-          price: BigDecimal.new("1.23"),
+          price: BigDecimal("1.23"),
           quantity: 4,
           secure: false,
           due_date: Date.new(2016, 2, 13),
