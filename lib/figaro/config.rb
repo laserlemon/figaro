@@ -52,7 +52,7 @@ module Figaro
       defaults = ::YAML.load_file(path) || {}
       # TODO: Validate the loaded defaults to verify the returned value is a
       # hash with a single level of nesting and string keys.
-    rescue # rubocop:disable Lint/HandleExceptions, Lint/RescueWithoutErrorClass
+    rescue # rubocop:disable Lint/HandleExceptions, Style/RescueStandardError
       # TODO: Tell the developer why defaults could not be loaded. This might
       # happen if no file exists at the given path or a file exists but is not
       # valid YAML. Invalid YAML should raise an exception. A missing file
