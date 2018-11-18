@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require "figaro/config"
 require "figaro/utils"
 require "figaro/version"

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Figaro
   class Error < ::StandardError
   end

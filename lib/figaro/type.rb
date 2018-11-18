@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Figaro
   class Type
     def self.register(type_name, type_class)

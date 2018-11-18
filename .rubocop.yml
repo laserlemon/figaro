@@ -1,6 +1,6 @@
 # This should always correspond to the earliest non-EOL Ruby version.
 AllCops:
-  TargetRubyVersion: 2.2
+  TargetRubyVersion: 2.3
 
 # TODO: Re-enable this cop after TomDoc code deocumentation is added.
 Style/Documentation:

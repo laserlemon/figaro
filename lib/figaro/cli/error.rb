@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Figaro
   class CLI < ::Thor
     class Error < ::Thor::MalformattedArgumentError

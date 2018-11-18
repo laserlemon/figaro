@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Figaro
   VERSION = ::Gem::Version.new("2.0.0")
 
