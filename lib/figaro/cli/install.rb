@@ -103,14 +103,11 @@ module Figaro
 
       def bundled_gems
         return [] unless defined?(::Bundler) && defined?(::Bundler::Error)
+        return @bundled_gems if defined? @bundled_gems
 
-        @bundled_gems ||= begin
-          locked_gems = ::Bundler.locked_gems
-          specs = locked_gems ? locked_gems.specs : []
-          specs.map(&:name)
-        rescue Bundler::BundlerError
-          []
-        end
+        @bundled_gems = ::Bundler.locked_gems&.specs&.map(&:name) || []
+      rescue Bundler::BundlerError
+        []
       end
     end
   end
