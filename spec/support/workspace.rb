@@ -3,7 +3,7 @@
 require "fileutils"
 
 module WorkspaceHelpers
-  DIR = File.expand_path('../workspace', __dir__)
+  DIR = File.expand_path("../workspace", __dir__)
 
   def in_workspace
     create_workspace
