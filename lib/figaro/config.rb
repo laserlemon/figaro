@@ -15,8 +15,8 @@ require "figaro/type/time"
 
 module Figaro
   class Config
-    ENVFILE_PATH = "env.rb".freeze
-    ENVFILE_PATH_KEY = "FIGARO_ENVFILE".freeze
+    ENVFILE_PATH = "env.rb"
+    ENVFILE_PATH_KEY = "FIGARO_ENVFILE"
 
     def self.load
       new.tap(&:load)
