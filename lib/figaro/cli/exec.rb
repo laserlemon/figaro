@@ -27,6 +27,7 @@ module Figaro
 
       def validate_command
         return if command
+
         warn "figaro: exec needs a command to run"
         exit 128
       end
