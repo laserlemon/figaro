@@ -79,11 +79,11 @@ module Figaro
       end
 
       def git_ignore_local_configuration_file
-        append_to_file(".gitignore", Figaro::Utils.strip_heredoc(<<-EOF))
+        append_to_file(".gitignore", <<~STR)
 
           # Ignore Figaro's local configuration file
           /#{options[:path]}
-          EOF
+          STR
       end
 
       private

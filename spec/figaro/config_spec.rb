@@ -7,10 +7,10 @@ module Figaro
     describe ".load" do
       context "defaults" do
         it "loads default values from a YAML file" do
-          write_file <<-EOF, "defaults.yml"
+          write_file <<~EOF, "defaults.yml"
             foo: "bar"
             EOF
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             defaults "defaults.yml"
             string :foo
             EOF
@@ -23,12 +23,12 @@ module Figaro
         it "locates the nearest envfile in ancestor directories" do
           create_directory("bar")
           change_directory("bar")
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo, default: "bar"
             EOF
           create_directory("baz")
           change_directory("baz")
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo, default: "baz"
             EOF
           create_directory("qux")
@@ -40,10 +40,10 @@ module Figaro
         end
 
         it "overrides default values specified in the envfile" do
-          write_file <<-EOF, "defaults.yml"
+          write_file <<~EOF, "defaults.yml"
             foo: "baz"
             EOF
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             defaults "defaults.yml"
             string :foo, default: "bar"
             EOF
@@ -55,10 +55,10 @@ module Figaro
 
         it "is overridden by ENV" do
           ENV["FOO"] = "qux"
-          write_file <<-EOF, "defaults.yml"
+          write_file <<~EOF, "defaults.yml"
             foo: "baz"
             EOF
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             defaults "defaults.yml"
             string :foo, default: "bar"
             EOF
@@ -69,10 +69,10 @@ module Figaro
         end
 
         it "skips missing files" do
-          write_file <<-EOF, "defaults.yml"
+          write_file <<~EOF, "defaults.yml"
             foo: "baz"
             EOF
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             defaults "missing.yml"
             string :foo, default: "bar"
             EOF
@@ -83,14 +83,14 @@ module Figaro
         end
 
         it "uses the last default values seen when called multiple times" do
-          write_file <<-EOF, "defaults.yml"
+          write_file <<~EOF, "defaults.yml"
             foo: "baz"
             hello: "world"
             EOF
-          write_file <<-EOF, "overrides.yml"
+          write_file <<~EOF, "overrides.yml"
             foo: "qux"
             EOF
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             defaults "defaults.yml"
             defaults "overrides.yml"
             string :foo, default: "bar"
@@ -107,7 +107,7 @@ module Figaro
       context "string" do
         it "loads a set string variable" do
           ENV["FOO"] = "bar"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo
             EOF
 
@@ -122,7 +122,7 @@ module Figaro
         end
 
         it "loads an unset string variable with a default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo, default: "bar"
             EOF
 
@@ -138,7 +138,7 @@ module Figaro
 
         it "loads a set string variable with a default value" do
           ENV["FOO"] = "baz"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo, default: "bar"
             EOF
 
@@ -153,7 +153,7 @@ module Figaro
         end
 
         it "raises an error if an unset string variable is required" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo
             EOF
 
@@ -161,7 +161,7 @@ module Figaro
         end
 
         it "loads an optional, unset string variable" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo, required: false
             EOF
 
@@ -176,7 +176,7 @@ module Figaro
         end
 
         it "loads an unset string variable when dynamically optional" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo, required: false
             string :bar, required: -> { foo? }
             EOF
@@ -193,7 +193,7 @@ module Figaro
 
         it "loads a string variable from a custom ENV key" do
           ENV["FU"] = "bar"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo, key: "FU"
             EOF
 
@@ -210,7 +210,7 @@ module Figaro
         # TODO: Decide whether an empty string should be considered as "set."
         it "loads an empty string" do
           ENV["FOO"] = ""
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo
             EOF
 
@@ -226,7 +226,7 @@ module Figaro
 
         it "loads a string variable with a dynamically set default value" do
           ENV["FOO"] = "bar"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo
             string :bar, default: -> { foo }
             EOF
@@ -242,7 +242,7 @@ module Figaro
         end
 
         it "loads a string variable with a non-string default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             string :foo, default: 1
             EOF
 
@@ -260,7 +260,7 @@ module Figaro
       context "integer" do
         it "loads a set integer variable" do
           ENV["FOO"] = "3"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo
             EOF
 
@@ -275,7 +275,7 @@ module Figaro
         end
 
         it "loads an unset integer variable with a default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo, default: 3
             EOF
 
@@ -291,7 +291,7 @@ module Figaro
 
         it "loads a set integer variable with a default value" do
           ENV["FOO"] = "4"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo, default: 3
             EOF
 
@@ -306,7 +306,7 @@ module Figaro
         end
 
         it "raises an error if an unset integer variable is required" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo
             EOF
 
@@ -314,7 +314,7 @@ module Figaro
         end
 
         it "loads an optional, unset integer variable" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo, required: false
             EOF
 
@@ -329,7 +329,7 @@ module Figaro
         end
 
         it "loads an unset integer variable when dynamically optional" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo, required: false
             integer :bar, required: -> { foo? }
             EOF
@@ -346,7 +346,7 @@ module Figaro
 
         it "loads an integer variable from a custom ENV key" do
           ENV["FU"] = "3"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo, key: "FU"
             EOF
 
@@ -362,7 +362,7 @@ module Figaro
 
         it "loads a integer variable with a dynamically set default value" do
           ENV["FOO"] = "3"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo
             integer :bar, default: -> { foo }
             EOF
@@ -378,7 +378,7 @@ module Figaro
         end
 
         it "loads a integer variable with a non-integer default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo, default: "3"
             EOF
 
@@ -394,7 +394,7 @@ module Figaro
 
         it "loads a negative integer variable" do
           ENV["FOO"] = "-3"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             integer :foo
             EOF
 
@@ -412,7 +412,7 @@ module Figaro
       context "decimal" do
         it "loads a set decimal variable" do
           ENV["FOO"] = "1.23"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo
             EOF
 
@@ -428,7 +428,7 @@ module Figaro
         end
 
         it "loads an unset decimal variable with a string default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo, default: "1.23"
             EOF
 
@@ -445,7 +445,7 @@ module Figaro
 
         # TODO: Decide whether to allow loading from a float. Floats are buggy.
         it "loads an unset decimal variable with a float default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo, default: 1.23
             EOF
 
@@ -462,7 +462,7 @@ module Figaro
 
         it "loads a set decimal variable with a default value" do
           ENV["FOO"] = "2.34"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo, default: "1.23"
             EOF
 
@@ -478,7 +478,7 @@ module Figaro
         end
 
         it "raises an error if an unset decimal variable is required" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo
             EOF
 
@@ -486,7 +486,7 @@ module Figaro
         end
 
         it "loads an optional, unset decimal variable" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo, required: false
             EOF
 
@@ -501,7 +501,7 @@ module Figaro
         end
 
         it "loads an unset decimal variable when dynamically optional" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo, required: false
             decimal :bar, required: -> { foo? }
             EOF
@@ -518,7 +518,7 @@ module Figaro
 
         it "loads a decimal variable from a custom ENV key" do
           ENV["FU"] = "1.23"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo, key: "FU"
             EOF
 
@@ -535,7 +535,7 @@ module Figaro
 
         it "loads a decimal variable with a dynamically set default value" do
           ENV["FOO"] = "1.23"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo
             decimal :bar, default: -> { foo }
             EOF
@@ -553,7 +553,7 @@ module Figaro
 
         it "loads a negative decimal variable" do
           ENV["FOO"] = "-1.23"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             decimal :foo
             EOF
 
@@ -572,7 +572,7 @@ module Figaro
       context "boolean" do
         it "loads a boolean variable set to true" do
           ENV["FOO"] = "true"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             boolean :foo
             EOF
 
@@ -587,7 +587,7 @@ module Figaro
         end
 
         it "loads an unset boolean variable with a default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             boolean :foo, default: true
             EOF
 
@@ -603,7 +603,7 @@ module Figaro
 
         it "loads a set boolean variable with a default value" do
           ENV["FOO"] = "false"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             boolean :foo, default: true
             EOF
 
@@ -618,7 +618,7 @@ module Figaro
         end
 
         it "raises an error if an unset boolean variable is required" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             boolean :foo
             EOF
 
@@ -626,7 +626,7 @@ module Figaro
         end
 
         it "loads an optional, unset boolean variable" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             boolean :foo, required: false
             EOF
 
@@ -641,7 +641,7 @@ module Figaro
         end
 
         it "loads an unset boolean variable when dynamically optional" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             boolean :foo, required: false
             boolean :bar, required: -> { foo? }
             EOF
@@ -658,7 +658,7 @@ module Figaro
 
         it "loads a boolean variable from a custom ENV key" do
           ENV["FU"] = "true"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             boolean :foo, key: "FU"
             EOF
 
@@ -674,7 +674,7 @@ module Figaro
 
         it "loads a boolean variable with a dynamically set default value" do
           ENV["FOO"] = "true"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             boolean :foo
             boolean :bar, default: -> { foo }
             EOF
@@ -690,7 +690,7 @@ module Figaro
         end
 
         it "loads a boolean variable with a non-boolean default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             boolean :foo, default: "yes"
             EOF
 
@@ -708,7 +708,7 @@ module Figaro
       context "array" do
         it "loads a set array variable" do
           ENV["FOO"] = "bar,baz"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo
             EOF
 
@@ -724,7 +724,7 @@ module Figaro
 
         it "loads a set array variable with a custom separator" do
           ENV["FOO"] = "bar|baz"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, separator: "|"
             EOF
 
@@ -739,7 +739,7 @@ module Figaro
         end
 
         it "loads an unset array variable with a default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, default: ["bar", "baz"]
             EOF
 
@@ -754,7 +754,7 @@ module Figaro
         end
 
         it "loads an unset array variable with a default value and a custom separator" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, default: ["bar", "baz"], separator: "|"
             EOF
 
@@ -770,7 +770,7 @@ module Figaro
 
         it "loads a set array variable with a default value" do
           ENV["FOO"] = "bar,baz"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, default: ["bar", "baz", "qux"]
             EOF
 
@@ -785,7 +785,7 @@ module Figaro
         end
 
         it "raises an error if an unset array variable is required" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo
             EOF
 
@@ -793,7 +793,7 @@ module Figaro
         end
 
         it "loads an optional, unset array variable" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, required: false
             EOF
 
@@ -808,7 +808,7 @@ module Figaro
         end
 
         it "loads an unset array variable when dynamically optional" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, required: false
             array :bar, required: -> { foo? }
             EOF
@@ -825,7 +825,7 @@ module Figaro
 
         it "loads an array variable from a custom ENV key" do
           ENV["FU"] = "bar,baz"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, key: "FU"
             EOF
 
@@ -841,7 +841,7 @@ module Figaro
 
         it "loads an array variable with a dynamically set default value" do
           ENV["FOO"] = "bar,baz"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo
             array :bar, default: -> { foo }
             EOF
@@ -857,7 +857,7 @@ module Figaro
         end
 
         it "loads an array variable with a non-array default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, default: "bar,baz"
             EOF
 
@@ -873,7 +873,7 @@ module Figaro
 
         it "loads an array variable with non-string values" do
           ENV["FOO"] = "1,2,3"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, type: :integer
             EOF
 
@@ -889,7 +889,7 @@ module Figaro
 
         it "loads a nested array variable with non-string values" do
           ENV["FOO"] = "1,2,3|4,5,6|7,8,9"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             array :foo, separator: "|", type: :array, type_options: { type: :integer }
             EOF
 
@@ -907,7 +907,7 @@ module Figaro
       context "date" do
         it "loads a set date variable" do
           ENV["FOO"] = "2016-12-21"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             date :foo
             EOF
 
@@ -922,7 +922,7 @@ module Figaro
         end
 
         it "loads an unset date variable with a default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             date :foo, default: "2016-12-21"
             EOF
 
@@ -938,7 +938,7 @@ module Figaro
 
         it "loads a set date variable with a default value" do
           ENV["FOO"] = "2016-12-25"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             date :foo, default: "2016-12-21"
             EOF
 
@@ -953,7 +953,7 @@ module Figaro
         end
 
         it "raises an error if an unset date variable is required" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             date :foo
             EOF
 
@@ -961,7 +961,7 @@ module Figaro
         end
 
         it "loads an optional, unset date variable" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             date :foo, required: false
             EOF
 
@@ -976,7 +976,7 @@ module Figaro
         end
 
         it "loads an unset date variable when dynamically optional" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             date :foo, required: false
             date :bar, required: -> { foo? }
             EOF
@@ -993,7 +993,7 @@ module Figaro
 
         it "loads a date variable from a custom ENV key" do
           ENV["FU"] = "2016-12-21"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             date :foo, key: "FU"
             EOF
 
@@ -1009,7 +1009,7 @@ module Figaro
 
         it "loads a date variable with a dynamically set default value" do
           ENV["FOO"] = "2016-12-21"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             date :foo
             date :bar, default: -> { foo }
             EOF
@@ -1026,7 +1026,7 @@ module Figaro
 
         it "loads a date variable with a custom format" do
           ENV["FOO"] = "12/21/2016"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             date :foo, format: "%m/%d/%Y"
             EOF
 
@@ -1044,7 +1044,7 @@ module Figaro
       context "time" do
         it "loads a set time variable" do
           ENV["FOO"] = "2016-12-21T11:12:41-05:00"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo
             EOF
 
@@ -1059,7 +1059,7 @@ module Figaro
         end
 
         it "loads an unset time variable with a default value" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo, default: "2016-12-21T11:12:41-05:00"
             EOF
 
@@ -1075,7 +1075,7 @@ module Figaro
 
         it "loads a set time variable with a default value" do
           ENV["FOO"] = "2016-12-21T11:19:20-05:00"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo, default: "2016-12-21T11:12:41-05:00"
             EOF
 
@@ -1090,7 +1090,7 @@ module Figaro
         end
 
         it "raises an error if an unset time variable is required" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo
             EOF
 
@@ -1098,7 +1098,7 @@ module Figaro
         end
 
         it "loads an optional, unset time variable" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo, required: false
             EOF
 
@@ -1113,7 +1113,7 @@ module Figaro
         end
 
         it "loads an unset time variable when dynamically optional" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo, required: false
             time :bar, required: -> { foo? }
             EOF
@@ -1130,7 +1130,7 @@ module Figaro
 
         it "loads a time variable from a custom ENV key" do
           ENV["FU"] = "2016-12-21T11:12:41-05:00"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo, key: "FU"
             EOF
 
@@ -1146,7 +1146,7 @@ module Figaro
 
         it "loads a time variable with a dynamically set default value" do
           ENV["FOO"] = "2016-12-21T11:12:41-05:00"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo
             time :bar, default: -> { foo }
             EOF
@@ -1163,7 +1163,7 @@ module Figaro
 
         it "loads a time variable with a custom format" do
           ENV["FOO"] = "12/21/2016"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo, format: "%m/%d/%Y"
             EOF
 
@@ -1179,7 +1179,7 @@ module Figaro
 
         it "assumes UTC when no time zone is given" do
           ENV["FOO"] = "2016-12-21T11:12:41"
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             time :foo, format: "%FT%T"
             EOF
 
@@ -1196,7 +1196,7 @@ module Figaro
 
       context "variable" do
         it "loads variables with custom types" do
-          write_envfile <<-EOF
+          write_envfile <<~EOF
             require "json"
             variable :foo, JSON, default: { bar: "baz" }
             EOF
@@ -1215,7 +1215,7 @@ module Figaro
 
     describe "#to_h" do
       it "builds a symbol-to-rich-value hash of variable values" do
-        write_envfile <<-EOF
+        write_envfile <<~EOF
           string :foo, default: "bar"
           decimal :price, default: "1.23"
           integer :quantity, default: 4

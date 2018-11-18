@@ -6,10 +6,8 @@ module Figaro
 
   class TypeLoadError < Figaro::Error
     def initialize(type:, value:)
-      message = Figaro::Utils.squish(<<-ERR)
-        The value #{value.inspect} cannot be loaded by a variable of type of
-        type #{type.class.name}.
-        ERR
+      message = "The value #{value.inspect} cannot be loaded by a variable " \
+        "of type of type #{type.class.name}."
 
       super(message)
     end

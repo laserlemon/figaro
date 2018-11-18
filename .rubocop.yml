@@ -25,6 +25,8 @@ Layout/AlignHash:
   EnforcedLastArgumentHashStyle: ignore_implicit
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
+Layout/ClosingHeredocIndentation:
+  Enabled: false
 Layout/IndentHash:
   EnforcedStyle: consistent
 Layout/MultilineMethodCallIndentation:

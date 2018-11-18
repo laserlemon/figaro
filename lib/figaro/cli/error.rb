@@ -7,7 +7,7 @@ module Figaro
 
     class ComplexVariableNamesError < Figaro::CLI::Error
       def initialize(complex_names:)
-        message = Figaro::Utils.strip_heredoc(<<-ERR)
+        message = <<~ERR
           ERROR:
             Variable names must be simple. Use letters and underscores only.
             Given:
@@ -20,7 +20,7 @@ module Figaro
 
     class InvalidVariableTypesError < Figaro::CLI::Error
       def initialize(valid_types:, invalid_types:)
-        message = Figaro::Utils.strip_heredoc(<<-ERR)
+        message = <<~ERR
           ERROR:
             Variable types must be valid. Valid types are:
           ERR
@@ -34,7 +34,7 @@ module Figaro
 
     class DuplicateVariableNamesError < Figaro::CLI::Error
       def initialize(duplicate_names:)
-        message = Figaro::Utils.strip_heredoc(<<-ERR)
+        message = <<~ERR
           ERROR:
             Variables names must be unique. Duplicate variable names were found.
             Found:
