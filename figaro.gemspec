@@ -22,7 +22,7 @@ Gem::Specification.new do |spec|
   spec.bindir      = "exe"
   spec.executables = spec.files.grep(/^exe/) { |f| File.basename(f) }
 
-  spec.required_ruby_version = ">= 1.9.3"
+  spec.required_ruby_version = ">= 2.3.0"
 
   spec.add_dependency "thor", "~> 0.14"
 

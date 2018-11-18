@@ -12,8 +12,6 @@ env:
 language: ruby
 matrix:
   allow_failures: &allowed_failures
-    - rvm: "2.1"
-    - rvm: "2.2"
     - rvm: ruby-head
     - rvm: jruby
     - rvm: rbx-3
