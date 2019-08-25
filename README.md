@@ -1,6 +1,8 @@
 # ![Figaro](https://raw.githubusercontent.com/laserlemon/figaro/1f6e709/doc/title.png)
 
-Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML file
+Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML file.
+
+This fork includes some enhancements, see below.
 
 [![Gem Version](https://img.shields.io/gem/v/figaro.svg?style=flat-square)](http://badge.fury.io/rb/figaro)
 [![Build Status](https://img.shields.io/travis/laserlemon/figaro/master.svg?style=flat-square)](https://travis-ci.org/laserlemon/figaro)
@@ -11,6 +13,13 @@ Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML fi
 **NOTE:** If you're using Figaro 0.7 or prior, please refer to the
 [appropriate documentation](https://github.com/laserlemon/figaro/tree/0-stable#readme)
 or [upgrade](#how-do-i-upgrade-to-figaro-10) to Figaro 1.0.
+
+## Fork Changes
+
+* testing: remove support for EOL versions of Ruby and Rails, and add support
+  for newer versions (Rails: 4.1 - 6.0; Ruby: 2.4 - 2.6);
+* incorporate laserlemon/figaro#232: Don't "require 'rails'" at require-time;
+* [TODO] add Settings DSL;
 
 ## Why does Figaro exist?
 

@@ -14,21 +14,20 @@ env:
       2hKVjwzVUTWZlpSEocqAg/YIDB3BJzWmyc6UP+VA0gji6HsufXYTmKAVPSVY
       TQ7mPPP7hm95e3SkFbLdLbGkQfLdjIKeMY5lY/knX+QKUCjO52Y=
 gemfile:
-  - gemfiles/rails30.gemfile
-  - gemfiles/rails31.gemfile
-  - gemfiles/rails32.gemfile
-  - gemfiles/rails40.gemfile
   - gemfiles/rails41.gemfile
   - gemfiles/rails42.gemfile
+  - gemfiles/rails50.gemfile
+  - gemfiles/rails51.gemfile
+  - gemfiles/rails52.gemfile
+  - gemfiles/rails60.gemfile
 language: ruby
 matrix:
   allow_failures:
     - rvm: ruby-head
 rvm:
-  - 1.9.3
-  - "2.0"
-  - "2.1"
-  - "2.2"
+  - "2.4"
+  - "2.5"
+  - "2.6"
   - ruby-head
 script: bundle exec rspec
 sudo: false
