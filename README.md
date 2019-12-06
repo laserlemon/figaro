@@ -1,12 +1,17 @@
+## 📢 UPDATE
+
+Figaro [v2](https://github.com/laserlemon/figaro/tree/v2) development is underway but _stalled_. I need your help! Please consider [sponsoring Figaro's development](https://github.com/sponsors/laserlemon).
+
+With the constraints of a family and a full-time job, even the _emotional_ support that sponsorship provides is extremely valuable in re-energizing Figaro development. Thank you! 💛
+
 # ![Figaro](https://raw.githubusercontent.com/laserlemon/figaro/1f6e709/doc/title.png)
 
 Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML file
 
-[![Gem Version](https://img.shields.io/gem/v/figaro.svg?style=flat-square)](http://badge.fury.io/rb/figaro)
-[![Build Status](https://img.shields.io/travis/laserlemon/figaro/master.svg?style=flat-square)](https://travis-ci.org/laserlemon/figaro)
-[![Code Climate](https://img.shields.io/codeclimate/github/laserlemon/figaro.svg?style=flat-square)](https://codeclimate.com/github/laserlemon/figaro)
-[![Coverage Status](https://img.shields.io/codeclimate/coverage/github/laserlemon/figaro.svg?style=flat-square)](https://codeclimate.com/github/laserlemon/figaro)
-[![Dependency Status](https://img.shields.io/gemnasium/laserlemon/figaro.svg?style=flat-square)](https://gemnasium.com/laserlemon/figaro)
+[![Gem Version](https://img.shields.io/gem/v/figaro.svg)](http://badge.fury.io/rb/figaro)
+[![Build Status](https://img.shields.io/travis/laserlemon/figaro/master.svg)](https://travis-ci.org/laserlemon/figaro)
+[![Code Climate](https://img.shields.io/codeclimate/maintainability/laserlemon/figaro.svg)](https://codeclimate.com/github/laserlemon/figaro)
+[![Coverage Status](https://img.shields.io/codeclimate/coverage/laserlemon/figaro.svg)](https://codeclimate.com/github/laserlemon/figaro)
 
 **NOTE:** If you're using Figaro 0.7 or prior, please refer to the
 [appropriate documentation](https://github.com/laserlemon/figaro/tree/0-stable#readme)
