@@ -39,7 +39,7 @@ module Figaro
 
     def get_value(key)
       _, value = ::ENV.detect { |k, _| k.downcase == key }
-      value
+      eval("\"#{value}\"") if value
     end
   end
 end
