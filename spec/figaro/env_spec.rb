@@ -31,6 +31,11 @@ describe Figaro::ENV do
         allow(env).to receive(:bar) { "baz" }
         expect(env.bar).to eq("baz")
       end
+
+      it "removes escape characters" do
+        ::ENV["bar"] = 'baz\$baz'
+        expect(env.bar).to eq("baz$baz")
+      end
     end
 
     context "bang methods" do
