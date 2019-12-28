@@ -8,5 +8,5 @@ group :test do
   gem "aruba", "~> 0.6.2"
   gem "codeclimate-test-reporter", require: false
   gem "rspec", "~> 3.1"
-  gem "sqlite3", "~> 1.3"
+  gem "sqlite3", '~> 1.3', '< 1.4'
 end
