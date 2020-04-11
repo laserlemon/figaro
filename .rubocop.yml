@@ -1,6 +1,6 @@
 # This should always correspond to the earliest non-EOL Ruby version.
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.4
 
 # TODO: Re-enable this cop after TomDoc code deocumentation is added.
 Style/Documentation:
@@ -9,32 +9,35 @@ Style/Documentation:
 # Allow some style changes in the specs.
 Metrics/BlockLength:
   Exclude:
-    - spec/**/*
-Metrics/LineLength:
-  Exclude:
+    - figaro.gemspec
     - spec/**/*
 Metrics/ModuleLength:
   Exclude:
     - spec/**/*
-Style/BracesAroundHashParameters:
+Layout/LineLength:
   Exclude:
+    - figaro.gemspec
     - spec/**/*
 
 # These style conventions are personal preference.
-Layout/AlignHash:
-  EnforcedLastArgumentHashStyle: ignore_implicit
-Layout/AlignParameters:
+Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
 Layout/ClosingHeredocIndentation:
   Enabled: false
-Layout/IndentHash:
+Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
+Layout/HashAlignment:
+  EnforcedLastArgumentHashStyle: ignore_implicit
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+Layout/ParameterAlignment:
+  EnforcedStyle: with_fixed_indentation
 Naming/HeredocDelimiterNaming:
   Enabled: false
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error
 Style/DoubleNegation:
   Enabled: false
 Style/StringLiterals:
