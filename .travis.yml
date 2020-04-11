@@ -9,8 +9,6 @@ language: ruby
 matrix:
   allow_failures: &allowed_failures
     - rvm: ruby-head
-    - rvm: jruby
-    - rvm: rbx-4
   include: *allowed_failures
 rvm:
   - "2.4"
