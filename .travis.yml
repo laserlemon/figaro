@@ -5,9 +5,6 @@ branches:
   only:
     - master
     - v2
-env:
-  global:
-    - JRUBY_OPTS="$JRUBY_OPTS --debug"
 language: ruby
 matrix:
   allow_failures: &allowed_failures
