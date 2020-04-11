@@ -5,7 +5,6 @@ branches:
   only:
     - master
     - v2
-dist: trusty
 env:
   global:
     - JRUBY_OPTS="$JRUBY_OPTS --debug"
