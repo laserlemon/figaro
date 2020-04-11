@@ -17,8 +17,8 @@ matrix:
     - rvm: rbx-3
   include: *allowed_failures
 rvm:
-  - "2.3"
   - "2.4"
   - "2.5"
   - "2.6"
+  - "2.7"
 sudo: false
