@@ -46,3 +46,15 @@ Style/SymbolArray:
   EnforcedStyle: brackets
 Style/WordArray:
   EnforcedStyle: brackets
+
+# New cops:
+Lint/RaiseException:
+  Enabled: true
+Lint/StructNewOverride:
+  Enabled: true
+Style/HashEachMethods:
+  Enabled: true
+Style/HashTransformKeys:
+  Enabled: true
+Style/HashTransformValues:
+  Enabled: true
