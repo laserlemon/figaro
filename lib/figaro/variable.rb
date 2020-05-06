@@ -4,18 +4,23 @@ require "figaro/type"
 
 module Figaro
   class Variable
-    attr_reader :config, :name, :key, :type
+    attr_reader :config, :name, :type, :key
 
-    def initialize(config, name, type_class, options)
+    def initialize(
+      config:,
+      name:,
+      type_class:,
+      key: nil,
+      default: nil,
+      required: true,
+      **options
+    )
       @config = config
-      @name = name.to_sym
-
-      options = options.dup
-      @key = options.delete(:key) { default_key }
-      @default = config.defaults.fetch(name.to_s, options.delete(:default))
-      @required = options.delete(:required) { true }
-
-      @type = Figaro::Type.load(type_class, options)
+      @name = name.to_s
+      @type = Figaro::Type.load(type_class, **options)
+      @key = key || @name.upcase
+      @default = @config.defaults.fetch(@name, default)
+      @required = required
     end
 
     def value
@@ -44,10 +49,6 @@ module Figaro
     end
 
     private
-
-    def default_key
-      name.to_s.upcase
-    end
 
     # Used in #value because using #value= returns the given argument, no matter
     # what the method returns. Within #value's config.get block, we need the

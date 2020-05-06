@@ -5,8 +5,8 @@ require "figaro/variable"
 module Figaro
   class DSL
     def self.register_type(type_name, type_class)
-      define_method(type_name) do |name, options = {}|
-        variable(name, type_class, options)
+      define_method(type_name) do |name, **options|
+        variable(name, type_class, **options)
       end
     end
 
@@ -24,8 +24,15 @@ module Figaro
       config.load_defaults(path)
     end
 
-    def variable(name, type_class, options = {})
-      config << Figaro::Variable.new(config, name, type_class, options)
+    def variable(name, type_class, **options)
+      variable =
+        Figaro::Variable.new(
+          config: config,
+          name: name,
+          type_class: type_class,
+          **options
+        )
+      config << variable
     end
   end
 end

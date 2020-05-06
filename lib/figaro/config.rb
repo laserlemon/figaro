@@ -86,7 +86,7 @@ module Figaro
 
     def to_h
       variables.each_with_object({}) do |variable, hash|
-        hash[variable.name] = variable.value
+        hash[variable.name.to_sym] = variable.value
       end
     end
 
