@@ -7,8 +7,11 @@ module WorkspaceHelpers
 
   def in_workspace
     create_workspace
+    original_directory = get_directory
     change_directory(DIR)
     yield
+  ensure
+    change_directory(original_directory)
     clean_workspace
   end
 
@@ -34,6 +37,10 @@ module WorkspaceHelpers
 
   def change_directory(path)
     FileUtils.cd(path)
+  end
+
+  def get_directory
+    FileUtils.pwd
   end
 end
 
