@@ -34,6 +34,10 @@ Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
+Metrics/ParameterLists:
+  Enabled: false
+Naming/AccessorMethodName:
+  Enabled: false
 Naming/HeredocDelimiterNaming:
   Enabled: false
 Naming/RescuedExceptionsVariableName:
@@ -48,9 +52,13 @@ Style/WordArray:
   EnforcedStyle: brackets
 
 # New cops:
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
 Lint/RaiseException:
   Enabled: true
 Lint/StructNewOverride:
+  Enabled: true
+Style/ExponentialNotation:
   Enabled: true
 Style/HashEachMethods:
   Enabled: true
