@@ -6,5 +6,6 @@ gemspec
 
 group :test do
   gem "rspec"
-  gem "rubocop-rspec", require: false
+  gem "rubocop", "~> 0.82.0", require: false
+  gem "rubocop-rspec", "~> 1.39", require: false
 end
