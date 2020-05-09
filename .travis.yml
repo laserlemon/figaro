@@ -6,13 +6,6 @@ before_script:
 branches:
   only:
     - master
-cache: bundler
-env:
-  global:
-    secure: | # CODECLIMATE_REPO_TOKEN
-      Pm3j2/BtAzMtqRMP83rFvDtpUNeIAdLMzwH62In+3h/AE8gHDArGYS+jmChw
-      2hKVjwzVUTWZlpSEocqAg/YIDB3BJzWmyc6UP+VA0gji6HsufXYTmKAVPSVY
-      TQ7mPPP7hm95e3SkFbLdLbGkQfLdjIKeMY5lY/knX+QKUCjO52Y=
 gemfile:
   - gemfiles/rails30.gemfile
   - gemfiles/rails31.gemfile
@@ -23,12 +16,23 @@ gemfile:
 language: ruby
 matrix:
   allow_failures:
+    - rvm: 1.9.3
+    - rvm: "2.0"
+    - rvm: "2.1"
+    - rvm: "2.2"
+    - rvm: "2.3"
+    - rvm: "2.4"
     - rvm: ruby-head
 rvm:
   - 1.9.3
   - "2.0"
   - "2.1"
   - "2.2"
+  - "2.3"
+  - "2.4"
+  - "2.5"
+  - "2.6"
+  - "2.7"
   - ruby-head
 script: bundle exec rspec
 sudo: false
