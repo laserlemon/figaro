@@ -7,29 +7,13 @@ branches:
   only:
     - master
 gemfile:
-  - gemfiles/rails30.gemfile
-  - gemfiles/rails31.gemfile
-  - gemfiles/rails32.gemfile
-  - gemfiles/rails40.gemfile
-  - gemfiles/rails41.gemfile
-  - gemfiles/rails42.gemfile
+  - gemfiles/rails52.gemfile
+  - gemfiles/rails60.gemfile
 language: ruby
 matrix:
   allow_failures:
-    - rvm: 1.9.3
-    - rvm: "2.0"
-    - rvm: "2.1"
-    - rvm: "2.2"
-    - rvm: "2.3"
-    - rvm: "2.4"
     - rvm: ruby-head
 rvm:
-  - 1.9.3
-  - "2.0"
-  - "2.1"
-  - "2.2"
-  - "2.3"
-  - "2.4"
   - "2.5"
   - "2.6"
   - "2.7"

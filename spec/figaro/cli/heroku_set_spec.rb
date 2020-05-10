@@ -1,12 +1,12 @@
 describe "figaro heroku:set" do
   before do
-    create_dir("example")
+    create_directory("example")
     cd("example")
     write_file("config/application.yml", "foo: bar")
   end
 
   it "sends Figaro configuration to Heroku" do
-    run_simple("figaro heroku:set")
+    run_command_and_stop("figaro heroku:set")
 
     command = commands.last
     expect(command.name).to eq("heroku")
@@ -16,7 +16,7 @@ describe "figaro heroku:set" do
   it "respects path" do
     write_file("env.yml", "foo: bar")
 
-    run_simple("figaro heroku:set -p env.yml")
+    run_command_and_stop("figaro heroku:set -p env.yml")
 
     command = commands.last
     expect(command.name).to eq("heroku")
@@ -30,7 +30,7 @@ test:
   foo: baz
 EOF
 
-    run_simple("figaro heroku:set -e test")
+    run_command_and_stop("figaro heroku:set -e test")
 
     command = commands.last
     expect(command.name).to eq("heroku")
@@ -38,7 +38,7 @@ EOF
   end
 
   it "targets a specific Heroku app" do
-    run_simple("figaro heroku:set -a foo-bar-app")
+    run_command_and_stop("figaro heroku:set -a foo-bar-app")
 
     command = commands.last
     expect(command.name).to eq("heroku")
@@ -47,7 +47,7 @@ EOF
   end
 
   it "targets a specific Heroku git remote" do
-    run_simple("figaro heroku:set -r production")
+    run_command_and_stop("figaro heroku:set -r production")
 
     command = commands.last
     expect(command.name).to eq("heroku")
@@ -58,7 +58,7 @@ EOF
   it "handles values with special characters" do
     overwrite_file("config/application.yml", "foo: bar baz")
 
-    run_simple("figaro heroku:set")
+    run_command_and_stop("figaro heroku:set")
 
     command = commands.last
     expect(command.name).to eq("heroku")
