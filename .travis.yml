@@ -9,10 +9,12 @@ branches:
 gemfile:
   - gemfiles/rails52.gemfile
   - gemfiles/rails60.gemfile
+  - gemfiles/rails6.gemfile
 language: ruby
 matrix:
   allow_failures:
     - rvm: ruby-head
+    - gemfile: gemfiles/rails6.gemfile
 rvm:
   - "2.5"
   - "2.6"

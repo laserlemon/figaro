@@ -1,0 +1,11 @@
+source "https://rubygems.org"
+
+gemspec path: ".."
+
+gem "rails", "~> 6.0"
+
+group :test do
+  gem "aruba", "~> 1.0"
+  gem "rspec", "~> 3.9"
+  gem "sqlite3"
+end
