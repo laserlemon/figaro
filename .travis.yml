@@ -10,15 +10,14 @@ gemfile:
   - gemfiles/rails52.gemfile
   - gemfiles/rails60.gemfile
   - gemfiles/rails6.gemfile
-language: ruby
-matrix:
+jobs:
   allow_failures:
     - rvm: ruby-head
     - gemfile: gemfiles/rails6.gemfile
+language: ruby
 rvm:
   - "2.5"
   - "2.6"
   - "2.7"
   - ruby-head
 script: bundle exec rspec
-sudo: false
