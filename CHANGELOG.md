@@ -1,3 +1,11 @@
+## 1.2.0 / 2020-05-10
+
+* [ENHANCEMENT] Drop support for Rubies 1.9.3, 2.0, 2.1, and 2.2
+* [ENHANCEMENT] Add support for Rubies 2.5, 2.6, and 2.7
+* [ENHANCEMENT] Drop support for Rails 3 and 4
+* [ENHANCEMENT] Add support for Rails 5.2 and 6.0
+* [ENHANCEMENT] Proxy all ENV values via CLI to the "heroku" command
+
 ## 1.1.1 / 2015-04-30
 
 * [BUGFIX] Fix crash when environment-specific configuration is `nil`
