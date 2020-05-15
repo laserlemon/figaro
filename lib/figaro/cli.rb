@@ -16,6 +16,26 @@ module Figaro
       Install.start
     end
 
+    # figaro configs:dump
+
+    desc "configs:dump", "Dump configs to STDOUT in an exportable format"
+    method_option "app_name",
+      aliases: ["-a"],
+      desc: "Specify a Dokku app name"
+    method_option "dokku_alias",
+      aliases: ["-z"],
+      desc: "Specify an alias you use to run the dokku/ paas command"
+    method_option "path",
+      aliases: ["-p"],
+      default: "config/application.yml",
+      desc: "Specify a configuration file path"
+
+    define_method "configs:dump" do
+      require "figaro/cli/configs_dump"
+      ConfigsDump.run(options)
+    end
+
+
     # figaro heroku:set
 
     desc "heroku:set", "Send Figaro configuration to Heroku"
