@@ -16,6 +16,20 @@ module Figaro
       Install.start
     end
 
+    # figaro print <environment>
+
+    desc "print ENVIRONMENT", "Print the specified environment's variables"
+
+    method_option "path",
+      aliases: ["-p"],
+      default: "config/application.yml",
+      desc: "Specify a configuration file path"
+
+    define_method "print" do |environment|
+      require 'figaro/cli/print'
+      Print.run(options.merge(environment: environment))
+    end
+
     # figaro heroku:set
 
     desc "heroku:set", "Send Figaro configuration to Heroku"
