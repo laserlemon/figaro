@@ -20,4 +20,5 @@ rvm:
   - "2.6"
   - "2.7"
   - ruby-head
+  - truffleruby-head
 script: bundle exec rspec
