@@ -1,4 +1,11 @@
 describe Figaro do
+  describe 'require' do
+    it 'does not load Rails' do
+      require 'figaro'
+      expect(defined?(Rails)).to be nil
+    end
+  end
+
   describe ".env" do
     it "falls through to Figaro::ENV" do
       expect(Figaro.env).to eq(Figaro::ENV)
