@@ -1,11 +1,18 @@
 describe Figaro::Rails do
   before do
+    spec = Bundler.locked_gems.specs.find { |spec| spec.name == 'rails' }
+    skip_asset_pipeline_option = if spec.version >= '7.0.0'
+                                   '--skip_asset_pipeline'
+                                 else
+                                   '--skip-sprockets'
+                                 end
+
     run_command_and_stop(<<-CMD)
       rails new example \
         --skip-gemfile \
         --skip-git \
         --skip-keeps \
-        --skip-sprockets \
+        #{skip_asset_pipeline_option} \
         --skip-spring \
         --skip-listen \
         --skip-javascript \
