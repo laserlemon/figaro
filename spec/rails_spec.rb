@@ -2,7 +2,7 @@ describe Figaro::Rails do
   before do
     spec = Bundler.locked_gems.specs.find { |spec| spec.name == 'rails' }
     skip_asset_pipeline_option = if spec.version >= '7.0.0'
-                                   '--skip_asset_pipeline'
+                                   '--skip-asset-pipeline'
                                  else
                                    '--skip-sprockets'
                                  end
