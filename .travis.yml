@@ -9,11 +9,23 @@ branches:
 gemfile:
   - gemfiles/rails52.gemfile
   - gemfiles/rails60.gemfile
-  - gemfiles/rails6.gemfile
+  - gemfiles/rails61.gemfile
+  - gemfiles/rails70.gemfile
 jobs:
   allow_failures:
     - rvm: ruby-head
-    - gemfile: gemfiles/rails6.gemfile
+    - rvm: '3.1'
+      gemfile: gemfiles/rails52.gemfile
+    - rvm: '3.1'
+      gemfile: gemfiles/rails60.gemfile
+    - rvm: ruby-head
+      gemfile: gemfiles/rails52.gemfile
+    - rvm: ruby-head
+      gemfile: gemfiles/rails60.gemfile
+    - rvm: "2.5"
+      gemfile: gemfiles/rails70.gemfile
+    - rvm: "2.6"
+      gemfile: gemfiles/rails70.gemfile
 language: ruby
 rvm:
   - "2.5"
