@@ -19,7 +19,7 @@ module Figaro
       end
 
       def ignore_configuration
-        if File.exists?(".gitignore")
+        if File.exist?(".gitignore")
           append_to_file(".gitignore", <<-EOF)
 
 # Ignore application configuration

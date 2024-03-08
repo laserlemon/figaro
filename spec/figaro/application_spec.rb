@@ -105,6 +105,17 @@ YAML
         expect(application.configuration).to eq("foo" => "bar")
       end
 
+      it "loads alias from YAML" do
+        application = Application.new(path: yaml_to_path(<<-YAML), environment: "development")
+default: &defaults
+  foo: bar
+development:
+  <<: *defaults
+YAML
+
+        expect(application.configuration).to eq("foo" => "bar")
+      end
+
       it "merges environment-specific values" do
         application = Application.new(path: yaml_to_path(<<-YAML), environment: "test")
 foo: bar
