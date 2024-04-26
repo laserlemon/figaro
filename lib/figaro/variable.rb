@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "figaro/type"
+require_relative "type"
 
 module Figaro
   class Variable

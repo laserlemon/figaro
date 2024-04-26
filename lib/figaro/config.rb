@@ -3,15 +3,15 @@
 require "pathname"
 require "yaml"
 
-require "figaro/dsl"
-require "figaro/error"
-require "figaro/type/array"
-require "figaro/type/boolean"
-require "figaro/type/date"
-require "figaro/type/decimal"
-require "figaro/type/integer"
-require "figaro/type/string"
-require "figaro/type/time"
+require_relative "dsl"
+require_relative "error"
+require_relative "type/array"
+require_relative "type/boolean"
+require_relative "type/date"
+require_relative "type/decimal"
+require_relative "type/integer"
+require_relative "type/string"
+require_relative "type/time"
 
 module Figaro
   class Config

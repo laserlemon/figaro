@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require "figaro/config"
-require "figaro/utils"
-require "figaro/version"
+require_relative "figaro/config"
+require_relative "figaro/utils"
+require_relative "figaro/version"
 
 module Figaro
   def self.config

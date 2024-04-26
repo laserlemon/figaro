@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "figaro/variable"
+require_relative "variable"
 
 module Figaro
   class DSL

@@ -2,7 +2,7 @@
 
 require "thor"
 
-require "figaro/cli/error"
+require_relative "cli/error"
 
 module Figaro
   class CLI < ::Thor
@@ -20,7 +20,7 @@ module Figaro
     # figaro exec
     desc "exec COMMAND", "Run a command with Figaro's configuration"
     def exec(command, *args)
-      require "figaro/cli/exec"
+      require_relative "cli/exec"
       Figaro::CLI::Exec.invoke(command, args, options)
     end
 
@@ -31,7 +31,7 @@ module Figaro
       desc: "Specify a path for Figaro's local configuration file"
     generator_method_options
     def install(*args)
-      require "figaro/cli/install"
+      require_relative "cli/install"
       invoke Figaro::CLI::Install, args, options
     end
   end

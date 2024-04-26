@@ -2,7 +2,7 @@
 
 require "bigdecimal"
 
-require "figaro/type"
+require_relative "../type"
 
 module Figaro
   class Type
