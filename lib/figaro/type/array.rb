@@ -30,7 +30,7 @@ module Figaro
       def type
         @type ||= Figaro::Type.load(
           options.fetch(:type, :string),
-          options.fetch(:type_options, {})
+          **options.fetch(:type_options, {})
         )
       end
     end
