@@ -18,10 +18,11 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(/\Aexe/) { |f| File.basename(f) }
 
-  spec.required_ruby_version = ">= 2.4.0"
+  spec.required_ruby_version = ">= 3.1"
 
   spec.add_dependency "thor", ">= 0.14.0", "< 2"
 
   spec.add_development_dependency "bundler"
   spec.add_development_dependency "rake"
+  spec.metadata["rubygems_mfa_required"] = "true"
 end

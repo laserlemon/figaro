@@ -10,7 +10,7 @@ module Figaro
       def load(value)
         case value
         when nil then nil
-        when /\A\-?\d+(\.\d+)\z/ then BigDecimal(value)
+        when /\A-?\d+(\.\d+)\z/ then BigDecimal(value)
         else raise_type_load_error(value)
         end
       end

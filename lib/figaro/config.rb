@@ -68,8 +68,8 @@ module Figaro
       add_accessors(variable)
     end
 
-    def get(key, &default)
-      ENV.fetch(key, &default)
+    def get(key, &)
+      ENV.fetch(key, &)
     end
 
     def set(key, value)
@@ -94,9 +94,9 @@ module Figaro
 
     def add_accessors(variable)
       @accessors.instance_eval do
-        define_method(variable.name, &variable.method(:value))
-        define_method(:"#{variable.name}=", &variable.method(:value=))
-        define_method(:"#{variable.name}?", &variable.method(:value?))
+        define_method(variable.name) { variable.value }
+        define_method(:"#{variable.name}=") { |value| variable.value = value }
+        define_method(:"#{variable.name}?") { variable.value? }
       end
     end
 

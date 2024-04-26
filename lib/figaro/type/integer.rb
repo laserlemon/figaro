@@ -8,7 +8,7 @@ module Figaro
       def load(value)
         case value
         when nil then nil
-        when /\A\-?\d+\z/ then Integer(value)
+        when /\A-?\d+\z/ then Integer(value)
         else raise_type_load_error(value)
         end
       end

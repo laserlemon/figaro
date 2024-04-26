@@ -21,7 +21,7 @@ module Figaro
 
       include ::Thor::Actions
 
-      source_root ::File.expand_path("../install", __FILE__)
+      source_root ::File.expand_path("install", __dir__)
 
       attr_reader :variables, :environment_options
 
@@ -36,7 +36,7 @@ module Figaro
         return if complex_names.none?
 
         raise Figaro::CLI::ComplexVariableNamesError,
-          complex_names: complex_names
+          complex_names:
       end
 
       def variable_types_must_be_valid
@@ -47,7 +47,7 @@ module Figaro
         return if invalid_types.none?
 
         raise Figaro::CLI::InvalidVariableTypesError,
-          valid_types: valid_types, invalid_types: invalid_types
+          valid_types:, invalid_types:
       end
 
       def variable_names_must_be_unique
@@ -59,13 +59,13 @@ module Figaro
         return if duplicate_names.none?
 
         raise Figaro::CLI::DuplicateVariableNamesError,
-          duplicate_names: duplicate_names
+          duplicate_names:
       end
 
       def infer_environment_options
         keys = using_rack? ? ["RACK_ENV"] : []
         keys.unshift(using_rails? ? "RAILS_ENV" : "APP_ENV")
-        options = keys.count > 1 ? { keys: keys } : { key: keys.first }
+        options = keys.count > 1 ? { keys: } : { key: keys.first }
         options[:default] = "development"
         @environment_options = options
       end

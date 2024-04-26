@@ -1,25 +1,40 @@
-require: rubocop-rspec
+require:
+- rubocop-performance
+- rubocop-rake
+- rubocop-rspec
 
-# This should always correspond to the earliest non-EOL Ruby version.
 AllCops:
-  TargetRubyVersion: 2.4
+  NewCops: enable
+  TargetRubyVersion: 3.1
 
-# TODO: Re-enable this cop after TomDoc code deocumentation is added.
-Style/Documentation:
+Gemspec/DevelopmentDependencies:
   Enabled: false
 
-# Allow some style changes in the specs.
-Metrics/BlockLength:
-  Exclude:
-    - figaro.gemspec
-    - spec/**/*
-Metrics/ModuleLength:
-  Exclude:
-    - spec/**/*
+Layout/ArgumentAlignment:
+  EnforcedStyle: with_fixed_indentation
+Layout/ClosingHeredocIndentation:
+  Enabled: false
+Layout/LineEndStringConcatenationIndentation:
+  EnforcedStyle: indented
 Layout/LineLength:
-  Exclude:
-    - figaro.gemspec
-    - spec/**/*
+  Enabled: false
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Metrics:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+Naming/HeredocDelimiterNaming:
+  Enabled: false
+Naming/RescuedExceptionsVariableName:
+  PreferredName: error
+
+RSpec/BeEq:
+  Enabled: false
 RSpec/ContextWording:
   Enabled: false
 RSpec/DescribedClass:
@@ -29,30 +44,9 @@ RSpec/ExampleLength:
 RSpec/MultipleExpectations:
   Enabled: false
 
-# These style conventions are personal preference.
-Layout/ArgumentAlignment:
-  EnforcedStyle: with_fixed_indentation
-Layout/ClosingHeredocIndentation:
+Style/Documentation:
   Enabled: false
-Layout/FirstHashElementIndentation:
-  EnforcedStyle: consistent
-Layout/HashAlignment:
-  EnforcedLastArgumentHashStyle: ignore_implicit
-Layout/MultilineMethodCallIndentation:
-  EnforcedStyle: indented
-Layout/MultilineOperationIndentation:
-  EnforcedStyle: indented
-Layout/ParameterAlignment:
-  EnforcedStyle: with_fixed_indentation
-Metrics/ParameterLists:
-  Enabled: false
-Naming/AccessorMethodName:
-  Enabled: false
-Naming/HeredocDelimiterNaming:
-  Enabled: false
-Naming/RescuedExceptionsVariableName:
-  PreferredName: error
-Style/DoubleNegation:
+Style/FetchEnvVar:
   Enabled: false
 Style/StringLiterals:
   EnforcedStyle: double_quotes
@@ -60,19 +54,3 @@ Style/SymbolArray:
   EnforcedStyle: brackets
 Style/WordArray:
   EnforcedStyle: brackets
-
-# New cops:
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
-Lint/RaiseException:
-  Enabled: true
-Lint/StructNewOverride:
-  Enabled: true
-Style/ExponentialNotation:
-  Enabled: true
-Style/HashEachMethods:
-  Enabled: true
-Style/HashTransformKeys:
-  Enabled: true
-Style/HashTransformValues:
-  Enabled: true

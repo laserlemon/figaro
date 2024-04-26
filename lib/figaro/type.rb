@@ -38,7 +38,7 @@ module Figaro
     private
 
     def raise_type_load_error(value)
-      raise Figaro::TypeLoadError, type: self, value: value
+      raise Figaro::TypeLoadError, type: self, value:
     end
   end
 end

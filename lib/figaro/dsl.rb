@@ -27,9 +27,9 @@ module Figaro
     def variable(name, type_class, **options)
       variable =
         Figaro::Variable.new(
-          config: config,
-          name: name,
-          type_class: type_class,
+          config:,
+          name:,
+          type_class:,
           **options
         )
       config << variable
