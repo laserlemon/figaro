@@ -191,9 +191,29 @@ For more information:
 $ figaro help heroku:set
 ```
 
+#### OpenShift
+
+for OpenShift you'd set env variables like:
+
+```bash
+$ rhc env-set google_analytics_key=UA-35722661-5
+```
+
+Using `figaro` you can set all values from your configuration similar to heroku:
+
+```bash
+$ figaro rhc:set
+```
+
+For all commandline options:
+
+```bash
+$ figaro help rhc:set
+```
+
 #### Other Hosts
 
-If you're not deploying to Heroku, you have two options:
+If you're not deploying to Heroku or OpenShift, you have two options:
 
 * Generate a remote configuration file
 * Set `ENV` variables directly
