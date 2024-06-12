@@ -4,6 +4,7 @@ require "yaml"
 module Figaro
   class Application
     FIGARO_ENV_PREFIX = "_FIGARO_"
+    SILENCE_STRING_WARNINGS_KEY = :FIGARO_SILENCE_STRING_WARNINGS
 
     include Enumerable
 
@@ -69,8 +70,10 @@ module Figaro
     end
 
     def set(key, value)
-      non_string_configuration!(key) unless key.is_a?(String)
-      non_string_configuration!(value) unless value.is_a?(String) || value.nil?
+      unless non_string_warnings_silenced?
+        non_string_configuration!(key) unless key.is_a?(String)
+        non_string_configuration!(value) unless value.is_a?(String) || value.nil?
+      end
 
       ::ENV[key.to_s] = value.nil? ? nil : value.to_s
       ::ENV[FIGARO_ENV_PREFIX + key.to_s] = value.nil? ? nil: value.to_s
@@ -78,6 +81,13 @@ module Figaro
 
     def skip?(key)
       ::ENV.key?(key.to_s) && !::ENV.key?(FIGARO_ENV_PREFIX + key.to_s)
+    end
+
+    def non_string_warnings_silenced?
+      key = SILENCE_STRING_WARNINGS_KEY
+
+      # Allow the silence configuration itself to use non-string keys/values.
+      configuration.values_at(key.to_s, key).any? { |cv| cv.to_s == 'true' }
     end
 
     def non_string_configuration!(value)
