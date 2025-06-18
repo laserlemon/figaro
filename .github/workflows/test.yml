@@ -1,11 +1,12 @@
 name: Test
-push:
-  branches:
-  - main
-  - refresh-2025
-pull_request:
-  branches:
-  - main
+on:
+  push:
+    branches:
+    - main
+    - refresh-2025
+  pull_request:
+    branches:
+    - main
 jobs:
   test:
     env:
