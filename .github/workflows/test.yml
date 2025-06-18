@@ -1,0 +1,87 @@
+name: Test
+push:
+  branches:
+  - main
+pull_request:
+  branches:
+  - main
+jobs:
+  test:
+    env:
+      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - gemfile: gemfiles/rails52.gemfile
+          ruby: "2.5"
+        - gemfile: gemfiles/rails52.gemfile
+          ruby: "2.6"
+        - gemfile: gemfiles/rails52.gemfile
+          ruby: "2.7"
+        - gemfile: gemfiles/rails60.gemfile
+          ruby: "2.5"
+        - gemfile: gemfiles/rails60.gemfile
+          ruby: "2.6"
+        - gemfile: gemfiles/rails60.gemfile
+          ruby: "2.7"
+        - gemfile: gemfiles/rails61.gemfile
+          ruby: "2.5"
+        - gemfile: gemfiles/rails61.gemfile
+          ruby: "2.6"
+        - gemfile: gemfiles/rails61.gemfile
+          ruby: "2.7"
+        - gemfile: gemfiles/rails61.gemfile
+          ruby: "3.0"
+        - gemfile: gemfiles/rails70.gemfile
+          ruby: "2.7"
+        - gemfile: gemfiles/rails70.gemfile
+          ruby: "3.0"
+        - gemfile: gemfiles/rails70.gemfile
+          ruby: "3.1"
+        - gemfile: gemfiles/rails70.gemfile
+          ruby: "3.2"
+        - gemfile: gemfiles/rails71.gemfile
+          ruby: "2.7"
+        - gemfile: gemfiles/rails71.gemfile
+          ruby: "3.0"
+        - gemfile: gemfiles/rails71.gemfile
+          ruby: "3.1"
+        - gemfile: gemfiles/rails71.gemfile
+          ruby: "3.2"
+        - gemfile: gemfiles/rails71.gemfile
+          ruby: "3.3"
+        - gemfile: gemfiles/rails72.gemfile
+          ruby: "3.1"
+        - gemfile: gemfiles/rails72.gemfile
+          ruby: "3.2"
+        - gemfile: gemfiles/rails72.gemfile
+          ruby: "3.3"
+        - gemfile: gemfiles/rails72.gemfile
+          ruby: "3.4"
+        - gemfile: gemfiles/rails80.gemfile
+          ruby: "3.2"
+        - gemfile: gemfiles/rails80.gemfile
+          ruby: "3.3"
+        - gemfile: gemfiles/rails80.gemfile
+          ruby: "3.4"
+        - gemfile: Gemfile
+          ruby: ruby
+        - gemfile: Gemfile
+          ruby: head
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+    - name: Print dependency versions
+      run: |
+        ruby --version
+        bundle exec rails --version
+        bundle list
+    - name: Run RSpec
+      run: bundle exec rspec
