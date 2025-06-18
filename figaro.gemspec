@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.version = "1.2.0"
 
   gem.author      = "Steve Richert"
-  gem.email       = "steve.richert@gmail.com"
+  gem.email       = "steve.richert@hey.com"
   gem.summary     = "Simple Rails app configuration"
   gem.description = "Simple, Heroku-friendly Rails app configuration using ENV and a single YAML file"
   gem.homepage    = "https://github.com/laserlemon/figaro"
