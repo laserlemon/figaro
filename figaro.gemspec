@@ -11,6 +11,8 @@ Gem::Specification.new do |gem|
   gem.homepage    = "https://github.com/laserlemon/figaro"
   gem.license     = "MIT"
 
+  gem.required_ruby_version = ">= 2.7.0"
+
   gem.add_dependency "thor", ">= 0.14.0", "< 2"
 
   gem.add_development_dependency "bundler", ">= 1.7.0", "< 3"
