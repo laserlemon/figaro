@@ -1,15 +1,21 @@
-## 📢 UPDATE
+> [!IMPORTANT]
+> Figaro [v2](https://github.com/laserlemon/figaro/tree/v2) development is underway but _stalled_. I need your help! Please consider [sponsoring Figaro's development](https://github.com/sponsors/laserlemon).
+>
+> With the constraints of a family and a full-time job, even the _emotional_ support that sponsorship provides is extremely valuable in re-energizing Figaro development. Thank you! 💛
 
-Figaro [v2](https://github.com/laserlemon/figaro/tree/v2) development is underway but _stalled_. I need your help! Please consider [sponsoring Figaro's development](https://github.com/sponsors/laserlemon).
-
-With the constraints of a family and a full-time job, even the _emotional_ support that sponsorship provides is extremely valuable in re-energizing Figaro development. Thank you! 💛
-
-# ![Figaro](https://raw.githubusercontent.com/laserlemon/figaro/1f6e709/doc/title.png)
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: light)" srcset="https://github.com/user-attachments/assets/5fc9ba97-8288-4228-ba4d-03b2bdcdf0f4">
+    <source media="(prefers-color-scheme: dark)" srcset="https://github.com/user-attachments/assets/1cd8ae2e-afd4-4930-bdc9-147b787ea3fe">
+    <img alt="Figaro" src="https://github.com/user-attachments/assets/5fc9ba97-8288-4228-ba4d-03b2bdcdf0f4" style="height:2em">
+  </picture>
+</h1>
 
 Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML file
 
-[![Gem Version](https://img.shields.io/gem/v/figaro.svg)](http://badge.fury.io/rb/figaro)
-[![Build Status](https://img.shields.io/travis/laserlemon/figaro/master.svg)](https://travis-ci.org/laserlemon/figaro)
+[![Made by laserlemon](https://img.shields.io/badge/laser-lemon-fc0?style=flat-square)](https://github.com/laserlemon)
+[![Gem Version](https://img.shields.io/gem/v/figaro?style=flat-square)](https://rubygems.org/gems/figaro)
+[![Build status](https://img.shields.io/github/checks-status/laserlemon/figaro/main?style=flat-square)](https://github.com/laserlemon/figaro/actions)
 
 **NOTE:** If you're using Figaro 0.7 or prior, please refer to the
 [appropriate documentation](https://github.com/laserlemon/figaro/tree/0-stable#readme)
