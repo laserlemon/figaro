@@ -2,6 +2,7 @@ name: Test
 push:
   branches:
   - main
+  - refresh-2025
 pull_request:
   branches:
   - main
