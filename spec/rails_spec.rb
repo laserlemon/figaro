@@ -2,19 +2,23 @@ describe Figaro::Rails do
   before do
     run_command_and_stop(<<-CMD)
       rails new example \
+        --api \
+        --minimal \
+        --no-rc \
+        --skip-asset-pipeline \
+        --skip-bootsnap \
+        --skip-bundle \
         --skip-gemfile \
         --skip-git \
-        --skip-keeps \
-        --skip-sprockets \
-        --skip-spring \
-        --skip-listen \
         --skip-javascript \
-        --skip-turbolinks \
+        --skip-keeps \
+        --skip-listen \
+        --skip-spring \
+        --skip-sprockets \
         --skip-test \
-        --skip-bootsnap \
-        --no-rc \
-        --skip-bundle \
-        --skip-webpack-install
+        --skip-turbolinks \
+        --skip-webpack-install \
+        --skip-yarn
       CMD
     cd("example")
   end
