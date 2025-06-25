@@ -1,3 +1,9 @@
+## 1.3.0 / 2025-06-25
+
+* [ENHANCEMENT] Drop support for Rubies before 2.5
+* [ENHANCEMENT] Add support for Rubies 3.0, 3.1, 3.2, 3.3, and 3.4
+* [ENHANCEMENT] Add support for Rails 6, 7, and 8
+
 ## 1.2.0 / 2020-05-10
 
 * [ENHANCEMENT] Drop support for Rubies 1.9.3, 2.0, 2.1, and 2.2
