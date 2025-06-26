@@ -6,6 +6,11 @@ describe Figaro::ENV do
     ::ENV["foo"] = "bar"
   end
 
+  after do
+    ::ENV["HELLO"] = nil
+    ::ENV["foo"] = nil
+  end
+
   describe "#method_missing" do
     context "plain methods" do
       it "makes ENV values accessible as lowercase methods" do

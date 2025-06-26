@@ -218,6 +218,8 @@ YAML
         }.not_to change {
           ::ENV["foo"]
         }
+      ensure
+        ::ENV["foo"] = nil
       end
 
       it "sets keys that have already been set internally" do
