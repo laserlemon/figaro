@@ -197,9 +197,34 @@ For more information:
 $ figaro help heroku:set
 ```
 
+#### Dokku
+
+[Dokku](https://github.com/progrium/dokku), like Heroku, provides a way to set application configuration ENV variables via the command line.
+
+```bash
+$ dokku config:set google_analytics_key=UA-35722661-5
+```
+
+Using the `figaro` command, you can set values from your configuration file all at once:
+
+```bash
+$ figaro dokku:set -e production
+```
+
+For more information:
+
+```bash
+$ figaro help dokku:set
+```
+
+In this initial implementation, you need to:
+
+1. Add git remote dokku repository => `git remote add dokku dokku@example-dokku-server.com:example-app`
+2. Do following command => `gem install dokku-cli`
+
 #### Other Hosts
 
-If you're not deploying to Heroku, you have two options:
+If you're not deploying to Heroku or Dokku, you have two options:
 
 * Generate a remote configuration file
 * Set `ENV` variables directly
