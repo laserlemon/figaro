@@ -14,8 +14,9 @@
 Simple, Heroku-friendly Rails app configuration using `ENV` and a single YAML file
 
 [![Made by laserlemon](https://img.shields.io/badge/laser-lemon-fc0?style=flat-square)](https://github.com/laserlemon)
-[![Gem Version](https://img.shields.io/gem/v/figaro?style=flat-square)](https://rubygems.org/gems/figaro)
-[![Build status](https://img.shields.io/github/checks-status/laserlemon/figaro/main?style=flat-square)](https://github.com/laserlemon/figaro/actions)
+[![Gem version](https://img.shields.io/gem/v/figaro?style=flat-square)](https://rubygems.org/gems/figaro)
+[![Build status](https://img.shields.io/github/actions/workflow/status/laserlemon/figaro/test.yml?style=flat-square)](https://github.com/laserlemon/figaro/actions/workflows/test.yml)
+
 
 **NOTE:** If you're using Figaro 0.7 or prior, please refer to the
 [appropriate documentation](https://github.com/laserlemon/figaro/tree/0-stable#readme)
